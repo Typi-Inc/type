@@ -38,7 +38,7 @@ export default class Item extends Component {
 				<Image style={{height:60,width:60,borderRadius:60/2}} 
 					source={{uri:this.props.item.toWhom.image}}
 				/>
-				<View style={{marginLeft:4,width:245*k,padding:7,paddingRight:10,height:72,
+				<View style={{marginLeft:4,width:k>1?255*k:245*k,padding:7,paddingRight:10,height:72,
 					borderBottomWidth:1,borderColor:BORDER_COLOR}}>
 					<View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
 						<Text style={{fontSize:17,fontWeight:'500'}}>

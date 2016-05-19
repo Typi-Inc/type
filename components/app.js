@@ -96,7 +96,7 @@ export default class App extends Component {
 				<Animated.View 
 					style={{position:'absolute',top:0,left:0,
 					backgroundColor:TRANSPARENT_GREY,width:320*k,
-					height:this.anim.interpolate({inputRange:[0,1],outputRange:[0,75*h]})
+					height:this.anim.interpolate({inputRange:[0,1],outputRange:[0,70]})
 				}}/>
 			</TouchableWithoutFeedback>
 		</View>

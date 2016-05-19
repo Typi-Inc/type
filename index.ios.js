@@ -25,6 +25,7 @@ global.RED="#F33030"
 global.BACKGROUND_GREY="#FAFAFA"
 global.TEXT_GREY="rgb(100,100,100)"
 global.TRANSPARENT_GREY="rgba(230,230,230,.9)"
+global.BUBBLE_GREY='#ECEDF1'
 class typi extends Component {
   render() {
     return (
