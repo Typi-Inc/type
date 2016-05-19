@@ -16,10 +16,13 @@ import Connect from './navigation/connect';
 import SettingsButton from './navigation/settingsButton';
 import BackButton from './navigation/backButton';
 import Discovery from './discover/discovery';
-import PhotoButton from './navigation/photoButton'
+import PhotoButton from './navigation/photoButton';
 import Tube from './chat/tube';
 import Title from './navigation/title';
-import Settings from './settings/settings'
+import Settings from './settings/settings';
+import NewChat from './creation/newChat';
+import NewGroup from './creation/newGroup';
+import NewBroadcast from './creation/newBroadcast';
 var RCTStatusBarManager = require('NativeModules').StatusBarManager;
 
 let NavigationBarRouteMapper={
@@ -57,6 +60,8 @@ export default class App extends Component {
 				this.show()
 			}else if(x.action==='hide'){
 				Animated.timing(this.anim,{toValue:0,duration:1}).start()
+			}else if(x.action==='clean'){
+				this.anim.setValue(0)
 			}
 		})
 	}
@@ -103,22 +108,23 @@ export default class App extends Component {
 		);
 	}
 	renderApp(route,navigator){
-		if(route.name==='discovery') return <Discovery/>
-		else if(route.name==='settings') return <Settings/>
-		else if(route.name==='tube') return <Tube/>
-		return <List/>
+		if(route.name==='discovery') return <Discovery/>;
+		else if(route.name==='settings') return <Settings/>;
+		else if(route.name==='tube') return <Tube/>;
+		else if(route.name==='newChat') return <NewChat/>;
+		else if(route.name==='newGroup') return <NewGroup/>;
+		else if(route.name==='newBroadcast') return <NewBroadcast/>;
+		return <List/>;
 	}
 	configureScene(route,routeStack){
-		// if(route.name==='createChannel') return {...Navigator.SceneConfigs.FloatFromBottom, gestures: {}}
+		if(route.name==='newChat'||route.name==='newGroup'||route.name==='newBroadcast') 
+			return {...Navigator.SceneConfigs.FloatFromBottom, gestures: {}};
 		// else if (route.name==='channel') return Navigator.SceneConfigs.FloatFromRight
 
 		// else if (route.name=='imageViewer') return Navigator.SceneConfigs.FadeAndroid
-		if(route.name==='discovery') return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight
-		return Navigator.SceneConfigs.PushFromRight
+		else if(route.name==='discovery') return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
+		return Navigator.SceneConfigs.PushFromRight;
 	}
 }
-
-
-
-
 Object.assign(App.prototype, TimerMixin);
+

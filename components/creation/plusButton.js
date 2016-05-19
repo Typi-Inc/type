@@ -8,7 +8,8 @@ import {
    Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {plusButtonPress,cancelCreate$} from '../actions/uiactions'
+import TimerMixin from 'react-timer-mixin';
+import {plusButtonPress,cancelCreate$,appNav} from '../actions/uiactions'
 export default class PlusButton extends Component {
 	state={active:false}
 	componentDidMount(){
@@ -28,17 +29,30 @@ export default class PlusButton extends Component {
 
 	}
 	startChatting(){
-		console.log('hello world')
+		appNav({action:'push',nav:'appNav',name:'newChat',info:{title:'New chat'}})
+		this.clean()
 	}
-	creactGroup(){
-
+	clean(){
+		plusButtonPress({action:'clean'})
+		this.setTimeout(()=>{
+			
+			this.anim1.setValue(0)
+			this.setState({active:false})
+		},300)
+		
+	}
+	createGroup(){
+		appNav({action:'push',nav:'appNav',name:'newGroup',info:{title:'New group'}})
+		this.clean()
 	}
 	broadcast(){
-
+		appNav({action:'push',nav:'appNav',name:'newBroadcast',info:{title:'New broadcast'}})
+		this.clean()
 	}
 	dismiss(){
 			Animated.spring(this.anim1,{toValue:0,tension:140,friction:16}).start(()=>{this.setState({active:false})})
 	}
+
 
 	render() {
 		this.anim1=this.anim1 || new Animated.Value(0)
@@ -46,7 +60,7 @@ export default class PlusButton extends Component {
 		this.anim3=this.anim3 || new Animated.Value(0)
 		return (
 			<View>
-			<TouchableWithoutFeedback onPress={this.state.active?this.startChatting.bind(this):this.handlePress.bind(this)}>
+			<TouchableWithoutFeedback onPress={()=>{}}>
 				<Animated.View style={{shadowOpacity:this.anim1.interpolate({inputRange:[0,1],outputRange:[0,0.5]}),
 					shadowOffset:{width:4,height:4},}}>
 				<Animated.Image source={{uri:'http://a57.foxnews.com/media2.foxnews.com/BrightCove/694940094001/2016/05/09/876/493/694940094001_4885965796001_9cc88214-5962-41e4-a293-56e1f55dcc00.jpg?ve=1&tl=1'}} 
@@ -61,7 +75,7 @@ export default class PlusButton extends Component {
 				}}/>
 				</Animated.View>
 				</TouchableWithoutFeedback>
-				<TouchableWithoutFeedback onPress={this.state.active?this.startChatting.bind(this):this.handlePress.bind(this)}>
+				<TouchableWithoutFeedback onPress={this.broadcast.bind(this)}>
 					<Animated.View style={{position:'absolute',
 						bottom:this.anim1.interpolate({inputRange:[0,1],outputRange:[14,160]}),
 						right:17,
@@ -79,7 +93,7 @@ export default class PlusButton extends Component {
 					</Animated.View>
 				</TouchableWithoutFeedback>
 
-				<TouchableWithoutFeedback onPress={this.state.active?this.startChatting.bind(this):this.handlePress.bind(this)}>
+				<TouchableWithoutFeedback onPress={this.createGroup.bind(this)}>
 					
 
 
@@ -143,6 +157,7 @@ export default class PlusButton extends Component {
 }
 
 
+Object.assign(PlusButton.prototype, TimerMixin);
 
 
 //<Animated.View style={{marginRight:20,padding:6,backgroundColor:'white',

@@ -7,7 +7,7 @@ import {
   Image,
   View
 } from 'react-native';
-var Swipeout = require('react-native-swipeout')
+// var Swipeout = require('react-native-swipeout')
 import {appNav } from '../actions/uiactions'
 export default class Item extends Component {
  	componentWillMount(){
@@ -30,7 +30,6 @@ export default class Item extends Component {
  	}
 	render() {
 		return (
-	<Swipeout autoClose={true} backgroundColor="white" right={this.swipeoutBtns}>
 		<TouchableOpacity onPress={this.showTube.bind(this,this.props.item)} style={{overflow:'hidden'}} underlayColor={'rgb(120,120,120'} >
 	
 
@@ -65,7 +64,6 @@ export default class Item extends Component {
 				</View>
 			</View>
 		</TouchableOpacity>
-	</Swipeout>
 
 		);
 	}

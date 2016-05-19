@@ -16,6 +16,8 @@ export default class Background extends Component {
 				this.show()
 			}else if(x.action==='hide'){
 				Animated.timing(this.anim,{toValue:0,duration:1}).start()
+			}else if(x.action==='clean'){
+				this.anim.setValue(0)
 			}
 		})
 	}

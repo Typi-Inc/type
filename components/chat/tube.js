@@ -6,10 +6,13 @@ import {
   Text,
   View,
   DatePickerIOS,
+  Animated,
   ScrollView
 } from 'react-native';
 import Input from './input';
-import Bubble from './bubble'
+import Bubble from './bubble';
+import IncrementalGroup from 'IncrementalGroup';
+import Incremental from 'Incremental';
 export default class Tube extends Component {
 
 	componentDidMount(){
@@ -28,8 +31,12 @@ export default class Tube extends Component {
 	onTouchEnd(){
 		if(!this.touchMove && !this.input.keyboardIsUp()) this.input.dismissTimer()
 	}
+	_onDone(){
+		Animated.timing(this.anim,{toValue:0,duration:100}).start()
+	}
 
 	render() {
+		this.anim=this.anim || new Animated.Value(1)
 		return (
 
 			<View style={{flex:1,backgroundColor:'white'}}>
@@ -38,7 +45,8 @@ export default class Tube extends Component {
 					onTouchStart={this.onTouchStart.bind(this)}
 					onTouchMove={this.onTouchMove.bind(this)}
 					onTouchEnd={this.onTouchEnd.bind(this)}
-					removeClippedSubviews={true} contentContainerStyle={{paddingBottom:80}}>
+					removeClippedSubviews={true} 
+					contentContainerStyle={{paddingBottom:80}}>
 					<Bubble/>
 					<Bubble/>
 					<Bubble/>
@@ -48,37 +56,14 @@ export default class Tube extends Component {
 					<Bubble/>
 					<Bubble/>
 					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					
-			
 				</ScrollView>
-				<Input ref={el=>this.input=el}/>
+				<IncrementalGroup onDone={this._onDone.bind(this)} disabled={false}>
+					<Incremental><Input ref={el=>this.input=el}/></Incremental>
+				</IncrementalGroup>
+				<Animated.View style={{position:'absolute',width:320*k,bottom:0,height:500,
+					backgroundColor:'white',
+					opacity:this.anim
+				}}/>
 			</View>
 		);
 	}

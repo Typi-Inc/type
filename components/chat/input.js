@@ -1,7 +1,7 @@
 import TimerMixin from 'react-timer-mixin'
 let UIManager = require('NativeModules').UIManager;
 import React, { Component } from 'react';
-import ReactNative,{
+import {
   StyleSheet,
   Text,
   TextInput,
@@ -16,8 +16,10 @@ import ReactNative,{
 } from 'react-native';
 import {input$} from '../actions/uiactions';
 import {keyboard,openAnimation} from '../animations';
-import dismissKeyboard from 'dismissKeyboard'
-import moment from 'moment'
+import dismissKeyboard from 'dismissKeyboard';
+import moment from 'moment';
+import IncrementalGroup from 'IncrementalGroup';
+import Incremental from 'Incremental';
 export default class Input extends Component {
 	state={
 		loading:true,
@@ -81,24 +83,24 @@ export default class Input extends Component {
           		
 			</View>
 			<View ref={el=>this.white=el} style={{position:'absolute',bottom:0,height:0,width:320*k,backgroundColor:BACKGROUND_GREY}}/>
-			{this.state.loading?null:
-				<View ref={el=>this.datePicker=el} style={{position:'absolute',bottom:-230,left:0,
-					paddingBottom:0*h,...center,paddingLeft:k>1?20*k:0,backgroundColor:BACKGROUND_GREY,paddingTop:0
-					// backgroundColor:'rgba(34,167,240,0.4)'
-				}}>
-					<DatePickerIOS
-					style={{width:320*k}}
-					ref={el=>this.datePicker1=el} 
-						// style={{height:100=}}
-				        	date={this.state.date}
-				        	mode="datetime"
-				        	timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-				       		onDateChange={this.onDateChange.bind(this)}
-				       	 />
-		    	</View>
-
-
-			}
+			<IncrementalGroup disabled={false} >
+				<Incremental>
+					<View ref={el=>this.datePicker=el} style={{position:'absolute',bottom:-230,left:0,
+						paddingBottom:0*h,...center,paddingLeft:k>1?20*k:0,backgroundColor:BACKGROUND_GREY,paddingTop:0
+						// backgroundColor:'rgba(34,167,240,0.4)'
+					}}>
+						<DatePickerIOS
+						style={{width:320*k}}
+						ref={el=>this.datePicker1=el} 
+							// style={{height:100=}}
+					        	date={this.state.date}
+					        	mode="datetime"
+					        	timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
+					       		onDateChange={this.onDateChange.bind(this)}
+					       	 />
+			    	</View>
+		    	</Incremental>
+			</IncrementalGroup>
 			
 		</View>
 		);
@@ -106,7 +108,7 @@ export default class Input extends Component {
 	pressTimer(){
 		this.setState({goDown:false})
 		this.white&&this.white.setNativeProps({style:{height:216,bottom:-10}})
-		this.datePicker && this.datePicker.setNativeProps({bottom:-10})
+		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-10}})
 		dismissKeyboard()
 		LayoutAnimation.configureNext(keyboard);
 		this.main && this.main.setNativeProps({style:{bottom:200}})
@@ -115,7 +117,7 @@ export default class Input extends Component {
 	show(e){
 		this.setState({goDown:true})
 		LayoutAnimation.configureNext(keyboard);
-		this.datePicker && this.datePicker.setNativeProps({bottom:-230})
+		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
 		this.white&&this.white.setNativeProps({style:{height:e.endCoordinates.height,bottom:0}})
 		this.main && this.main.setNativeProps({style:{bottom:e.endCoordinates.height}})	
 	}
@@ -125,7 +127,7 @@ export default class Input extends Component {
 	dismissTimer(){
 		this.white&&this.white.setNativeProps({style:{height:10}})
 		LayoutAnimation.configureNext(keyboard);
-		this.datePicker && this.datePicker.setNativeProps({bottom:-230})
+		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
 		
 		this.main && this.main.setNativeProps({style:{bottom:0}})
 	}
