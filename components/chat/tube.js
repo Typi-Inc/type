@@ -57,13 +57,8 @@ export default class Tube extends Component {
 					<Bubble/>
 					<Bubble/>
 				</ScrollView>
-				<IncrementalGroup onDone={this._onDone.bind(this)} disabled={false}>
 					<Incremental><Input ref={el=>this.input=el}/></Incremental>
-				</IncrementalGroup>
-				<Animated.View style={{position:'absolute',width:320*k,bottom:0,height:500,
-					backgroundColor:'white',
-					opacity:this.anim
-				}}/>
+			
 			</View>
 		);
 	}
