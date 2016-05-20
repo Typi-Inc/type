@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -9,14 +7,18 @@ import {
   Animated,
   ScrollView
 } from 'react-native';
+import TimerMixin from 'react-timer-mixin';
 import Input from './input';
 import Bubble from './bubble';
 import IncrementalGroup from 'IncrementalGroup';
 import Incremental from 'Incremental';
 export default class Tube extends Component {
-
+	state={clipped:false}
 	componentDidMount(){
-
+		this.setTimeout(()=>{
+			this.scroll.setNativeProps({removeClippedSubviews:true})
+		},100)
+		
 	}
 	componentWillUnmount(){
 
@@ -42,24 +44,20 @@ export default class Tube extends Component {
 			<View style={{flex:1,backgroundColor:'white'}}>
 				
 				<ScrollView 
+					ref={el=>this.scroll=el}
 					onTouchStart={this.onTouchStart.bind(this)}
 					onTouchMove={this.onTouchMove.bind(this)}
 					onTouchEnd={this.onTouchEnd.bind(this)}
-					removeClippedSubviews={true} 
+					removeClippedSubviews={false} 
 					contentContainerStyle={{paddingBottom:80}}>
 					<Bubble/>
 					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
+					
 				</ScrollView>
-					<Incremental><Input ref={el=>this.input=el}/></Incremental>
+					{this.props.showInput?<Incremental><Input ref={el=>this.input=el}/></Incremental>:null}
 			
 			</View>
 		);
 	}
 }
+Object.assign(Tube.prototype, TimerMixin);

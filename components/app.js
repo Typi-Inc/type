@@ -17,6 +17,7 @@ import SettingsButton from './navigation/settingsButton';
 import BackButton from './navigation/backButton';
 import Discovery from './discover/discovery';
 import PhotoButton from './navigation/photoButton';
+import Chat from './chat/chat';
 import Tube from './chat/tube';
 import Title from './navigation/title';
 import Settings from './settings/settings';
@@ -32,10 +33,11 @@ let NavigationBarRouteMapper={
 	},
 	RightButton(route, navigator, index, navState){
 		if(route.name==='home') return <SettingsButton/>;
-		if(route.name==='tube') return <PhotoButton info={route.info}/>
+		if(route.name==='chat') return <PhotoButton info={route.info}/>
 		return null
 	},
 	Title(route, navigator, index, navState){
+		// console.log(route,navigator.getCurrentRoutes())
 		if(route.name==='home') return <HomeSearch/>;
 		return <Title info={route.info}/>
 	}
@@ -50,9 +52,10 @@ export default class App extends Component {
 	componentDidMount(){
 		this.sub=appNav$.subscribe(x=>{
 			if(x.nav==='appNav' && x.action==='push'){
+				if(x.name==='chat')this.nav.replaceAtIndex({name:'home'},1)
 				this.nav.push({name:x.name,info:x.info})
 			}else if(x.nav==='appNav'&& x.action==='pop'){
-				this.nav.pop()
+				this.nav.popToTop()
 			}
 		})
 		this.sub1=plusButtonPress$.subscribe(x=>{
@@ -86,7 +89,19 @@ export default class App extends Component {
 		 	<Navigator ref={el=>this.nav=el}
 				initialRoute={{name:'home'}}
 				configureScene={this.configureScene.bind(this)}
-				onWillFocus={(e)=>dismissKeyboard()}
+				onWillFocus={(e)=>{
+					// if(e.name==='chat'){
+					// 	console.log('aim here')
+					// 	this.nav.immediatelyResetRouteStack([{name:'home'}])
+
+					// }
+					dismissKeyboard()}}
+				onDidFocus={(e)=>{
+					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
+					if(this.nav&&this.nav.getCurrentRoutes().length>2){
+						this.nav.replacePrevious({name:'home'})
+					}
+				}}
 				renderScene={this.renderApp.bind(this)}
 				style={{paddingTop:70,backgroundColor:'white'}}
 				navigationBar={
@@ -110,16 +125,16 @@ export default class App extends Component {
 	renderApp(route,navigator){
 		if(route.name==='discovery') return <Discovery/>;
 		else if(route.name==='settings') return <Settings/>;
-		else if(route.name==='tube') return <Tube/>;
+		else if(route.name==='chat') return <Tube showInput={true}/>;
 		else if(route.name==='newChat') return <NewChat/>;
 		else if(route.name==='newGroup') return <NewGroup/>;
 		else if(route.name==='newBroadcast') return <NewBroadcast/>;
-		return <List/>;
+		else if(route.name==='home') return <List/>;
 	}
 	configureScene(route,routeStack){
 		if(route.name==='newChat'||route.name==='newGroup'||route.name==='newBroadcast') 
 			return {...Navigator.SceneConfigs.FloatFromBottom, gestures: {}};
-		// else if (route.name==='channel') return Navigator.SceneConfigs.FloatFromRight
+		// else if (route.name==='chat') return Navigator.SceneConfigs.HorizontalSwipeJump
 
 		// else if (route.name=='imageViewer') return Navigator.SceneConfigs.FadeAndroid
 		else if(route.name==='discovery') return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;

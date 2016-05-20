@@ -26,7 +26,7 @@ export default class Item extends Component {
  		return text
  	}
  	showTube(item){
- 		appNav({action:'push',nav:'appNav',name:'tube',info:{title:this.props.item.toWhom.name,item:item}})
+ 		appNav({action:'push',nav:'appNav',name:'chat',info:{title:this.props.item.toWhom.name,item:item}})
  	}
 	render() {
 		return (

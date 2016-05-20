@@ -15,13 +15,16 @@ import {
   DeviceEventEmitter
 } from 'react-native';
 import {input$} from '../actions/uiactions';
-import {keyboard,openAnimation} from '../animations';
+import {keyboard,openAnimation,fast} from '../animations';
 import dismissKeyboard from 'dismissKeyboard';
 import moment from 'moment';
 import IncrementalGroup from 'IncrementalGroup';
 import Incremental from 'Incremental';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 export default class Input extends Component {
 	state={
+		text:'',
 		loading:true,
 		goDown:true,
 		height:0,
@@ -43,7 +46,7 @@ export default class Input extends Component {
 		return (
 		<View>
 			<View ref={el=>this.main=el} 
-				style={{position:'absolute',width:320*k,bottom:0,left:0,
+				style={{position:'absolute',bottom:0,left:0,
 				backgroundColor:'transparent'}}>
 				<View style={{backgroundColor:ORANGE,padding:7, paddingRight:8,
 					shadowOffset:{width:4,height:4},shadowOpacity:0.4,borderRadius:4,
@@ -56,11 +59,9 @@ export default class Input extends Component {
              	 	height:Math.max(53, (12*k+this.state.height)),borderTopWidth:1,
               		flexDirection:'row',alignItems:'flex-end',justifyContent:'flex-start',
               		borderColor:BORDER_COLOR,width:320*k,padding:7,paddingLeft:0}}>
-              		<TouchableOpacity style={{padding:6,paddingBottom:10*k,...center}} onPress={this.pressTimer.bind(this)}>
-	              		<Image
-	              			style={{width:20,height:20,}}
-	              			source={{uri:'clock',isStatic:true}}
-	              		/>
+              		<TouchableOpacity style={{padding:6,paddingBottom:5,...center}} onPress={this.pressTimer.bind(this)}>
+	              		{this.state.goDown?<Icon name="md-time" size={24} color={'gray'} />:
+	              		<Icon name="ios-keypad" size={25} color={'gray'} />}
               		</TouchableOpacity>
               		<TextInput
               			multiline={true}
@@ -70,15 +71,23 @@ export default class Input extends Component {
                    	 	style={{height: Math.max(32, this.state.height+4*k),
                     		fontSize:16,alignItems:'center',backgroundColor:'white',
                       		borderColor: BORDER_COLOR, borderWidth:1,borderRadius:6,
-                      		alignSelf:'center',width:273*k,paddingLeft:5*k}}
+                      		alignSelf:'center',width:/\S/.test(this.state.text)?238*k:273*k,paddingLeft:5*k}}
                       	// value={this.state.text}
                       	onChange={(event) => {
+                      		LayoutAnimation.configureNext(openAnimation)
                       		this.setState({
 								text: event.nativeEvent.text,
 								height: Math.min(event.nativeEvent.contentSize.height,129*k)
 	                        });
                       	}}
               		/>
+              		<TouchableOpacity><Text ref={el=>this.send=el} 
+              			style={{marginLeft:5,marginBottom:7,marginRight:5,
+              				color:APP_COLOR,fontWeight:'500',
+              				fontSize:16,
+              				opacity:/\S/.test(this.state.text)?1:0}}>Send</Text>
+              		</TouchableOpacity>
+              		
               	</View>
           		
 			</View>
@@ -106,12 +115,17 @@ export default class Input extends Component {
 		);
 	}
 	pressTimer(){
-		this.setState({goDown:false})
-		this.white&&this.white.setNativeProps({style:{height:216,bottom:-10}})
-		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-10}})
-		dismissKeyboard()
-		LayoutAnimation.configureNext(keyboard);
-		this.main && this.main.setNativeProps({style:{bottom:200}})
+		if(this.state.goDown){
+			this.setState({goDown:false})
+			this.white&&this.white.setNativeProps({style:{height:226,bottom:-10}})
+			this.datePicker && this.datePicker.setNativeProps({style:{bottom:-10}})
+			dismissKeyboard()
+			LayoutAnimation.configureNext(keyboard);
+			this.main && this.main.setNativeProps({style:{bottom:213}})
+		}else{
+			this.textInput.focus()
+		}
+		
 
 	}
 	show(e){
@@ -130,6 +144,7 @@ export default class Input extends Component {
 		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
 		
 		this.main && this.main.setNativeProps({style:{bottom:0}})
+		this.setState({goDown:true})
 	}
 	hide(e){
 		if(!this.state.goDown) return;

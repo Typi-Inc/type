@@ -7,6 +7,7 @@ import {
   Animated,
   View
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {homeSearch$,appNav} from '../actions/uiactions'
 export default class SettingsButton extends Component {
 	componentDidMount(){
@@ -36,9 +37,9 @@ export default class SettingsButton extends Component {
 		<Animated.View style={{right:this.anim.interpolate({inputRange:[0,1],outputRange:[0,-100]}),}}>
 
 			<TouchableOpacity onPress={this.openSettings.bind(this)}
-			  style={{marginTop:4,marginLeft:7,paddingTop:9,paddingBottom:9,padding:6,paddingLeft:0,}}>
+			  style={{marginTop:4,marginLeft:7,paddingTop:5,paddingBottom:9,paddingRight:7,paddingLeft:0,}}>
 
-				<Image style={{width:20,height:20}} source={{uri:'settings',isStatic:true}}/>
+				<Icon name="ios-settings" size={27} color={APP_COLOR} />
 
 
 			</TouchableOpacity>
