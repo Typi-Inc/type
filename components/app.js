@@ -46,13 +46,15 @@ import {appNav$,plusButtonPress$,plusButtonPress,cancelCreate} from './actions/u
 export default class App extends Component {
 	state={};
 
-	componentWillMount(){
-	RCTStatusBarManager.getHeight((e)=>this.setState({statusBarHeight:e.height}))
-	}
+	// componentWillMount(){
+	// RCTStatusBarManager.getHeight((e)=>this.setState({statusBarHeight:e.height}))
+	// }
 	componentDidMount(){
+
 		this.sub=appNav$.subscribe(x=>{
 			if(x.nav==='appNav' && x.action==='push'){
-				if(x.name==='chat')this.nav.replaceAtIndex({name:'home'},1)
+				// if(x.name==='chat')this.nav.replaceAtIndex({name:'home'},1)
+				// console.log('app nav push')
 				this.nav.push({name:x.name,info:x.info})
 			}else if(x.nav==='appNav'&& x.action==='pop'){
 				this.nav.pop()
@@ -85,24 +87,18 @@ export default class App extends Component {
 	render() {
 		this.anim=this.anim || new Animated.Value(0)
 		return (
-		<View style={{flex:1,backgroundColor:'black'}}>
+		<View style={{flex:1}}>
 		 	<Navigator ref={el=>this.nav=el}
 				initialRoute={{name:'home'}}
 				configureScene={this.configureScene.bind(this)}
 				onWillFocus={(e)=>{
-					// if(e.name==='chat'){
-					// 	console.log('aim here')
-					// 	this.nav.immediatelyResetRouteStack([{name:'home'}])
-
-					// }
-
 					dismissKeyboard()}}
-				onDidFocus={(e)=>{
-					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
-					if(this.nav&&this.nav.getCurrentRoutes().length>2){
-						this.nav.replacePrevious({name:'home'})
-					}
-				}}
+				// onDidFocus={(e)=>{
+				// 	// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
+				// 	if(this.nav&&this.nav.getCurrentRoutes().length>2){
+				// 		this.nav.replacePrevious({name:'home'})
+				// 	}
+				// }}
 				renderScene={this.renderApp.bind(this)}
 				style={{paddingTop:70,backgroundColor:'white'}}
 				navigationBar={

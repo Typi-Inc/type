@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import {
   Text,
-  TouchableOpacity,
+  TouchableHighlight,
   Image,
   View
 } from 'react-native';
@@ -31,7 +31,7 @@ export default class Item extends Component {
  	}
 	render() {
 		return (
-		<TouchableOpacity onPress={this.showTube.bind(this,this.props.item)} style={{overflow:'hidden'}} underlayColor={'rgb(120,120,120'} >
+		<TouchableHighlight onPress={this.showTube.bind(this,this.props.item)} style={{overflow:'hidden'}} underlayColor={'rgb(220,220,220)'} >
 	
 
 			<View style={{flexDirection:'row',padding:10,alignItems:'center',paddingTop:2,paddingBottom:0}}>
@@ -64,7 +64,7 @@ export default class Item extends Component {
 
 				</View>
 			</View>
-		</TouchableOpacity>
+		</TouchableHighlight>
 
 		);
 	}

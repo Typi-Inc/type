@@ -58,14 +58,7 @@ export default class Tube extends Component {
 					<Bubble/>
 					<Bubble/>
 					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
-					<Bubble/>
+					
 					
 				</ScrollView>
 					{this.props.showInput?<Incremental><Input ref={el=>this.input=el}/></Incremental>:null}

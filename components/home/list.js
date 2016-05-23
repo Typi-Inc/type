@@ -18,15 +18,16 @@ export default class List extends Component {
 
 	state={clippedSubviews:false}
 	componentDidMount(){
-		this.setTimeout(()=>this.scroll.setNativeProps({removeClippedSubviews:true}),100)
+		// this.setTimeout(()=>this.scroll.setNativeProps({removeClippedSubviews:true}),100)
 	}
 	render() {
 		// console.log(WindowedListView)
 	return (
-		<View style={{flex:1}}>
+		<View style={{flex:1,backgroundColor:'white'}}>
 			<ScrollView
+				automaticallyAdjustContentInsets={true}
 				ref={el=>this.scroll=el}
-			 	// removeClippedSubviews={false}
+			 	removeClippedSubviews={true}
 				>
 				{directs.map((item,i)=><Item key={i} item={item}/>)}
 			</ScrollView>
