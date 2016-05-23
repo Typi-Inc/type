@@ -33,19 +33,13 @@ export default class Input extends Component {
      	timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
 	};
 	onDateChange(date){
+		LayoutAnimation.configureNext(fast)
 		
 		if(date < new Date) this.setState({date: new Date});
 		else this.setState({date: date});
 	}
-	
-	getDate(){
-
-	}
-	componentWillUpdate(){
-		LayoutAnimation.configureNext(keyboard)
-	}
 	render() {
-		// if(this.state.loading) return null
+		if(this.state.loading) return <View/>
 		return (
 		<View>
 			<View ref={el=>this.main=el} 
@@ -85,7 +79,7 @@ export default class Input extends Component {
                       		alignSelf:'center',width:/\S/.test(this.state.text)?238*k:273*k,paddingLeft:5*k}}
                       	// value={this.state.text}
                       	onChange={(event) => {
-                      		// LayoutAnimation.configureNext(openAnimation)
+                      		// LayoutAnimation.configureNext(fast)
                       		this.setState({
 								text: event.nativeEvent.text,
 								height: Math.min(event.nativeEvent.contentSize.height,129*k)
@@ -103,8 +97,7 @@ export default class Input extends Component {
           		
 			</View>
 			<View ref={el=>this.white=el} style={{position:'absolute',bottom:0,height:0,width:320*k,backgroundColor:BACKGROUND_GREY}}/>
-			<IncrementalGroup disabled={false} >
-				<Incremental>
+			
 					<View ref={el=>this.datePicker=el} style={{position:'absolute',bottom:-230,left:0,
 						paddingBottom:0*h,...center,paddingLeft:k>1?20*k:0,backgroundColor:BACKGROUND_GREY,paddingTop:0
 						// backgroundColor:'rgba(34,167,240,0.4)'
@@ -119,8 +112,7 @@ export default class Input extends Component {
 					       		onDateChange={this.onDateChange.bind(this)}
 					       	 />
 			    	</View>
-		    	</Incremental>
-			</IncrementalGroup>
+		    
 			
 		</View>
 		);
@@ -131,7 +123,7 @@ export default class Input extends Component {
 			this.white&&this.white.setNativeProps({style:{height:226,bottom:-10}})
 			this.datePicker && this.datePicker.setNativeProps({style:{bottom:-10}})
 			dismissKeyboard()
-			// LayoutAnimation.configureNext(keyboard);
+			LayoutAnimation.configureNext(keyboard);
 			this.main && this.main.setNativeProps({style:{bottom:213}})
 		}else{
 			this.textInput.focus()
@@ -141,7 +133,7 @@ export default class Input extends Component {
 	}
 	show(e){
 		this.setState({goDown:true})
-		// LayoutAnimation.configureNext(keyboard);
+		LayoutAnimation.configureNext(keyboard);
 		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
 		this.white&&this.white.setNativeProps({style:{height:e.endCoordinates.height,bottom:0}})
 		this.main && this.main.setNativeProps({style:{bottom:e.endCoordinates.height}})	
@@ -151,7 +143,7 @@ export default class Input extends Component {
 	}
 	dismissTimer(){
 		this.white&&this.white.setNativeProps({style:{height:10}})
-		// LayoutAnimation.configureNext(keyboard);
+		LayoutAnimation.configureNext(keyboard);
 		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
 		
 		this.main && this.main.setNativeProps({style:{bottom:0}})
@@ -172,6 +164,7 @@ export default class Input extends Component {
 		this._keyboardWillShowSubscription= DeviceEventEmitter.addListener('keyboardWillShow', this.show.bind(this));
 	    this._keyboardWillHideSubscription= DeviceEventEmitter.addListener('keyboardWillHide', this.hide.bind(this));
 	    InteractionManager.runAfterInteractions(()=>{
+	    	// LayoutAnimation.configureNext(openAnimation)
 	    	this.setState({loading:false},()=>{
 	    		// this.setTimeout(()=>{let handle=ReactNative.findNodeHandle(this.datePicker1)
 		    	// 	UIManager.measure(handle,(x,y,width,height,pagex,pagey)=>{

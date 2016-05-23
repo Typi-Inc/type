@@ -4,6 +4,7 @@ import {
   Text,
   View,
   DatePickerIOS,
+  InteractionManager,
   Animated,
   ScrollView
 } from 'react-native';
@@ -13,11 +14,13 @@ import Bubble from './bubble';
 import IncrementalGroup from 'IncrementalGroup';
 import Incremental from 'Incremental';
 export default class Tube extends Component {
-	state={clipped:false}
+	state={clipped:false,loading:true};
 	componentDidMount(){
-		this.setTimeout(()=>{
-			this.scroll.setNativeProps({removeClippedSubviews:true})
-		},100)
+		InteractionManager.runAfterInteractions(()=>{
+			this.scroll&&this.scroll.setNativeProps({removeClippedSubviews:true})
+			this.setState({loading:false})
+		})
+	
 		
 	}
 	componentWillUnmount(){
@@ -39,6 +42,11 @@ export default class Tube extends Component {
 
 	render() {
 		this.anim=this.anim || new Animated.Value(1)
+		if(this.state.loading){
+			return <View style={{flex:1,backgroundColor:'white',...center}}>
+				<Text>Loading...</Text>
+			</View>
+		}
 		return (
 
 			<View style={{flex:1,backgroundColor:'white'}}>
@@ -61,7 +69,7 @@ export default class Tube extends Component {
 					
 					
 				</ScrollView>
-					{this.props.showInput?<Incremental><Input ref={el=>this.input=el}/></Incremental>:null}
+				<Input ref={el=>this.input=el}/>
 			
 			</View>
 		);

@@ -57,7 +57,7 @@ export default class App extends Component {
 				// console.log('app nav push')
 				this.nav.push({name:x.name,info:x.info})
 			}else if(x.nav==='appNav'&& x.action==='pop'){
-				this.nav.pop()
+				this.nav.popToTop()
 			}
 		})
 		this.sub1=plusButtonPress$.subscribe(x=>{
@@ -93,12 +93,12 @@ export default class App extends Component {
 				configureScene={this.configureScene.bind(this)}
 				onWillFocus={(e)=>{
 					dismissKeyboard()}}
-				// onDidFocus={(e)=>{
-				// 	// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
-				// 	if(this.nav&&this.nav.getCurrentRoutes().length>2){
-				// 		this.nav.replacePrevious({name:'home'})
-				// 	}
-				// }}
+				onDidFocus={(e)=>{
+					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
+					if(this.nav&&this.nav.getCurrentRoutes().length>2){
+						this.nav.replacePrevious({name:'home'})
+					}
+				}}
 				renderScene={this.renderApp.bind(this)}
 				style={{paddingTop:70,backgroundColor:'white'}}
 				navigationBar={
