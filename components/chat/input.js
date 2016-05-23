@@ -76,10 +76,15 @@ export default class Input extends Component {
                    	 	style={{height: Math.max(32, this.state.height+4*k),
                     		fontSize:16,alignItems:'center',backgroundColor:'white',
                       		borderColor: BORDER_COLOR, borderWidth:1,borderRadius:6,
-                      		alignSelf:'center',width:/\S/.test(this.state.text)?238*k:273*k,paddingLeft:5*k}}
+                      		alignSelf:'center',
+                      		width:/\S/.test(this.state.text)?238*k:273*k,
+                      		paddingLeft:5*k}}
                       	// value={this.state.text}
                       	onChange={(event) => {
-                      		// LayoutAnimation.configureNext(fast)
+                      		//
+                      		// if(/\S/.test(this.state.text)){
+                      			 // LayoutAnimation.configureNext(fast)
+                      		// }
                       		this.setState({
 								text: event.nativeEvent.text,
 								height: Math.min(event.nativeEvent.contentSize.height,129*k)

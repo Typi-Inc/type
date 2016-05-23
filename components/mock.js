@@ -148,14 +148,50 @@ export let directs=[
 	karma:123},lastTime:'09:20',counter:0,
 	lastText:'common'
 },
-
-
-
-
-
-
-
-
-
-
 ]
+export let messages=[{
+	text:'hello there my friend'
+},
+{
+	text:`Its big,
+It’s warm,                                                    
+It’s fuzzy.
+Before you get ideas – it’s a big g’night HUG from me to you!`
+},
+{
+	text:`When the night breeze blows my hair, I imagine they’re your kisses
+I can stand missing you this much.`
+},
+{
+	text:`God sprinkles tiny but wonderful seeds of blessings on earth each day...and I just caught one that's so nice and true...it's YOU ! Love you and good night`
+},
+{
+	text:`I love all the stars in the sky, but they are nothing compared to the ones in your eyes! So I’ll think about you as I turn in for the night. Good Night!`
+},
+{
+	text:`One day I wish my dream would come true
+And I’d wake up next to you. Till then Good Night!`
+},
+{
+	text:`Hey there
+just dropped by to say hello.
+Hope that you had a wonderful day! Good Night.`
+},
+{
+	text:`The sun rose and set today - like every other day
+But no one knows my world has stopped.
+It will move only when we meet again tomorrow. Good night my love!`
+},
+{
+	text:`I wish I was there to hold you tight, instead of just sending you this loving “Good Night.”`
+},
+{
+	text:`Nobody's right till somebody’s wrong.
+Nobody's weak till somebody’s strong.
+Nobody's lucky till love comes along.
+Nobody's lonely till somebody’s gone.
+I love and miss you tonight!`
+},
+{text:'short'}
+]
+
