@@ -37,7 +37,7 @@ export default class Connect extends Component {
 		return (
 		<Animated.View style={{left:this.anim.interpolate({inputRange:[0,1],outputRange:[0,-100]}),}}>
 			<TouchableOpacity onPress={this.connect.bind(this)}
-			 style={{marginTop:3,marginLeft:7,paddingTop:7,paddingBottom:9,padding:6,paddingLeft:2,}}>
+			 style={{marginTop:3,marginLeft:7,paddingTop:5,paddingBottom:9,padding:6,paddingLeft:2,}}>
 				<Icon name="ios-person-add" size={30} color={APP_COLOR} />
 				
 			</TouchableOpacity>

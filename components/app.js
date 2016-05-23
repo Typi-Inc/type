@@ -55,7 +55,7 @@ export default class App extends Component {
 				if(x.name==='chat')this.nav.replaceAtIndex({name:'home'},1)
 				this.nav.push({name:x.name,info:x.info})
 			}else if(x.nav==='appNav'&& x.action==='pop'){
-				this.nav.popToTop()
+				this.nav.pop()
 			}
 		})
 		this.sub1=plusButtonPress$.subscribe(x=>{
@@ -85,7 +85,7 @@ export default class App extends Component {
 	render() {
 		this.anim=this.anim || new Animated.Value(0)
 		return (
-		<View style={{flex:1}}>
+		<View style={{flex:1,backgroundColor:'black'}}>
 		 	<Navigator ref={el=>this.nav=el}
 				initialRoute={{name:'home'}}
 				configureScene={this.configureScene.bind(this)}
@@ -95,6 +95,7 @@ export default class App extends Component {
 					// 	this.nav.immediatelyResetRouteStack([{name:'home'}])
 
 					// }
+
 					dismissKeyboard()}}
 				onDidFocus={(e)=>{
 					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	

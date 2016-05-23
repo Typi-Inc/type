@@ -26,7 +26,7 @@ export default class List extends Component {
 		<View style={{flex:1}}>
 			<ScrollView
 				ref={el=>this.scroll=el}
-			 	removeClippedSubviews={false}
+			 	// removeClippedSubviews={false}
 				>
 				{directs.map((item,i)=><Item key={i} item={item}/>)}
 			</ScrollView>

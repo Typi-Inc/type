@@ -49,7 +49,21 @@ export default class Tube extends Component {
 					onTouchMove={this.onTouchMove.bind(this)}
 					onTouchEnd={this.onTouchEnd.bind(this)}
 					removeClippedSubviews={false} 
-					contentContainerStyle={{paddingBottom:80}}>
+					contentContainerStyle={{paddingBottom:90}}>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
+					<Bubble/>
 					<Bubble/>
 					<Bubble/>
 					

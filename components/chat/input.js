@@ -25,6 +25,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default class Input extends Component {
 	state={
 		text:'',
+		showTime:false,
 		loading:true,
 		goDown:true,
 		height:0,
@@ -32,7 +33,7 @@ export default class Input extends Component {
      	timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
 	};
 	onDateChange(date){
-		LayoutAnimation.configureNext(openAnimation)
+		
 		if(date < new Date) this.setState({date: new Date});
 		else this.setState({date: date});
 	}
@@ -40,7 +41,9 @@ export default class Input extends Component {
 	getDate(){
 
 	}
-	
+	componentWillUpdate(){
+		LayoutAnimation.configureNext(keyboard)
+	}
 	render() {
 		// if(this.state.loading) return null
 		return (
@@ -48,11 +51,19 @@ export default class Input extends Component {
 			<View ref={el=>this.main=el} 
 				style={{position:'absolute',bottom:0,left:0,
 				backgroundColor:'transparent'}}>
-				<View style={{backgroundColor:ORANGE,padding:7, paddingRight:8,
-					shadowOffset:{width:4,height:4},shadowOpacity:0.4,borderRadius:4,
+				<View style={{backgroundColor:APP_COLOR,padding:6, paddingRight:4,opacity:!this.state.showTime?0:1,
+					shadowOffset:{width:4,height:4},shadowOpacity:0.4,borderRadius:4,flexDirection:'row',...center,
 					alignSelf:'flex-start',margin:2,marginBottom:2}}>
-					<Text style={{color:'white',fontSize:12}}>{moment(this.state.date).calendar()}</Text>
+					<Text style={{color:'white',fontSize:14}}>{moment(this.state.date).calendar()}</Text>
+					{this.state.goDown?<View style={{backgroundColor:'white',borderRadius:4,width:20,height:20,...center,marginLeft:6,paddingTop:2}}>
+						<TouchableOpacity style={{padding:6}} onPress={()=>this.setState({showTime:false,date:new Date()})}
+							><Icon name="ios-close" style={{backgroundColor:'transparent'}} 
+						
+						size={20} color={'black'} /></TouchableOpacity>
+					</View>
 
+						:null}
+					
 				</View>
 				<View ref={el=>this.wrapper=el} 
               		style={{backgroundColor:BACKGROUND_GREY,marginBottom:0,
@@ -74,7 +85,7 @@ export default class Input extends Component {
                       		alignSelf:'center',width:/\S/.test(this.state.text)?238*k:273*k,paddingLeft:5*k}}
                       	// value={this.state.text}
                       	onChange={(event) => {
-                      		LayoutAnimation.configureNext(openAnimation)
+                      		// LayoutAnimation.configureNext(openAnimation)
                       		this.setState({
 								text: event.nativeEvent.text,
 								height: Math.min(event.nativeEvent.contentSize.height,129*k)
@@ -116,11 +127,11 @@ export default class Input extends Component {
 	}
 	pressTimer(){
 		if(this.state.goDown){
-			this.setState({goDown:false})
+			this.setState({goDown:false,showTime:true})
 			this.white&&this.white.setNativeProps({style:{height:226,bottom:-10}})
 			this.datePicker && this.datePicker.setNativeProps({style:{bottom:-10}})
 			dismissKeyboard()
-			LayoutAnimation.configureNext(keyboard);
+			// LayoutAnimation.configureNext(keyboard);
 			this.main && this.main.setNativeProps({style:{bottom:213}})
 		}else{
 			this.textInput.focus()
@@ -130,7 +141,7 @@ export default class Input extends Component {
 	}
 	show(e){
 		this.setState({goDown:true})
-		LayoutAnimation.configureNext(keyboard);
+		// LayoutAnimation.configureNext(keyboard);
 		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
 		this.white&&this.white.setNativeProps({style:{height:e.endCoordinates.height,bottom:0}})
 		this.main && this.main.setNativeProps({style:{bottom:e.endCoordinates.height}})	
@@ -140,7 +151,7 @@ export default class Input extends Component {
 	}
 	dismissTimer(){
 		this.white&&this.white.setNativeProps({style:{height:10}})
-		LayoutAnimation.configureNext(keyboard);
+		// LayoutAnimation.configureNext(keyboard);
 		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
 		
 		this.main && this.main.setNativeProps({style:{bottom:0}})
