@@ -20,6 +20,10 @@ export const input$ = new Rx.Subject();
 
 export const input = (args) => input$.next(args);
 
+export const chatTitle$ = new Rx.Subject();
+
+export const chatTitle = (args) => chatTitle$.next(args);
+
 
 
 

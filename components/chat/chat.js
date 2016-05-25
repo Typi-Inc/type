@@ -6,37 +6,34 @@ import {
   Text,
   View
 } from 'react-native';
+import realm from '../db'
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view';
 import Tube from './tube';
-class Dots extends Component {
-	render() {
-		return (
-				<View style={{flexDirection:'row',alignSelf:'center',margin:5,backgroundColor:'transparent'}}>
-
-				<View   style={{width:7,height:7,borderRadius:5,
-					backgroundColor:this.props.activeTab===0?APP_COLOR:TRANSPARENT_GREY,marginRight:3}}/>
-
-
-				<View style={{width:7,height:7,borderRadius:5,
-					backgroundColor:this.props.activeTab===1?APP_COLOR:TRANSPARENT_GREY,marginLeft:3}}/>
-
-
-			</View>
-		);
-	}
-}
+import {chatTitle} from '../actions/uiactions';
+import List from '../home/list';
 export default class Chat extends Component {
+	state={contacts:realm.objects('Contact')};
+	changeTab(obj){
+		// console.log(obj['i'])
+		chatTitle({activeTab:obj['i']})
+	}
+	componentWillMount(){
+		console.log(this.state.contacts.length)
+
+	}
 	render() {
+		// console.log(this.state.contacts.filtered('givenName="Assem"'))
 
 		return (
 			<View style={{flex:1,backgroundColor:'white'}}>
 				<ScrollableTabView
-				renderTabBar={()=><DefaultTabBar backgroundColor='rgba(255, 255, 255, 0.7)' />}
+				style={{backgroundColor:'white'}}
+				onChangeTab={this.changeTab.bind(this)}
 					tabBarPosition={'overlayTop'}
-					// renderTabBar={() => <Dots/>}
+					renderTabBar={() => <View/>}
 				>
 		        	<Tube showInput={true} tabLabel="Chat" />
-		      		<View tabLabel="Future" style={{flex:1,backgroundColor:'red'}} />
+		      		<View style={{flex:1,backgroundColor:TRANSPARENT_GREY}} tabLabel="Future"/>
 		   	 </ScrollableTabView>
 		    </View>
 		);

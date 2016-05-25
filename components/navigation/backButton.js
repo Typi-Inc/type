@@ -7,12 +7,21 @@ import {
   Animated,
   View
 } from 'react-native';
+import TimerMixin from 'react-timer-mixin';
+
+import dismissKeyboard from 'dismissKeyboard'
 import {homeSearch$,appNav,input} from '../actions/uiactions'
 export default class BackButton extends Component {
 
 	back(){
-		appNav({nav:'appNav',action:'pop'})
+		if(this.props.index>1){
+			appNav({nav:'appNav',action:'popToTop'})
+		}else appNav({nav:'appNav',action:'pop'})
+		
 		input({action:'unsubscribe'})
+		if(this.props.name==='chat'){
+			dismissKeyboard()
+		}
 	}
 	render() {
 		return (
@@ -25,3 +34,5 @@ export default class BackButton extends Component {
 		);
   }
 }
+
+Object.assign(BackButton.prototype, TimerMixin);

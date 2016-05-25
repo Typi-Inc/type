@@ -152,6 +152,13 @@ export let directs=[
 export let messages=[{
 	text:'hello there my friend'
 },
+{text:'sup'},
+{
+	text:'good'
+},
+{
+	text:'are you down for movies'
+},
 {
 	text:`Its big,
 It’s warm,                                                    

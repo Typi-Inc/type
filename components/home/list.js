@@ -23,7 +23,7 @@ export default class List extends Component {
 	        })
 	}
 	componentWillMount(){
-		// this.setTimeout(()=>this.scroll.setNativeProps({removeClippedSubviews:true}),100)
+		this.setTimeout(()=>this.scroll&&this.scroll.setNativeProps({removeClippedSubviews:true}),100)
 		this.setState({dataSource:this.state.dataSource.cloneWithRows(directs)})
 
 	}
@@ -39,7 +39,7 @@ export default class List extends Component {
 					// ref={el=>this.scroll=el}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderRow.bind(this)}
-				 	removeClippedSubviews={true}
+				 	removeClippedSubviews={false}
 					/>
 			
 				<Background/>

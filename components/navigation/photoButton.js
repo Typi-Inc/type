@@ -8,6 +8,8 @@ import {
   View
 } from 'react-native';
 export default class PhotoButton extends Component {
+	state={height:320*k,width:320*k}
+
 	render() {
 		return (
 			<Image 

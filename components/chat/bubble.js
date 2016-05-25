@@ -12,8 +12,8 @@ export default class Bubble extends Component {
 		// let marginR=this.state.active?{marginLeft:15}:{marginRight:15}
 		return (
 			<View style={{padding:4,paddingTop:6,overflow:'hidden',
-				paddingBottom:6,margin:6,marginRight:this.state.active?50:10,
-				marginLeft:this.state.active?10:50,
+				paddingBottom:6,margin:6,marginRight:this.state.active?70:10,
+				marginLeft:this.state.active?10:70,
 				flexDirection:this.props.message.text.length<30?'row':'column',
 				backgroundColor:this.state.active?BUBBLE_GREY:APP_COLOR,
 				borderRadius:14,alignSelf:this.state.active?"flex-start":"flex-end"}}>

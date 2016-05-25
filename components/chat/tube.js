@@ -14,7 +14,8 @@ import Input from './input';
 import Bubble from './bubble';
 import IncrementalGroup from 'IncrementalGroup';
 import Incremental from 'Incremental';
-import Spinner from 'react-native-spinkit'
+import Spinner from 'react-native-spinkit';
+import Loading from '../utils/loading'
 export default class Tube extends Component {
 	state={clipped:false,loading:true};
 	componentDidMount(){
@@ -39,9 +40,7 @@ export default class Tube extends Component {
 		if(!this.touchMove && !this.input.keyboardIsUp()) this.input.dismissTimer()
 	}
 	_onDone(){
-		Animated.timing(this.anim,{toValue:0,duration:200,delay:100}).
-			start(()=>Animated.timing(this.anim1,{toValue:1,duration:1}).start())
-		// this.setTimeout(()=>this.spinner&&this.spinner.setNativeProps({isVisible:false}),200)
+		this.loading&&this.loading._onDone()
 	}
 
 	render() {
@@ -58,6 +57,7 @@ export default class Tube extends Component {
 				<IncrementalGroup onDone={this._onDone.bind(this)} disabled={false}>
 					<ScrollView 
 						ref={el=>this.scroll=el}
+						// keyboardShouldPersistTaps={true}
 						onTouchStart={this.onTouchStart.bind(this)}
 						onTouchMove={this.onTouchMove.bind(this)}
 						onTouchEnd={this.onTouchEnd.bind(this)}
@@ -71,16 +71,7 @@ export default class Tube extends Component {
 					</ScrollView>
 				</IncrementalGroup>
 				<Input ref={el=>this.input=el}/>
-				<Animated.View style={{
-					bottom:0,top:this.anim1.interpolate({inputRange:[0,1],outputRange:[0,700]}),
-					position:'absolute',left:0,
-					width:320*k,
-					opacity:this.anim,backgroundColor:'white',...center
-				}}>
-					<Spinner ref={el=>this.spinner=el}
-					style={{marginBottom:50}} isVisible={true} 
-						size={30} type={'Wave'} color={APP_COLOR}/>
-				</Animated.View>
+				<Loading ref={el=>this.loading=el}/>
 			
 			</View>
 		);

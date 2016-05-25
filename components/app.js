@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {
+import ReactNative, {
   AppRegistry,
   StyleSheet,
   Text,
@@ -20,25 +20,28 @@ import PhotoButton from './navigation/photoButton';
 import Chat from './chat/chat';
 import Tube from './chat/tube';
 import Title from './navigation/title';
+import ChatTitle from './navigation/chatTitle';
 import Settings from './settings/settings';
 import NewChat from './creation/newChat';
 import NewGroup from './creation/newGroup';
+import realm from './db'
 import NewBroadcast from './creation/newBroadcast';
 var RCTStatusBarManager = require('NativeModules').StatusBarManager;
-
+let Contacts=ReactNative.NativeModules.RNUnifiedContacts
 let NavigationBarRouteMapper={
 	LeftButton(route, navigator, index, navState){
 		if(route.name==='home') return <Connect/>;
-		return <BackButton/>
+		return <BackButton index={index} name={route.name}/>
 	},
 	RightButton(route, navigator, index, navState){
 		if(route.name==='home') return <SettingsButton/>;
-		if(route.name==='chat') return <PhotoButton info={route.info}/>
+		if(route.name==='chat') return <PhotoButton navigator={navigator} info={route.info}/>
 		return null
 	},
 	Title(route, navigator, index, navState){
 		// console.log(route,navigator.getCurrentRoutes())
 		if(route.name==='home') return <HomeSearch/>;
+		else if(route.name==='chat') return <ChatTitle info={route.info}/>
 		return <Title info={route.info}/>
 	}
 }
@@ -46,9 +49,37 @@ import {appNav$,plusButtonPress$,plusButtonPress,cancelCreate} from './actions/u
 export default class App extends Component {
 	state={};
 
-	// componentWillMount(){
-	// RCTStatusBarManager.getHeight((e)=>this.setState({statusBarHeight:e.height}))
-	// }
+	componentWillMount(){
+		Contacts.getContacts( (error, contacts) =>  {
+			if (error) {
+				console.error(error);
+			}
+			else {
+				// console.log(realm.objects('Contact').filtered(`id="${contacts[0].identifier}"`))
+				for (let contact of contacts){
+					if(realm.objects('Contact').filtered(`id="${contact.identifier}"`)&&realm.objects('Contact').length>0) return;
+					realm.write(()=>{
+						// realm.deleteAll()
+
+						realm.create('Contact',{
+							givenName:contact.givenName,
+							fullName:contact.fullName,
+							id:contact.identifier,
+							imageDataAvailable:contact.imageDataAvailable,
+							// picture:contact.imageDataAvailable?contact.thumbnailImageData:null,
+							organizationName:contact.organizationName,
+							phones:contact.phoneNumbers.map((phoneNumber)=>({
+								id:phoneNumber.identifier,countryCode:phoneNumber.countryCode,number:phoneNumber.digits
+							})),
+							emailAddresses:contact.emailAddresses.map((emailAddress)=>({
+								id:emailAddress.identifier,value:emailAddress.value
+							})),
+						})
+					})
+				}
+			}
+		});
+	}
 	componentDidMount(){
 
 		this.sub=appNav$.subscribe(x=>{
@@ -57,6 +88,8 @@ export default class App extends Component {
 				// console.log('app nav push')
 				this.nav.push({name:x.name,info:x.info})
 			}else if(x.nav==='appNav'&& x.action==='pop'){
+				this.nav.pop()
+			}else if(x.nav==='appNav' && x.action==='popToTop'){
 				this.nav.popToTop()
 			}
 		})
@@ -91,14 +124,13 @@ export default class App extends Component {
 		 	<Navigator ref={el=>this.nav=el}
 				initialRoute={{name:'home'}}
 				configureScene={this.configureScene.bind(this)}
-				onWillFocus={(e)=>{
-					dismissKeyboard()}}
-				// onDidFocus={(e)=>{
-				// 	// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
-				// 	if(this.nav&&this.nav.getCurrentRoutes().length>2){
-				// 		this.nav.replacePrevious({name:'home'})
-				// 	}
-				// }}
+				// onWillFocus={(e)=>dismissKeyboard()}
+				onDidFocus={(e)=>{
+					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
+					if(this.nav&&this.nav.getCurrentRoutes().length>2){
+						this.nav.replacePrevious({name:'home'})
+					}
+				}}
 				renderScene={this.renderApp.bind(this)}
 				style={{paddingTop:70,backgroundColor:'white'}}
 				navigationBar={
@@ -122,7 +154,7 @@ export default class App extends Component {
 	renderApp(route,navigator){
 		if(route.name==='discovery') return <Discovery/>;
 		else if(route.name==='settings') return <Settings/>;
-		else if(route.name==='chat') return <Tube showInput={true}/>;
+		else if(route.name==='chat') return <Chat showInput={true}/>;
 		else if(route.name==='newChat') return <NewChat/>;
 		else if(route.name==='newGroup') return <NewGroup/>;
 		else if(route.name==='newBroadcast') return <NewBroadcast/>;
@@ -131,6 +163,7 @@ export default class App extends Component {
 	configureScene(route,routeStack){
 		if(route.name==='newChat'||route.name==='newGroup'||route.name==='newBroadcast') 
 			return {...Navigator.SceneConfigs.FloatFromBottom, gestures: {}};
+		if(route.name==='settings') return {...Navigator.SceneConfigs.PushFromRight, gestures: {}};
 		// else if (route.name==='chat') return Navigator.SceneConfigs.HorizontalSwipeJump
 
 		// else if (route.name=='imageViewer') return Navigator.SceneConfigs.FadeAndroid

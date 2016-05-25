@@ -15,7 +15,7 @@ import {
   DeviceEventEmitter
 } from 'react-native';
 import {input$} from '../actions/uiactions';
-import {keyboard,openAnimation,fast} from '../animations';
+import {keyboard,openAnimation,fast,veryFast} from '../animations';
 import dismissKeyboard from 'dismissKeyboard';
 import moment from 'moment';
 import IncrementalGroup from 'IncrementalGroup';
@@ -83,7 +83,7 @@ export default class Input extends Component {
                       	onChange={(event) => {
                       		//
                       		// if(/\S/.test(this.state.text)){
-                      			 // LayoutAnimation.configureNext(fast)
+                      			 LayoutAnimation.configureNext(veryFast)
                       		// }
                       		this.setState({
 								text: event.nativeEvent.text,
