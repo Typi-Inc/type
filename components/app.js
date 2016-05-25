@@ -66,7 +66,7 @@ export default class App extends Component {
 							fullName:contact.fullName,
 							id:contact.identifier,
 							imageDataAvailable:contact.imageDataAvailable,
-							// picture:contact.imageDataAvailable?contact.thumbnailImageData:null,
+							picture:contact.imageDataAvailable?contact.thumbnailImageData:null,
 							organizationName:contact.organizationName,
 							phones:contact.phoneNumbers.map((phoneNumber)=>({
 								id:phoneNumber.identifier,countryCode:phoneNumber.countryCode,number:phoneNumber.digits

@@ -22,7 +22,7 @@ const ContactSchema = {
     id: 'string',
     phones: {type: 'list', objectType: 'Phone'},
     emailAddresses: {type: 'list', objectType: 'Email'},
-    picture:  {type: 'data', optional: true},
+    picture:  {type: 'string', optional: true},
     organizationName: {type: 'string', optional: true},
     imageDataAvailable:'bool',
   }

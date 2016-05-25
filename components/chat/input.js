@@ -81,14 +81,14 @@ export default class Input extends Component {
                       		paddingLeft:5*k}}
                       	// value={this.state.text}
                       	onChange={(event) => {
-                      		//
-                      		// if(/\S/.test(this.state.text)){
-                      			 LayoutAnimation.configureNext(veryFast)
-                      		// }
+                       		// var handle = InteractionManager.createInteractionHandle();
+                       		this.requestAnimationFrame(()=>LayoutAnimation.configureNext(fast))
                       		this.setState({
 								text: event.nativeEvent.text,
 								height: Math.min(event.nativeEvent.contentSize.height,129*k)
 	                        });
+							// InteractionManager.clearInteractionHandle(handle);
+
                       	}}
               		/>
               		<TouchableOpacity><Text ref={el=>this.send=el} 
