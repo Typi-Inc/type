@@ -25,6 +25,7 @@ export default class Chat extends Component {
 	}
 	render() {
 		let assem=this.state.contacts.filtered('givenName="Assem"')
+		// console.log('assem',assem)
 		// console.log(this.state.contacts)
 		return (
 			<View style={{flex:1,backgroundColor:'white'}}>
@@ -36,8 +37,8 @@ export default class Chat extends Component {
 				>
 		        	<Tube showInput={true} tabLabel="Chat" />
 		      		<View style={{flex:1,backgroundColor:TRANSPARENT_GREY,...center}} tabLabel="Future">
-		      			<Image style={{width:100,height:100}} 
-		      				source={{uri:'data:image/png;base64,'+assem[1].picture,isStatic:true}}/>
+		      			{!_.isEmpty(assem)?<Image style={{width:100,height:100}} 
+		      				source={{uri:'data:image/png;base64,'+assem[1].picture,isStatic:true}}/>:null}
 		      		</View>
 		   	 </ScrollableTabView>
 		    </View>

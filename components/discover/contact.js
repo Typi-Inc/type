@@ -4,14 +4,21 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Image
 } from 'react-native';
 
-import {ListView} from 'realm/react-native'
-export default class Draft extends Component {
+export default class Contact extends Component {
 	render() {
+		let contact=this.props.contact
 		return (
-			<Text>Draf</Text>
+			<View style={{flexDirection:'row',overflow:'hidden',padding:10}}>
+
+				<Text style={{fontSize:16,flex:5}}>{contact.fullName}</Text>
+
+				<Text style={{color:APP_COLOR}}>Invite</Text>
+
+			</View>
 		);
 	}
 }

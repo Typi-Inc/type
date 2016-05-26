@@ -32,8 +32,9 @@ export default class Title extends Component {
 	}
 	render() {
 		return (
-			<View>
-				<Text style={{fontSize:18,marginTop:10,fontWeight:'500'}}>{this.props.info.title}</Text>
+			<View style={{...center}}>
+				<Text style={{fontSize:15,fontWeight:'500'}}>{this.props.info.title}</Text>
+				<Text style={{fontSize:11}}>Online</Text>
 				<Dots activeTab={this.state.activeTab}/>
 			</View>
 		);

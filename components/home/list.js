@@ -37,6 +37,7 @@ export default class List extends Component {
 				<ListView
 					automaticallyAdjustContentInsets={true}
 					// ref={el=>this.scroll=el}
+					renderSeparator={this.renderSeparator.bind(this)}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderRow.bind(this)}
 				 	removeClippedSubviews={false}
@@ -46,6 +47,9 @@ export default class List extends Component {
 				<PlusButton/>
 			</View>
 		);
+	}
+	renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+		return <View style={{width:250*k,marginLeft:70*k,height:1,backgroundColor:BORDER_COLOR}}/>
 	}
 	renderRow(row,sectionId,rowId){
 		return <Item item={row} key={rowId}/>	   

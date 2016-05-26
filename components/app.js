@@ -57,7 +57,7 @@ export default class App extends Component {
 			else {
 				// console.log(realm.objects('Contact').filtered(`id="${contacts[0].identifier}"`))
 				for (let contact of contacts){
-					if(realm.objects('Contact').filtered(`id="${contact.identifier}"`)&&realm.objects('Contact').length>0) return;
+					if(realm.objects('Contact').filtered(`id="${contact.identifier}"`)&&realm.objects('Contact').length>0) break;
 					realm.write(()=>{
 						// realm.deleteAll()
 
@@ -167,7 +167,7 @@ export default class App extends Component {
 		// else if (route.name==='chat') return Navigator.SceneConfigs.HorizontalSwipeJump
 
 		// else if (route.name=='imageViewer') return Navigator.SceneConfigs.FadeAndroid
-		else if(route.name==='discovery') return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
+		// else if(route.name==='discovery') return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
 		return Navigator.SceneConfigs.PushFromRight;
 	}
 }

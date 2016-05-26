@@ -15,7 +15,8 @@ import Bubble from './bubble';
 import IncrementalGroup from 'IncrementalGroup';
 import Incremental from 'Incremental';
 import Spinner from 'react-native-spinkit';
-import Loading from '../utils/loading'
+import Loading from '../utils/loading';
+import Message from './message';
 export default class Tube extends Component {
 	state={clipped:false,loading:true};
 	componentDidMount(){
@@ -65,7 +66,7 @@ export default class Tube extends Component {
 						contentContainerStyle={{paddingBottom:90}}>
 						{
 							messages.map((message,i)=>{
-								return <Bubble message={message} key={i}/>
+								return <Message message={message} key={i}/>
 							})
 						}
 					</ScrollView>
@@ -78,3 +79,4 @@ export default class Tube extends Component {
 	}
 }
 Object.assign(Tube.prototype, TimerMixin);
+// <Bubble message={message} key={i}/>

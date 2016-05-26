@@ -9,11 +9,7 @@ import {
 } from 'react-native';
 import Spinner from 'react-native-spinkit';
 export default class Loading extends Component {
-	getDefaultProps(){
-		return {
-			delay:100
-		}
-	}
+	defaultProps={delay:100};
 	_onDone(){
 		Animated.timing(this.anim,{toValue:0,duration:300,delay:this.props.delay}).
 			start(()=>Animated.timing(this.anim1,{toValue:1,duration:1}).start())
