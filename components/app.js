@@ -48,7 +48,28 @@ let NavigationBarRouteMapper={
 import {appNav$,plusButtonPress$,plusButtonPress,cancelCreate} from './actions/uiactions'
 export default class App extends Component {
 	state={};
-
+	writeContactsToRealmAsync(contacts){
+		realm.write(()=>{
+			// realm.deleteAll()
+			for (let contact of contacts){
+				if(realm.objects('Contact').filtered(`id="${contact.identifier}"`)&&realm.objects('Contact').length>0) break;
+				realm.create('Contact',{
+					givenName:contact.givenName,
+					fullName:contact.fullName,
+					id:contact.identifier,
+					imageDataAvailable:contact.imageDataAvailable,
+					picture:contact.imageDataAvailable?contact.thumbnailImageData:null,
+					organizationName:contact.organizationName,
+					phones:contact.phoneNumbers.map((phoneNumber)=>({
+						id:phoneNumber.identifier,countryCode:phoneNumber.countryCode,number:phoneNumber.digits
+					})),
+					emailAddresses:contact.emailAddresses.map((emailAddress)=>({
+						id:emailAddress.identifier,value:emailAddress.value
+					})),
+				})
+			}
+		})
+	}
 	componentWillMount(){
 		Contacts.getContacts( (error, contacts) =>  {
 			if (error) {
@@ -56,27 +77,7 @@ export default class App extends Component {
 			}
 			else {
 				// console.log(realm.objects('Contact').filtered(`id="${contacts[0].identifier}"`))
-				for (let contact of contacts){
-					if(realm.objects('Contact').filtered(`id="${contact.identifier}"`)&&realm.objects('Contact').length>0) break;
-					realm.write(()=>{
-						// realm.deleteAll()
-
-						realm.create('Contact',{
-							givenName:contact.givenName,
-							fullName:contact.fullName,
-							id:contact.identifier,
-							imageDataAvailable:contact.imageDataAvailable,
-							picture:contact.imageDataAvailable?contact.thumbnailImageData:null,
-							organizationName:contact.organizationName,
-							phones:contact.phoneNumbers.map((phoneNumber)=>({
-								id:phoneNumber.identifier,countryCode:phoneNumber.countryCode,number:phoneNumber.digits
-							})),
-							emailAddresses:contact.emailAddresses.map((emailAddress)=>({
-								id:emailAddress.identifier,value:emailAddress.value
-							})),
-						})
-					})
-				}
+				this.writeContactsToRealmAsync(contacts)
 			}
 		});
 	}
