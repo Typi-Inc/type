@@ -66,7 +66,7 @@ export default class Tube extends Component {
 						contentContainerStyle={{paddingBottom:90}}>
 						{
 							messages.map((message,i)=>{
-								return <Message message={message} key={i}/>
+								return  <Bubble index={i} message={message} key={i}/>
 							})
 						}
 					</ScrollView>
@@ -79,4 +79,3 @@ export default class Tube extends Component {
 	}
 }
 Object.assign(Tube.prototype, TimerMixin);
-// <Bubble message={message} key={i}/>

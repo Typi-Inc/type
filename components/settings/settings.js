@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  ScrollView,
+  Image,
   View
 } from 'react-native';
 import Calendar from 'react-native-calendar';

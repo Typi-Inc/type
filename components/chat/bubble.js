@@ -4,6 +4,7 @@ import {
   Text,
   View
 } from 'react-native';
+import IncrementalGroup from 'IncrementalGroup'
 export default class Bubble extends Component {
 
 	state={active:Math.random()>0.5};
@@ -11,6 +12,7 @@ export default class Bubble extends Component {
 	render() {
 		// let marginR=this.state.active?{marginLeft:15}:{marginRight:15}
 		return (
+		
 			<View style={{padding:4,paddingTop:6,overflow:'hidden',
 				paddingBottom:6,margin:6,marginRight:this.state.active?70:10,
 				marginLeft:this.state.active?10:70,

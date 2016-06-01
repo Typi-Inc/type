@@ -24,7 +24,8 @@ import ChatTitle from './navigation/chatTitle';
 import Settings from './settings/settings';
 import NewChat from './creation/newChat';
 import NewGroup from './creation/newGroup';
-import realm from './db'
+import realm from './db';
+
 import NewBroadcast from './creation/newBroadcast';
 var RCTStatusBarManager = require('NativeModules').StatusBarManager;
 let Contacts=ReactNative.NativeModules.RNUnifiedContacts
@@ -119,6 +120,8 @@ export default class App extends Component {
 	}
 
 	render() {
+		menu=<View style={{flex:1,...center}}><Text> hello</Text></View>
+
 		this.anim=this.anim || new Animated.Value(0)
 		return (
 		<View style={{flex:1}}>
