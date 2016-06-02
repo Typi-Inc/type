@@ -24,6 +24,10 @@ export const chatTitle$ = new Rx.Subject();
 
 export const chatTitle = (args) => chatTitle$.next(args);
 
+export const tube$ = new Rx.Subject();
+
+export const tube = (args) => tube$.next(args);
+
 
 
 

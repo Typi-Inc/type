@@ -14,7 +14,7 @@ import {
   LayoutAnimation,
   DeviceEventEmitter
 } from 'react-native';
-import {input$} from '../actions/uiactions';
+import {input$, tube} from '../actions/uiactions';
 import {keyboard,openAnimation,fast,veryFast} from '../animations';
 import dismissKeyboard from 'dismissKeyboard';
 import moment from 'moment';
@@ -38,7 +38,80 @@ export default class Input extends Component {
 		if(date < new Date) this.setState({date: new Date});
 		else this.setState({date: date});
 	}
+		pressTimer(){
+		if(this.state.goDown){
+			this.setState({goDown:false,showTime:true})
+			this.white&&this.white.setNativeProps({style:{height:226,bottom:-10}})
+			this.datePicker && this.datePicker.setNativeProps({style:{bottom:-10}})
+			dismissKeyboard()
+			LayoutAnimation.configureNext(keyboard);
+			this.main && this.main.setNativeProps({style:{bottom:213}})
+			this.props.show(226,this.addHeight)
+		}else{
+			this.textInput.focus()
+		}
+		
+
+	}
+	show(e){
+		this.setState({goDown:true})
+		this.keyboardHeight=e.endCoordinates.height
+		LayoutAnimation.configureNext(keyboard);
+		this.props.show(e.endCoordinates.height,this.addHeight)
+		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
+		this.white&&this.white.setNativeProps({style:{height:e.endCoordinates.height,bottom:0}})
+		this.main && this.main.setNativeProps({style:{bottom:e.endCoordinates.height}})	
+	}
+	keyboardIsUp(){
+		return this.state.goDown
+	}
+	dismissTimer(){
+		this.white&&this.white.setNativeProps({style:{height:10}})
+		LayoutAnimation.configureNext(keyboard);
+		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
+		this.props.hide(this.addHeight)
+		this.main && this.main.setNativeProps({style:{bottom:0}})
+		this.setState({goDown:true})
+	}
+	hide(e){
+		if(!this.state.goDown) return;
+		this.keyboardHeight=0
+		this.white&&this.white.setNativeProps({style:{height:0}})
+	  	LayoutAnimation.configureNext(keyboard);
+	    this.main && this.main.setNativeProps({style:{bottom:0}})
+	    this.props.hide(this.addHeight)
+	}
+	componentDidMount(){
+		this.sub=input$.subscribe((x)=>{
+			if(x.action='unsubscribe'){
+				this.unsubscribe()
+			}
+		});
+		this._keyboardWillShowSubscription= DeviceEventEmitter.addListener('keyboardWillShow', this.show.bind(this));
+	    this._keyboardWillHideSubscription= DeviceEventEmitter.addListener('keyboardWillHide', this.hide.bind(this));
+	    InteractionManager.runAfterInteractions(()=>{
+	    	// LayoutAnimation.configureNext(openAnimation)
+	    	this.setState({loading:false},()=>{
+	    		// this.setTimeout(()=>{let handle=ReactNative.findNodeHandle(this.datePicker1)
+		    	// 	UIManager.measure(handle,(x,y,width,height,pagex,pagey)=>{
+		    	// 		console.log(height,'this is height bayb')
+		    	// 	})
+	    		// },100)
+	    	})
+	    })
+	}
+	componentWillUnmount(){
+	  	this.unsubscribe()
+	}
+
+	unsubscribe(){
+		this._keyboardWillShowSubscription.remove()
+	  	this._keyboardWillHideSubscription.remove()
+	  	this.sub.unsubscribe()
+	}
 	render() {
+		this.addHeight=this.addHeight || 0
+		this.keyboardHeight=this.keyboardHeight || 0
 		if(this.state.loading) return <View/>
 		return (
 		<View>
@@ -87,7 +160,8 @@ export default class Input extends Component {
 								text: event.nativeEvent.text,
 								height: Math.min(event.nativeEvent.contentSize.height,129*k)
 	                        });
-							// InteractionManager.clearInteractionHandle(handle);
+	                        this.addHeight=this.state.height<25*k?0:this.state.height-30*k
+                        	this.props.setBottom(this.addHeight)
 
                       	}}
               		/>
@@ -122,72 +196,7 @@ export default class Input extends Component {
 		</View>
 		);
 	}
-	pressTimer(){
-		if(this.state.goDown){
-			this.setState({goDown:false,showTime:true})
-			this.white&&this.white.setNativeProps({style:{height:226,bottom:-10}})
-			this.datePicker && this.datePicker.setNativeProps({style:{bottom:-10}})
-			dismissKeyboard()
-			LayoutAnimation.configureNext(keyboard);
-			this.main && this.main.setNativeProps({style:{bottom:213}})
-		}else{
-			this.textInput.focus()
-		}
-		
 
-	}
-	show(e){
-		this.setState({goDown:true})
-		LayoutAnimation.configureNext(keyboard);
-		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
-		this.white&&this.white.setNativeProps({style:{height:e.endCoordinates.height,bottom:0}})
-		this.main && this.main.setNativeProps({style:{bottom:e.endCoordinates.height}})	
-	}
-	keyboardIsUp(){
-		return this.state.goDown
-	}
-	dismissTimer(){
-		this.white&&this.white.setNativeProps({style:{height:10}})
-		LayoutAnimation.configureNext(keyboard);
-		this.datePicker && this.datePicker.setNativeProps({style:{bottom:-230}})
-		
-		this.main && this.main.setNativeProps({style:{bottom:0}})
-		this.setState({goDown:true})
-	}
-	hide(e){
-		if(!this.state.goDown) return;
-		this.white&&this.white.setNativeProps({style:{height:0}})
-	  	LayoutAnimation.configureNext(keyboard);
-	    this.main && this.main.setNativeProps({style:{bottom:0}})
-	}
-	componentDidMount(){
-		this.sub=input$.subscribe((x)=>{
-			if(x.action='unsubscribe'){
-				this.unsubscribe()
-			}
-		});
-		this._keyboardWillShowSubscription= DeviceEventEmitter.addListener('keyboardWillShow', this.show.bind(this));
-	    this._keyboardWillHideSubscription= DeviceEventEmitter.addListener('keyboardWillHide', this.hide.bind(this));
-	    InteractionManager.runAfterInteractions(()=>{
-	    	// LayoutAnimation.configureNext(openAnimation)
-	    	this.setState({loading:false},()=>{
-	    		// this.setTimeout(()=>{let handle=ReactNative.findNodeHandle(this.datePicker1)
-		    	// 	UIManager.measure(handle,(x,y,width,height,pagex,pagey)=>{
-		    	// 		console.log(height,'this is height bayb')
-		    	// 	})
-	    		// },100)
-	    	})
-	    })
-	}
-	componentWillUnmount(){
-	  	this.unsubscribe()
-	}
-
-	unsubscribe(){
-		this._keyboardWillShowSubscription.remove()
-	  	this._keyboardWillHideSubscription.remove()
-	  	this.sub.unsubscribe()
-	}
 
 }
 Object.assign(Input.prototype, TimerMixin);

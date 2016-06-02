@@ -25,7 +25,7 @@ import Settings from './settings/settings';
 import NewChat from './creation/newChat';
 import NewGroup from './creation/newGroup';
 import realm from './db';
-
+import _ from 'lodash';
 import NewBroadcast from './creation/newBroadcast';
 var RCTStatusBarManager = require('NativeModules').StatusBarManager;
 let Contacts=ReactNative.NativeModules.RNUnifiedContacts
@@ -52,22 +52,24 @@ export default class App extends Component {
 	writeContactsToRealmAsync(contacts){
 		realm.write(()=>{
 			// realm.deleteAll()
+			// console.log(realm.objects('Contact').length)
 			for (let contact of contacts){
-				if(realm.objects('Contact').filtered(`id="${contact.identifier}"`)&&realm.objects('Contact').length>0) break;
-				realm.create('Contact',{
-					givenName:contact.givenName,
-					fullName:contact.fullName,
-					id:contact.identifier,
-					imageDataAvailable:contact.imageDataAvailable,
-					picture:contact.imageDataAvailable?contact.thumbnailImageData:null,
-					organizationName:contact.organizationName,
-					phones:contact.phoneNumbers.map((phoneNumber)=>({
-						id:phoneNumber.identifier,countryCode:phoneNumber.countryCode,number:phoneNumber.digits
-					})),
-					emailAddresses:contact.emailAddresses.map((emailAddress)=>({
-						id:emailAddress.identifier,value:emailAddress.value
-					})),
-				})
+				// console.log(realm.objects('Contact').filtered(`id="${contact.identifier}"`))
+				if(!_.isEmpty(realm.objects('Contact').filtered(`id="${contact.identifier}"`))) ;
+				else  realm.create('Contact',{
+						givenName:contact.givenName,
+						fullName:contact.fullName,
+						id:contact.identifier,
+						imageDataAvailable:contact.imageDataAvailable,
+						picture:contact.imageDataAvailable?contact.thumbnailImageData:null,
+						organizationName:contact.organizationName,
+						phones:contact.phoneNumbers.map((phoneNumber)=>({
+							id:phoneNumber.identifier,countryCode:phoneNumber.countryCode,number:phoneNumber.digits
+						})),
+						emailAddresses:contact.emailAddresses.map((emailAddress)=>({
+							id:emailAddress.identifier,value:emailAddress.value
+						})),
+					})
 			}
 		})
 	}

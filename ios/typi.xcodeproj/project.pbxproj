@@ -32,8 +32,9 @@
 		74808170BEAF48E8B28791E3 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86BE0714CF9E4CDF8B60DB04 /* FontAwesome.ttf */; };
 		79601EB15CE8470F8F0F8D54 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0065B711EEB4002A6363C86 /* EvilIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		985925241CF5745F000D1002 /* RNUnifiedContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985925231CF5745F000D1002 /* RNUnifiedContacts.swift */; };
-		985925261CF5746D000D1002 /* RNUnifiedContactsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 985925251CF5746D000D1002 /* RNUnifiedContactsBridge.m */; };
+		98387DD11D000391003DFD76 /* RNUnifiedContacts in Resources */ = {isa = PBXBuildFile; fileRef = 98387DD01D000391003DFD76 /* RNUnifiedContacts */; };
+		98387DD41D0003E1003DFD76 /* RNUnifiedContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98387DD31D0003E1003DFD76 /* RNUnifiedContacts.swift */; };
+		98387DD61D0003E5003DFD76 /* RNUnifiedContactsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 98387DD51D0003E5003DFD76 /* RNUnifiedContactsBridge.m */; };
 		A62FE2CA41ED4A0C888A5C6D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF9DE181C7BE4BB78ABDF521 /* Foundation.ttf */; };
 		CA6F7F8E37CD413AB1743CB0 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE543641599E4F09A118744C /* libRNVectorIcons.a */; };
 		DCF4BB4DA8494733905648CD /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 613BC685BB104B938C2827F7 /* libz.tbd */; };
@@ -173,9 +174,10 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		86BE0714CF9E4CDF8B60DB04 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		8E9CBC7F6A66468891A604C0 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		985925221CF57458000D1002 /* RNUnifiedContacts-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNUnifiedContacts-Bridging-Header.h"; sourceTree = "<group>"; };
-		985925231CF5745F000D1002 /* RNUnifiedContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNUnifiedContacts.swift; sourceTree = "<group>"; };
-		985925251CF5746D000D1002 /* RNUnifiedContactsBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNUnifiedContactsBridge.m; sourceTree = "<group>"; };
+		98387DD01D000391003DFD76 /* RNUnifiedContacts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RNUnifiedContacts; sourceTree = "<group>"; };
+		98387DD21D0003DD003DFD76 /* RNUnifiedContacts-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RNUnifiedContacts-Bridging-Header.h"; path = "RNUnifiedContacts/RNUnifiedContacts-Bridging-Header.h"; sourceTree = "<group>"; };
+		98387DD31D0003E1003DFD76 /* RNUnifiedContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNUnifiedContacts.swift; path = RNUnifiedContacts/RNUnifiedContacts.swift; sourceTree = "<group>"; };
+		98387DD51D0003E5003DFD76 /* RNUnifiedContactsBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNUnifiedContactsBridge.m; path = RNUnifiedContacts/RNUnifiedContactsBridge.m; sourceTree = "<group>"; };
 		A7B5180EA318461888F62A4E /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		BE543641599E4F09A118744C /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		C1C74784095641D5893DF59D /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -292,15 +294,16 @@
 		13B07FAE1A68108700A75B9A /* typi */ = {
 			isa = PBXGroup;
 			children = (
+				98387DD01D000391003DFD76 /* RNUnifiedContacts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				98387DD21D0003DD003DFD76 /* RNUnifiedContacts-Bridging-Header.h */,
+				98387DD31D0003E1003DFD76 /* RNUnifiedContacts.swift */,
+				98387DD51D0003E5003DFD76 /* RNUnifiedContactsBridge.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
-				985925221CF57458000D1002 /* RNUnifiedContacts-Bridging-Header.h */,
-				985925231CF5745F000D1002 /* RNUnifiedContacts.swift */,
-				985925251CF5746D000D1002 /* RNUnifiedContactsBridge.m */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = typi;
@@ -466,7 +469,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 730;
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -663,6 +666,7 @@
 				175072DFA5D3462AAA3104D9 /* Entypo.ttf in Resources */,
 				79601EB15CE8470F8F0F8D54 /* EvilIcons.ttf in Resources */,
 				74808170BEAF48E8B28791E3 /* FontAwesome.ttf in Resources */,
+				98387DD11D000391003DFD76 /* RNUnifiedContacts in Resources */,
 				A62FE2CA41ED4A0C888A5C6D /* Foundation.ttf in Resources */,
 				313F7587F6B54AF4AE10EBAF /* Ionicons.ttf in Resources */,
 				69D245BFD7854E7E876F632C /* MaterialIcons.ttf in Resources */,
@@ -703,9 +707,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				985925261CF5746D000D1002 /* RNUnifiedContactsBridge.m in Sources */,
+				98387DD61D0003E5003DFD76 /* RNUnifiedContactsBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				985925241CF5745F000D1002 /* RNUnifiedContacts.swift in Sources */,
+				98387DD41D0003E1003DFD76 /* RNUnifiedContacts.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -847,6 +851,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -896,6 +901,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

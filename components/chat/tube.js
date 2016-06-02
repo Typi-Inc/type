@@ -17,6 +17,7 @@ import Incremental from 'Incremental';
 import Spinner from 'react-native-spinkit';
 import Loading from '../utils/loading';
 import Message from './message';
+import {tube$} from '../actions/uiactions'
 export default class Tube extends Component {
 	state={clipped:false,loading:true};
 	componentDidMount(){
@@ -24,11 +25,27 @@ export default class Tube extends Component {
 			this.scroll&&this.scroll.setNativeProps({removeClippedSubviews:true})
 			this.setState({loading:false})
 		})
-	
-		
 	}
-	componentWillUnmount(){
+	handleScroll(e){
+		if (e.nativeEvent.contentOffset.y<0){
+			this.contentOffset=0
+		}else{
+			this.contentOffset=1
+		}
+	}
+	show(offset,h){
+		this.keyboardHeight=offset
+		this.scroll && this.scroll.setNativeProps({style:{bottom:offset+h},contentInset:{top:offset+h}})
+	}
+	hide(h){
+		this.keyboardHeight=0
+		this.scroll && this.scroll.setNativeProps({style:{bottom:h},contentInset:{top:h}})
 
+		// this.scroll && this.scroll.setNativeProps({contentInset:{top:h}})
+		if(this.contentOffset===0) this.scroll&&this.scroll.setNativeProps({contentOffset:{y:-20}})
+	}
+	setBottom(h){
+		this.scroll && this.scroll.setNativeProps({style:{bottom:this.keyboardHeight+h}})
 	}
 	
 	onTouchStart(){
@@ -43,22 +60,18 @@ export default class Tube extends Component {
 	_onDone(){
 		this.loading&&this.loading._onDone()
 	}
-
 	render() {
 		this.anim=this.anim || new Animated.Value(1)
 		this.anim1=this.anim1 || new Animated.Value(0)
-		// if(this.state.loading){
-		// 	return <View style={{flex:1,backgroundColor:'white',...center}}>
-		// 		<Text>Loading...</Text>
-		// 	</View>
-		// }
 		return (
 
 			<View style={{flex:1,backgroundColor:'white'}}>
 				<IncrementalGroup onDone={this._onDone.bind(this)} disabled={false}>
 					<ScrollView 
 						ref={el=>this.scroll=el}
-						// keyboardShouldPersistTaps={true}
+
+						scrollEventThrottle={100}
+						onScroll={this.handleScroll.bind(this)}
 						onTouchStart={this.onTouchStart.bind(this)}
 						onTouchMove={this.onTouchMove.bind(this)}
 						onTouchEnd={this.onTouchEnd.bind(this)}
@@ -71,7 +84,7 @@ export default class Tube extends Component {
 						}
 					</ScrollView>
 				</IncrementalGroup>
-				<Input ref={el=>this.input=el}/>
+				<Input show={this.show.bind(this)} hide={this.hide.bind(this)} setBottom={this.setBottom.bind(this)} ref={el=>this.input=el}/>
 				<Loading ref={el=>this.loading=el}/>
 			
 			</View>
