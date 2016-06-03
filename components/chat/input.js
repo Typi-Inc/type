@@ -163,6 +163,7 @@ export default class Input extends Component {
 	                        this.addHeight=this.state.height<25*k?0:this.state.height-30*k
                         	this.props.setBottom(this.addHeight)
 
+
                       	}}
               		/>
               		<TouchableOpacity><Text ref={el=>this.send=el} 

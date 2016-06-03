@@ -7,6 +7,7 @@ import {
   Animated,
   TouchableWithoutFeedback,
   ListView,
+  NavigatorIOS,
   View
 } from 'react-native';
 import TimerMixin from 'react-timer-mixin';
@@ -23,6 +24,7 @@ export default class List extends Component {
 	        })
 	}
 	componentWillMount(){
+		console.log('mounting',NavigatorIOS)
 		this.setTimeout(()=>this.scroll&&this.scroll.setNativeProps({removeClippedSubviews:true}),100)
 		this.setState({dataSource:this.state.dataSource.cloneWithRows(directs)})
 
@@ -31,7 +33,7 @@ export default class List extends Component {
 	// 	return false
 	// }
 	render() {
-		// console.log(WindowedListView)
+		console.log('here')
 		return (
 			<View style={{flex:1,backgroundColor:'white'}}>
 				<ListView

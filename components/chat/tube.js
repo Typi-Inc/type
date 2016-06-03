@@ -17,10 +17,12 @@ import Incremental from 'Incremental';
 import Spinner from 'react-native-spinkit';
 import Loading from '../utils/loading';
 import Message from './message';
-import {tube$} from '../actions/uiactions'
+import {tube$} from '../actions/uiactions';
+import dismissKeyboard from 'dismissKeyboard'
 export default class Tube extends Component {
 	state={clipped:false,loading:true};
 	componentDidMount(){
+
 		InteractionManager.runAfterInteractions(()=>{
 			this.scroll&&this.scroll.setNativeProps({removeClippedSubviews:true})
 			this.setState({loading:false})
@@ -61,6 +63,7 @@ export default class Tube extends Component {
 		this.loading&&this.loading._onDone()
 	}
 	render() {
+		this.setTimeout(()=>dismissKeyboard(),40)
 		this.anim=this.anim || new Animated.Value(1)
 		this.anim1=this.anim1 || new Animated.Value(0)
 		return (

@@ -68,10 +68,14 @@ export default class Discovery extends Component {
         });
     }
 	render() {
+        // this.setTimeout(()=>this.list.setNativeProps({pageSize:3}),50)
 		return (
 			<View style={{flex:1,backgroundColor:'blue'}}>
 			  <ListView
+                    ref={el=>this.list=el}
                 	// automaticallyAdjustContentInsets={true}
+                    pageSize={2}
+                    scrollRenderAheadDistance={1000}
                 	removeClippedSubviews={true}
                     dataSource = {this.state.dataSource}
                     style      = {{backgroundColor:'white'}}
@@ -89,8 +93,8 @@ export default class Discovery extends Component {
 		return <View style={{width:320*k,height:0.5,backgroundColor:TRANSPARENT_GREY}}/>
 	}
 	renderSectionHeader(section){
-		return <View key={section} style={{padding:10,backgroundColor:'rgb(245,245,245)'}}>
-		<Text style={{fontWeight:'bold',fontSize:16}}>{section}</Text></View>
+		return <IncrementalGroup disabled={section==='A'}><View key={section} style={{padding:10,backgroundColor:'rgb(245,245,245)'}}>
+		<Text style={{fontWeight:'bold',fontSize:16}}>{section}</Text></View></IncrementalGroup>
 	}
 }
 Object.assign(Discovery.prototype, TimerMixin);
