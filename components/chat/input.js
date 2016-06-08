@@ -14,6 +14,8 @@ import {
   LayoutAnimation,
   DeviceEventEmitter
 } from 'react-native';
+// // import SwipeableListView from 'SwipeableListView';
+// import WindowedListView from 'WindowedListView';
 import {input$, tube} from '../actions/uiactions';
 import {keyboard,openAnimation,fast,veryFast} from '../animations';
 import dismissKeyboard from 'dismissKeyboard';
@@ -94,7 +96,6 @@ export default class Input extends Component {
 	    	this.setState({loading:false},()=>{
 	    		// this.setTimeout(()=>{let handle=ReactNative.findNodeHandle(this.datePicker1)
 		    	// 	UIManager.measure(handle,(x,y,width,height,pagex,pagey)=>{
-		    	// 		console.log(height,'this is height bayb')
 		    	// 	})
 	    		// },100)
 	    	})
@@ -110,22 +111,22 @@ export default class Input extends Component {
 	  	this.sub.unsubscribe()
 	}
 	render() {
+		// console.log(SwipeableListView)
 		this.addHeight=this.addHeight || 0
 		this.keyboardHeight=this.keyboardHeight || 0
-		if(this.state.loading) return <View/>
+		// if(this.state.loading) return <View/>
 		return (
 		<View>
 			<View ref={el=>this.main=el} 
 				style={{position:'absolute',bottom:0,left:0,
 				backgroundColor:'transparent'}}>
-				<View style={{backgroundColor:APP_COLOR,padding:6, paddingRight:4,opacity:!this.state.showTime?0:1,
-					shadowOffset:{width:4,height:4},shadowOpacity:0.4,borderRadius:4,flexDirection:'row',...center,
-					alignSelf:'flex-start',margin:2,marginBottom:2}}>
+				<View style={{backgroundColor:GREEN,padding:6, paddingRight:4,opacity:!this.state.showTime?0:1,
+					shadowOffset:{width:4,height:4},shadowOpacity:0.4,borderRadius:2,flexDirection:'row',...center,
+					alignSelf:'flex-start',margin:4,marginBottom:2}}>
 					<Text style={{color:'white',fontSize:14}}>{moment(this.state.date).calendar()}</Text>
 					{this.state.goDown?<View style={{backgroundColor:'white',borderRadius:4,width:20,height:20,...center,marginLeft:6,paddingTop:2}}>
 						<TouchableOpacity style={{padding:6}} onPress={()=>this.setState({showTime:false,date:new Date()})}
-							><Icon name="ios-close" style={{backgroundColor:'transparent'}} 
-						
+						><Icon name="ios-close" style={{backgroundColor:'transparent'}} 
 						size={20} color={'black'} /></TouchableOpacity>
 					</View>
 
@@ -134,24 +135,24 @@ export default class Input extends Component {
 				</View>
 				<View ref={el=>this.wrapper=el} 
               		style={{backgroundColor:BACKGROUND_GREY,marginBottom:0,
-             	 	height:Math.max(53, (12*k+this.state.height)),borderTopWidth:1,
+             	 	height:Math.max(43, (12*k+this.state.height)),borderTopWidth:0.5,
               		flexDirection:'row',alignItems:'flex-end',justifyContent:'flex-start',
               		borderColor:BORDER_COLOR,width:320*k,padding:7,paddingLeft:0}}>
-              		<TouchableOpacity style={{padding:6,paddingBottom:5,...center}} onPress={this.pressTimer.bind(this)}>
-	              		{this.state.goDown?<Icon name="md-time" size={24} color={'gray'} />:
-	              		<Icon name="ios-keypad" size={25} color={'gray'} />}
+              		<TouchableOpacity style={{padding:7,paddingRight:6,paddingBottom:0,alignItems:'flex-end',justifyContent:'flex-end'}} onPress={this.pressTimer.bind(this)}>
+	              		{this.state.goDown?<Icon name="md-time" style={{alignSelf:'flex-end'}} size={25} color={'rgb(160,160,160)'} />:
+	              		<Icon name="ios-keypad" size={26} color={'rgb(160,160,160)'} />}
               		</TouchableOpacity>
               		<TextInput
               			multiline={true}
               			ref={el=>this.textInput=el}
               			placeholder={'Message'}
                     	placeholderTextColor={'rgb(160,160,160)'}
-                   	 	style={{height: Math.max(32, this.state.height+4*k),
-                    		fontSize:16,alignItems:'center',backgroundColor:'white',
-                      		borderColor: BORDER_COLOR, borderWidth:1,borderRadius:6,
+                   	 	style={{height: Math.max(30, this.state.height+4*k),marginBottom:2,
+                    		fontSize:15,alignItems:'center',backgroundColor:'white',
+                      		borderColor: 'rgb(210,210,210)', borderWidth:1,borderRadius:3,
                       		alignSelf:'center',
                       		width:/\S/.test(this.state.text)?238*k:273*k,
-                      		paddingLeft:5*k}}
+                      		paddingLeft:7}}
                       	// value={this.state.text}
                       	onChange={(event) => {
                        		// var handle = InteractionManager.createInteractionHandle();
@@ -167,7 +168,7 @@ export default class Input extends Component {
                       	}}
               		/>
               		<TouchableOpacity><Text ref={el=>this.send=el} 
-              			style={{marginLeft:5,marginBottom:7,marginRight:5,
+              			style={{marginLeft:5,marginBottom:2,marginRight:5,
               				color:APP_COLOR,fontWeight:'500',
               				fontSize:16,
               				opacity:/\S/.test(this.state.text)?1:0}}>Send</Text>
@@ -176,8 +177,9 @@ export default class Input extends Component {
               	</View>
           		
 			</View>
-			<View ref={el=>this.white=el} style={{position:'absolute',bottom:0,height:0,width:320*k,backgroundColor:BACKGROUND_GREY}}/>
 			
+			<View ref={el=>this.white=el} style={{position:'absolute',bottom:0,height:0,width:320*k,backgroundColor:BACKGROUND_GREY}}/>
+				{this.state.loading?null:
 					<View ref={el=>this.datePicker=el} style={{position:'absolute',bottom:-230,left:0,
 						paddingBottom:0*h,...center,paddingLeft:k>1?20*k:0,backgroundColor:BACKGROUND_GREY,paddingTop:0
 						// backgroundColor:'rgba(34,167,240,0.4)'
@@ -192,6 +194,8 @@ export default class Input extends Component {
 					       		onDateChange={this.onDateChange.bind(this)}
 					       	 />
 			    	</View>
+			    }
+					
 		    
 			
 		</View>

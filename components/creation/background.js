@@ -10,7 +10,6 @@ import {
 import {plusButtonPress$,plusButtonPress,cancelCreate} from '../actions/uiactions'
 export default class Background extends Component {
 	componentDidMount(){
-		console.log('mounted background')
 		this.sub=plusButtonPress$.subscribe(x=>{
 			if(x.action==='press'){
 				this.show()

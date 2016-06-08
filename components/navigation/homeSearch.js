@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import TimerMixin from 'react-timer-mixin';
+
 import {keyboard} from '../animations'
-import {homeSearch} from '../actions/uiactions'
+import {homeSearch,homeSearch$} from '../actions/uiactions'
 export default class HomeSearch extends Component {
 	state={text:''}
 	_onFocus(){
-		console.log('focusing')
 		homeSearch({value:'focusing'})
 		LayoutAnimation.configureNext(keyboard)
 		this.input.setNativeProps({style:{width:254*k,backgroundColor:'white',marginLeft:30*k}})
@@ -27,16 +28,27 @@ export default class HomeSearch extends Component {
 			this.input.blur()
 		}else{
 			LayoutAnimation.configureNext(keyboard)
-			this.input.setNativeProps({style:{width:240*k,backgroundColor:'rgb(238,238,238)',marginLeft:47*k}})
+			this.input.setNativeProps({style:{width:267*k,backgroundColor:'rgb(238,238,238)',marginLeft:10*k}})
 			this.cancelText.setNativeProps({style:{fontSize:0.001}})
 		}
 	}
+  componentWillMount(){
+    this.sub=homeSearch$.subscribe(x=>{
+      if(x.action==='blur'){
+        console.log('blir')
+        this.setTimeout(()=>this.input&&this.input.blur(),800)
+      }
+    })
+  }
+  componentWillUnmount(){
+    this.sub.unsubscribe()
+  }
   render() {
     return (
       <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginRight:28*k,}}>
 			<TextInput autoCorrect={false} ref={(e)=>this.input=e} clearButtonMode={'while-editing'}
-				style={{paddingLeft:10,marginTop:5,marginLeft:35,backgroundColor:'rgb(240,240,240)',marginLeft:47*k,
-					width:240*k,height:35,borderRadius:5,marginRight:5}}
+				style={{paddingLeft:10,marginTop:5,marginLeft:35,backgroundColor:'rgb(240,240,240)',marginLeft:10,
+					width:267*k,height:35,borderRadius:5,marginRight:5}}
 			   	value={this.state.text}
          		onFocus={this._onFocus.bind(this)}
                 onBlur={this.cancel.bind(this)}
@@ -59,3 +71,6 @@ export default class HomeSearch extends Component {
     );
   }
 }
+Object.assign(HomeSearch.prototype, TimerMixin);
+
+

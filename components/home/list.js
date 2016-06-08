@@ -12,10 +12,12 @@ import {
 } from 'react-native';
 import TimerMixin from 'react-timer-mixin';
 import Item from './item';
+import Loading from '../utils/loading';
 import {directs} from '../mock';
 import PlusButton from '../creation/plusButton';
 import Background from '../creation/background';
-// import WindowedListView from 'WindowedListView';
+import IncrementalGroup from 'IncrementalGroup';
+import SideMenu from 'react-native-side-menu';
 export default class List extends Component {
 
 	state={clippedSubviews:false,
@@ -24,29 +26,35 @@ export default class List extends Component {
 	        })
 	}
 	componentWillMount(){
-		console.log('mounting',NavigatorIOS)
 		this.setTimeout(()=>this.scroll&&this.scroll.setNativeProps({removeClippedSubviews:true}),100)
 		this.setState({dataSource:this.state.dataSource.cloneWithRows(directs)})
 
 	}
-	// shouldComponentUpdate(nextProps,nextState){
-	// 	return false
-	// }
+	_onDone(){
+		this.loading&&this.loading._onDone()
+	}
+
 	render() {
-		console.log('here')
 		return (
 			<View style={{flex:1,backgroundColor:'white'}}>
-				<ListView
-					automaticallyAdjustContentInsets={true}
-					// ref={el=>this.scroll=el}
-					renderSeparator={this.renderSeparator.bind(this)}
-					dataSource={this.state.dataSource}
-					renderRow={this.renderRow.bind(this)}
-				 	removeClippedSubviews={false}
-					/>
-			
-				<Background/>
-				<PlusButton/>
+				<IncrementalGroup onDone={this._onDone.bind(this)}  disabled={false}>
+					<View style={{flex:1,backgroundColor:'white'}}>
+						
+							<ListView
+								automaticallyAdjustContentInsets={true}
+								// ref={el=>this.scroll=el}
+								renderSeparator={this.renderSeparator.bind(this)}
+								dataSource={this.state.dataSource}
+								renderRow={this.renderRow.bind(this)}
+							 	removeClippedSubviews={false}
+								/>
+						
+							<Background/>
+							{this.props.disabled?null:<PlusButton/>}
+							
+					</View>
+				</IncrementalGroup>
+				<Loading delay={200} ref={el=>this.loading=el}/>
 			</View>
 		);
 	}

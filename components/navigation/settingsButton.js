@@ -7,7 +7,7 @@ import {
   Animated,
   View
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {homeSearch$,appNav} from '../actions/uiactions'
 export default class SettingsButton extends Component {
 	componentDidMount(){
@@ -39,7 +39,7 @@ export default class SettingsButton extends Component {
 			<TouchableOpacity onPress={this.openSettings.bind(this)}
 			  style={{marginTop:4,marginLeft:7,paddingTop:5,paddingBottom:9,paddingRight:7,paddingLeft:0,}}>
 
-				<Icon name="ios-settings" size={27} color={APP_COLOR} />
+				<Icon name="menu" size={27} color={APP_COLOR} />
 
 
 			</TouchableOpacity>

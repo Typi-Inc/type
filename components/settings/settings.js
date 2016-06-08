@@ -14,7 +14,6 @@ import IncrementalGroup from 'IncrementalGroup';
 import Loading from '../utils/loading'
 export default class Settings extends Component {
 	onDateSelect(date){
-		console.log(date)
 	}
 	_onDone(){
 		this.loading&&this.loading._onDone()

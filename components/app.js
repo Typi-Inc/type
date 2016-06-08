@@ -26,13 +26,16 @@ import NewChat from './creation/newChat';
 import NewGroup from './creation/newGroup';
 import realm from './db';
 import _ from 'lodash';
+import Calendar from './calendar/calendar';
+import CalendarTitle from './navigation/calendarTitle';
 import NewBroadcast from './creation/newBroadcast';
 var RCTStatusBarManager = require('NativeModules').StatusBarManager;
 let Contacts=ReactNative.NativeModules.RNUnifiedContacts
 let NavigationBarRouteMapper={
 	LeftButton(route, navigator, index, navState){
-		if(route.name==='home') return <Connect/>;
-		return <BackButton index={index} name={route.name}/>
+		if(route.name==='home') return null;
+		if(route.name==='calendar') return null;
+		return <BackButton  index={index} name={route.name}/>
 	},
 	RightButton(route, navigator, index, navState){
 		if(route.name==='home') return <SettingsButton/>;
@@ -40,9 +43,9 @@ let NavigationBarRouteMapper={
 		return null
 	},
 	Title(route, navigator, index, navState){
-		// console.log(route,navigator.getCurrentRoutes())
 		if(route.name==='home') return <HomeSearch/>;
-		else if(route.name==='chat') return <ChatTitle info={route.info}/>
+		else if(route.name==='chat') return <ChatTitle info={route.info}/>;
+		else if(route.name==='calendar') return <CalendarTitle/>;
 		return <Title info={route.info}/>
 	}
 }
@@ -52,9 +55,7 @@ export default class App extends Component {
 	writeContactsToRealmAsync(contacts){
 		realm.write(()=>{
 			// realm.deleteAll()
-			// console.log(realm.objects('Contact').length)
 			for (let contact of contacts){
-				// console.log(realm.objects('Contact').filtered(`id="${contact.identifier}"`))
 				if(!_.isEmpty(realm.objects('Contact').filtered(`id="${contact.identifier}"`))) ;
 				else  realm.create('Contact',{
 						givenName:contact.givenName,
@@ -68,18 +69,17 @@ export default class App extends Component {
 						})),
 						emailAddresses:contact.emailAddresses.map((emailAddress)=>({
 							id:emailAddress.identifier,value:emailAddress.value
-						})),
-					})
+					})),
+				})
 			}
 		})
 	}
 	componentWillMount(){
 		Contacts.getContacts( (error, contacts) =>  {
 			if (error) {
-				console.error(error);
+				// console.error(error);
 			}
 			else {
-				// console.log(realm.objects('Contact').filtered(`id="${contacts[0].identifier}"`))
 				this.writeContactsToRealmAsync(contacts)
 			}
 		});
@@ -89,12 +89,15 @@ export default class App extends Component {
 		this.sub=appNav$.subscribe(x=>{
 			if(x.nav==='appNav' && x.action==='push'){
 				// if(x.name==='chat')this.nav.replaceAtIndex({name:'home'},1)
-				// console.log('app nav push')
+				// this.nav.replacePrevious({name:'home'})
 				this.nav.push({name:x.name,info:x.info})
+				// this.props.toggle(false)
 			}else if(x.nav==='appNav'&& x.action==='pop'){
 				this.nav.pop()
+				// this.props.toggle(true)
 			}else if(x.nav==='appNav' && x.action==='popToTop'){
 				this.nav.popToTop()
+				// this.props.toggle(true)
 			}
 		})
 		this.sub1=plusButtonPress$.subscribe(x=>{
@@ -113,16 +116,13 @@ export default class App extends Component {
 	}
 	show(){
 		Animated.timing(this.anim,{toValue:1,duration:1}).start()
-
 	}
 	hide(){
 		plusButtonPress({action:'hide'})
 		cancelCreate({action:'cancel'})
-
 	}
-
 	render() {
-		menu=<View style={{flex:1,...center}}><Text> hello</Text></View>
+		// menu=<View style={{flex:1,...center}}><Text> hello</Text></View>
 
 		this.anim=this.anim || new Animated.Value(0)
 		return (
@@ -135,15 +135,18 @@ export default class App extends Component {
 					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
 					if(this.nav&&this.nav.getCurrentRoutes().length>2){
 						this.nav.replacePrevious({name:'home'})
+						// this.setTimeout(()=>{
+						// 	this.nav.immediatelyResetRouteStack([{name:'home'},{...this.nav.getCurrentRoutes()[2]}])
+						// },0)
 					}
 				}}
 				renderScene={this.renderApp.bind(this)}
-				style={{paddingTop:70,backgroundColor:'white'}}
+				style={{paddingTop:70,backgroundColor:'white',}}
 				navigationBar={
 					<Navigator.NavigationBar
 						ref={el=>this.navBar=el}
 			            routeMapper={NavigationBarRouteMapper}
-			            style={{height:70,backgroundColor:'white',borderBottomWidth:1,borderColor:BORDER_COLOR}}
+			            style={{height:70,backgroundColor:'white',borderBottomWidth:0.5,borderColor:'rgb(200,200,200)'}}
 			          />
 				}
 			/>
@@ -161,9 +164,10 @@ export default class App extends Component {
 		if(route.name==='discovery') return <Discovery/>;
 		else if(route.name==='settings') return <Settings/>;
 		else if(route.name==='chat') return <Chat showInput={true}/>;
-		else if(route.name==='newChat') return <NewChat/>;
+		else if(route.name==='newChat') return <List disabled={true}/>;
 		else if(route.name==='newGroup') return <NewGroup/>;
 		else if(route.name==='newBroadcast') return <NewBroadcast/>;
+		else if(route.name==='calendar') return <Calendar/>;
 		else if(route.name==='home') return <List/>;
 	}
 	configureScene(route,routeStack){

@@ -15,7 +15,7 @@ import Tube from '../chat/tube'
 import Loading from '../utils/loading'
 export default class MessageCalendar extends Component {
 	onDateSelect(date){
-		console.log(date)
+		// console.log(date)
 	}
 	_onDone(){
 		this.loading&&this.loading._onDone()

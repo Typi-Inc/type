@@ -16,17 +16,11 @@ import List from '../home/list';
 export default class Chat extends Component {
 	state={contacts:realm.objects('Contact')};
 	changeTab(obj){
-		// console.log(obj['i'])
 		chatTitle({activeTab:obj['i']})
 	}
-	componentWillMount(){
-		console.log(this.state.contacts.length)
 
-	}
 	render() {
 		let assem=this.state.contacts.filtered('givenName="Assem"')
-		// console.log('assem',assem)
-		// console.log(this.state.contacts)
 		return (
 			<View style={{flex:1,backgroundColor:'white'}}>
 				<ScrollableTabView

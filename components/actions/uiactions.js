@@ -28,6 +28,13 @@ export const tube$ = new Rx.Subject();
 
 export const tube = (args) => tube$.next(args);
 
+export const sideMenu$ = new Rx.Subject();
+
+export const sideMenu = (args) => sideMenu$.next(args);
+
+export const calendar$ = new Rx.Subject();
+
+export const calendar = (args) => calendar$.next(args);
 
 
 

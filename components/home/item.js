@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 // var Swipeout = require('react-native-swipeout')
-import {appNav } from '../actions/uiactions'
+import {appNav,homeSearch} from '../actions/uiactions'
 export default class Item extends Component {
  	componentWillMount(){
  		this.swipeoutBtns = [
@@ -28,6 +28,7 @@ export default class Item extends Component {
  	showTube(item){
  		appNav({action:'push',nav:'appNav',name:'chat',info:{title:this.props.item.toWhom.name,item:item}})
  		// appNav({action:'removeNav'})
+ 		homeSearch({action:'blur'})
  	}
 	render() {
 		return (
