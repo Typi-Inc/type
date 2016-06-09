@@ -49,7 +49,7 @@ let NavigationBarRouteMapper={
 		return <Title info={route.info}/>
 	}
 }
-import {appNav$,plusButtonPress$,plusButtonPress,cancelCreate} from './actions/uiactions'
+import {appNav$,plusButtonPress$,plusButtonPress,cancelCreate,calendar,sideMenu} from './actions/uiactions'
 export default class App extends Component {
 	state={};
 	writeContactsToRealmAsync(contacts){
@@ -87,6 +87,7 @@ export default class App extends Component {
 	componentDidMount(){
 
 		this.sub=appNav$.subscribe(x=>{
+			calendar({action:'unsubscribe'})
 			if(x.nav==='appNav' && x.action==='push'){
 				// if(x.name==='chat')this.nav.replaceAtIndex({name:'home'},1)
 				// this.nav.replacePrevious({name:'home'})
@@ -132,6 +133,11 @@ export default class App extends Component {
 				configureScene={this.configureScene.bind(this)}
 				// onWillFocus={(e)=>dismissKeyboard()}
 				onDidFocus={(e)=>{
+					if(e.name!=='home'){
+						sideMenu({action:'disableGesture'})
+					}else{
+						sideMenu({action:'enableGesture'})
+					}
 					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
 					if(this.nav&&this.nav.getCurrentRoutes().length>2){
 						this.nav.replacePrevious({name:'home'})
@@ -174,10 +180,10 @@ export default class App extends Component {
 		if(route.name==='newChat'||route.name==='newGroup'||route.name==='newBroadcast') 
 			return {...Navigator.SceneConfigs.FloatFromBottom, gestures: {}};
 		if(route.name==='settings') return {...Navigator.SceneConfigs.PushFromRight, gestures: {}};
-		// else if (route.name==='chat') return Navigator.SceneConfigs.HorizontalSwipeJump
+		else if (route.name==='chat') return {...Navigator.SceneConfigs.PushFromRight, defaultTransitionVelocity:5}
 
 		// else if (route.name=='imageViewer') return Navigator.SceneConfigs.FadeAndroid
-		// else if(route.name==='discovery') return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
+		else if(route.name==='calendar') return {...Navigator.SceneConfigs.HorizontalSwipeJumpFromRight, gestures: {},defaultTransitionVelocity:7};
 		return Navigator.SceneConfigs.PushFromRight;
 	}
 }

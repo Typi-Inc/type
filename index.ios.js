@@ -38,18 +38,28 @@ class typi extends Component {
   componentWillMount(){
   	this.sub=sideMenu$.subscribe(x=>{
   		if(x.action==='close'){
-  			this.setState({isOpen:false})
-  		}
+  			// this.setState({isOpen:false})
+        this.sideMenu.openMenu(false)
+  		}else if(x.action==='open'){
+        // this.setState({isOpen:true})
+        this.sideMenu.openMenu(true)
+      }
+      else if(x.action==='disableGesture'){
+        if(!this.state.disableGestures) this.setState({disableGestures:true})
+      }else if(x.action==='enableGesture'){
+        if(this.state.disableGestures) this.setState({disableGestures:false})
+      }
   	})
   }
   render() {
 	let menu=<Menu/>
 
     return (
-	<SideMenu isOpen={this.state.isOpen} edgeHitWidth={100} openMenuOffset={250*k}
+	<SideMenu ref={(el)=>this.sideMenu=el}
+   isOpen={this.state.isOpen} edgeHitWidth={100} openMenuOffset={250*k}
 	 	bounceBackOnOverdraw={false}
 	 	onChange={(value)=>{
-	 		StatusBar.setHidden(value, 'slide') 
+	 		// StatusBar.setHidden(value, 'slide') 
 	 	}}
 		disableGestures={this.state.disableGestures} menuPosition={'right'} menu={menu}>
 

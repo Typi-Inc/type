@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {homeSearch$,appNav} from '../actions/uiactions'
+import {homeSearch$,appNav,sideMenu} from '../actions/uiactions'
 export default class SettingsButton extends Component {
 	componentDidMount(){
 		this.sub=homeSearch$.subscribe(x=>{
@@ -29,7 +29,9 @@ export default class SettingsButton extends Component {
 		Animated.timing(this.anim,{toValue:1,duration:200}).start()
 	}
 	openSettings(){
-		appNav({nav:'appNav',action:'push',info:{title:'Settings'},name:'settings'})
+		console.log('open settings')
+		sideMenu({action:'open'})
+		// appNav({nav:'appNav',action:'push',info:{title:'Settings'},name:'settings'})
 	}
 	render() {
 		this.anim=this.anim || new Animated.Value(0)

@@ -55,13 +55,7 @@ export let directs=[
 export let messages=[{
 	text:'let s sing a funny little song and have a greate weekend '
 },
-{text:'sup'},
-{
-	text:'good'
-},
-{
-	text:'are you down for movies'
-},
+
 {
 	text:`Its big,
 It’s warm,                                                    

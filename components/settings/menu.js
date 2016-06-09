@@ -36,28 +36,25 @@ export default class Menu extends Component {
 						</View>
 					</TouchableOpacity>
 					<View style={{backgroundColor:'#383737',width:250*k,height:2}}/>
-						<TouchableOpacity onPress={this.visitCalendar.bind(this)} style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:20}}>
+						<TouchableOpacity onPress={this.visitCalendar.bind(this)} style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
 						<View style={{flexDirection:'row',...center}}>
-							<MDIcon name="perm-contact-calendar" size={28} color={APP_COLOR} />
-							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:11}}>Calendar of the future</Text>
-
+							<MDIcon name="perm-contact-calendar" size={27} color={APP_COLOR} />
+							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:9}}>Calendar of the future</Text>
 						</View>
 					</TouchableOpacity>
 					<View style={{backgroundColor:'#383737',width:250*k,height:2}}/>
-					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:20}}>
+					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
 						<View style={{flexDirection:'row',...center}}>
 							<Icon name="md-star-outline" size={28} color={'#f8e71c'} />
 							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:10}}>Starred items</Text>
-
 						</View>
 					</TouchableOpacity>
 					<View style={{backgroundColor:'#383737',width:250*k,height:2}}/>
 
-					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:20}}>
+					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
 						<View style={{flexDirection:'row',...center}}>
 							<MDIcon name="notifications-none" size={27} color={ORANGE} />
 							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:10}}>Notifications</Text>
-
 						</View>
 					</TouchableOpacity>
 
@@ -65,7 +62,7 @@ export default class Menu extends Component {
 
 				
 
-					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:20}}>
+					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
 						<View style={{flexDirection:'row',...center}}>
 							<Icon name="md-share" size={28} color={GREEN} />
 							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:10}}>Share with friends</Text>
