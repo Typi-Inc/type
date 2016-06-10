@@ -13,6 +13,7 @@ import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-v
 import Tube from './tube';
 import {chatTitle} from '../actions/uiactions';
 import List from '../home/list';
+import StarredItems from '../settings/starredItems';
 export default class Chat extends Component {
 	state={contacts:realm.objects('Contact')};
 	changeTab(obj){
@@ -30,10 +31,7 @@ export default class Chat extends Component {
 					renderTabBar={() => <View/>}
 				>
 		        	<Tube showInput={true} tabLabel="Chat" />
-		      		<View style={{flex:1,backgroundColor:TRANSPARENT_GREY,...center}} tabLabel="Future">
-		      			{!_.isEmpty(assem)?<Image style={{width:100,height:100}} 
-		      				source={{uri:'data:image/png;base64,'+assem[1].picture,isStatic:true}}/>:null}
-		      		</View>
+		      		<StarredItems tabLabel="Future"/>
 		   	 </ScrollableTabView>
 		    </View>
 		);

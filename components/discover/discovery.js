@@ -67,10 +67,16 @@ export default class Discovery extends Component {
         	loaded:true
         });
     }
+    _onDone(){
+        this.loading&&this.loading._onDone()
+    }
+
 	render() {
         // this.setTimeout(()=>this.list.setNativeProps({pageSize:3}),50)
 		return (
 			<View style={{flex:1,backgroundColor:'blue'}}>
+            <IncrementalGroup onDone={this._onDone.bind(this)}  disabled={false}>
+
 			  <ListView
                     ref={el=>this.list=el}
                 	// automaticallyAdjustContentInsets={true}
@@ -83,6 +89,8 @@ export default class Discovery extends Component {
                     renderSectionHeader = {this.renderSectionHeader.bind(this)}
                     renderSeparator={this.renderSeparator.bind(this)}
                 />
+                </IncrementalGroup>
+                <Loading delay={200} ref={el=>this.loading=el}/>
             </View>
 		);
 	}

@@ -182,7 +182,7 @@ export default class App extends Component {
 
 	}
 	configureScene(route,routeStack){
-		if(route.name==='newChat'||route.name==='newGroup'||route.name==='newBroadcast') 
+		if(route.name==='newChat'||route.name==='newGroup'||route.name==='discovery') 
 			return {...Navigator.SceneConfigs.FloatFromBottom, gestures: {}};
 		// if(route.name==='settings') return {...Navigator.SceneConfigs.PushFromRight, gestures: {}};
 		else if (route.name==='chat') return {...Navigator.SceneConfigs.PushFromRight, defaultTransitionVelocity:5}

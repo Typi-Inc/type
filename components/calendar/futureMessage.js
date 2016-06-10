@@ -43,8 +43,9 @@ export default class FutureMessage extends Component {
 
 
 				<CustomBubble message={message} color={this.props.starred?APP_COLOR:GREEN} textColor={'white'}/>
+				{this.props.starred?<Text style={{marginLeft:15,marginTop:5,color:'rgb(120,120,120)'}}>Date of delivery 12/04/2017</Text>:null}
 
-
+				<View style={{margin:20,marginTop:10,height:2,width:320*k,backgroundColor:'rgb(220,220,220)'}}/>
 
 
 

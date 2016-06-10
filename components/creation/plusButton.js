@@ -46,7 +46,7 @@ export default class PlusButton extends Component {
 		this.clean()
 	}
 	broadcast(){
-		appNav({action:'push',nav:'appNav',name:'newBroadcast',info:{title:'New broadcast'}})
+		appNav({action:'push',nav:'appNav',name:'discovery',info:{title:'Connect'}})
 		this.clean()
 	}
 	dismiss(){
@@ -85,9 +85,9 @@ export default class PlusButton extends Component {
 						backgroundColor:ORANGE,...center,
 						height:55,width:55,borderRadius:55/2}}>
 						
-						<Animated.Image source={{uri:'broadcast',isStatic:true}} style={{
-							height:20,
-							width:20,
+						<Animated.Image source={{uri:'invite',isStatic:true}} style={{
+							height:16,
+							width:19,
 
 						}}/>
 					</Animated.View>
