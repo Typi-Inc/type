@@ -20,7 +20,19 @@ export default class Menu extends Component {
 	}
 	visitCalendar(){
 		this.setTimeout(()=>sideMenu({action:'close'}),200)
-		appNav({nav:'appNav',action:'push',name:'calendar',info:{title:'Connect'}})
+		appNav({nav:'appNav',action:'push',name:'calendar',info:{title:'Calendar'}})
+	}
+	visitNotifications(){
+		this.setTimeout(()=>sideMenu({action:'close'}),100)
+		appNav({nav:'appNav',action:'push',name:'notifications',info:{title:'Notifications'}})
+	}
+	visitSettings(){
+		this.setTimeout(()=>sideMenu({action:'close'}),100)
+		appNav({nav:'appNav',action:'push',name:'settings',info:{title:'Settings'}})
+	}
+	visitStarred(){
+		this.setTimeout(()=>sideMenu({action:'close'}),100)
+		appNav({nav:'appNav',action:'push',name:'starred',info:{title:'Starred items'}})
 	}
 	render() {
 		return (
@@ -39,11 +51,11 @@ export default class Menu extends Component {
 						<TouchableOpacity onPress={this.visitCalendar.bind(this)} style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
 						<View style={{flexDirection:'row',...center}}>
 							<MDIcon name="perm-contact-calendar" size={27} color={APP_COLOR} />
-							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:9}}>Calendar of the future</Text>
+							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:9}}>Calendar</Text>
 						</View>
 					</TouchableOpacity>
 					<View style={{backgroundColor:'#383737',width:250*k,height:2}}/>
-					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
+					<TouchableOpacity  onPress={this.visitStarred.bind(this)}style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
 						<View style={{flexDirection:'row',...center}}>
 							<Icon name="md-star-outline" size={28} color={'#f8e71c'} />
 							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:10}}>Starred items</Text>
@@ -51,7 +63,7 @@ export default class Menu extends Component {
 					</TouchableOpacity>
 					<View style={{backgroundColor:'#383737',width:250*k,height:2}}/>
 
-					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
+					<TouchableOpacity onPress={this.visitNotifications.bind(this)} style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
 						<View style={{flexDirection:'row',...center}}>
 							<MDIcon name="notifications-none" size={27} color={ORANGE} />
 							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:10}}>Notifications</Text>
@@ -62,10 +74,10 @@ export default class Menu extends Component {
 
 				
 
-					<TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
+					<TouchableOpacity onPress={this.visitSettings.bind(this)} style={{flex:1,justifyContent:'center',alignItems:'flex-start',paddingLeft:14}}>
 						<View style={{flexDirection:'row',...center}}>
-							<Icon name="md-share" size={28} color={GREEN} />
-							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:10}}>Share with friends</Text>
+							<Icon name="ios-settings" size={28} color={GREEN} />
+							<Text style={{fontSize:18,fontWeight:'400',color:'white',marginLeft:10,marginBottom:4}}>Settings</Text>
 
 						</View>
 					</TouchableOpacity>

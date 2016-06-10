@@ -4,32 +4,47 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  Switch,
   ScrollView,
-  Image,
-  NavigatorIOS,
   View
 } from 'react-native';
-import MessageCalendar from './messageCalendar';
-import IncrementalGroup from 'IncrementalGroup';
-import Loading from '../utils/loading'
 export default class Settings extends Component {
-	onDateSelect(date){
-	}
-	_onDone(){
-		this.loading&&this.loading._onDone()
-	}
-
+	state={chatSwitch:true,groupSwitch:true,previewSwitch:true,taskSwitch:true}
 	render() {
-		let MyView=<View style={{flex:1,backgroundColor:'blue'}}/>
 		return (
-			<NavigatorIOS
-			style={{flex:1}} navigationBarHidden
-		      initialRoute={{
-		        component: MessageCalendar,
-		        title: 'My View Title',
-		        passProps: { myProp: 'foo' },
-		      }}
-		    />
+			<View style={{flex:1,backgroundColor:'rgb(240,240,240)'}}>
+				<ScrollView>
+
+				<View style={{paddingLeft:15,backgroundColor:'white',marginTop:40}}>
+						<View style={{height:47,flexDirection:'row',width:320*k,paddingRight:25,alignItems:'center',justifyContent:'space-between'}}>
+							<Text style={{fontSize:16}}>Account Settings</Text>
+							
+
+						</View>
+					</View>
+	
+					<View style={{paddingLeft:15,backgroundColor:'white',marginTop:40}}>
+						<View style={{height:47,flexDirection:'row',width:320*k,paddingRight:25,alignItems:'center',justifyContent:'space-between'}}>
+							<Text style={{fontSize:16}}>Share with Friends</Text>
+							
+
+						</View>
+					</View>
+
+					<View style={{paddingLeft:15,backgroundColor:'white',marginTop:40}}>
+						<View style={{height:47,flexDirection:'row',width:320*k,paddingRight:25,alignItems:'center',justifyContent:'space-between'}}>
+							<Text style={{fontSize:16}}>About Typi</Text>
+							
+
+						</View>
+					</View>
+
+
+
+				</ScrollView>
+
+			</View>
+			
 		);
 	}
 }

@@ -104,17 +104,27 @@ export default class Input extends Component {
 	componentWillUnmount(){
 	  	this.unsubscribe()
 	}
-
 	unsubscribe(){
 		this._keyboardWillShowSubscription.remove()
 	  	this._keyboardWillHideSubscription.remove()
 	  	this.sub.unsubscribe()
+	}
+	dateToDisplay(date){
+		let d=moment(date)
+		console.log(d.diff(moment(),'days'))
+		if(d.diff(moment(),'days')>3){
+			// console.log('date is here ',d.format('ddd D MMM h:m A'))
+			return d.format('dddd h:mm A, D MMMM')
+		}else{
+			return d.calendar()
+		}
 	}
 	render() {
 		// console.log(SwipeableListView)
 		this.addHeight=this.addHeight || 0
 		this.keyboardHeight=this.keyboardHeight || 0
 		// if(this.state.loading) return <View/>
+		let date=this.dateToDisplay(this.state.date)
 		return (
 		<View>
 			<View ref={el=>this.main=el} 
@@ -123,15 +133,13 @@ export default class Input extends Component {
 				<View style={{backgroundColor:GREEN,padding:6, paddingRight:4,opacity:!this.state.showTime?0:1,
 					shadowOffset:{width:4,height:4},shadowOpacity:0.4,borderRadius:2,flexDirection:'row',...center,
 					alignSelf:'flex-start',margin:4,marginBottom:2}}>
-					<Text style={{color:'white',fontSize:14}}>{moment(this.state.date).calendar()}</Text>
+					<Text style={{color:'white',fontSize:14}}>{date}</Text>
 					{this.state.goDown?<View style={{backgroundColor:'white',borderRadius:4,width:20,height:20,...center,marginLeft:6,paddingTop:2}}>
 						<TouchableOpacity style={{padding:6}} onPress={()=>this.setState({showTime:false,date:new Date()})}
 						><Icon name="ios-close" style={{backgroundColor:'transparent'}} 
 						size={20} color={'black'} /></TouchableOpacity>
 					</View>
-
 						:null}
-					
 				</View>
 				<View ref={el=>this.wrapper=el} 
               		style={{backgroundColor:BACKGROUND_GREY,marginBottom:0,

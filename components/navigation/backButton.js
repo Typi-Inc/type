@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native';
 import TimerMixin from 'react-timer-mixin';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import dismissKeyboard from 'dismissKeyboard'
 import {homeSearch$,appNav,input} from '../actions/uiactions'
@@ -27,11 +28,9 @@ export default class BackButton extends Component {
 	render() {
 		return (
 			<TouchableOpacity onPress={this.back.bind(this)}
-			 style={{marginTop:3,paddingTop:9,paddingBottom:9,padding:9,flexDirection:'row',...center}}>
-				<Image style={{width:11,
-					height:19
-				}} source={{uri:'arrowBack',isStatic:true}}/>
-				{this.props.name==='chat'?<Text style={{color:APP_COLOR,fontSize:17,marginLeft:5}}>Chats</Text>:null}
+			 style={{marginBottom:1,paddingTop:9,paddingBottom:9,padding:9,flexDirection:'row',...center}}>
+				<Icon  name="ios-arrow-back" size={28} color={APP_COLOR} />
+				{this.props.name==='chat'?<Text style={{color:APP_COLOR,fontSize:17,marginLeft:7,marginBottom:3}}>Chats</Text>:null}
 			</TouchableOpacity>
 		);
   }

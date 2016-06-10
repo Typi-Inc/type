@@ -37,7 +37,7 @@ export default class Calendar extends Component {
 	_onScroll(e){
 		if(this.state.dates.length>600) return;
 		let last=this.state.dates[this.state.dates.length-1].clone().add(1,'days');
-		let result=this.getDates(last,last.clone().add(6,'days'));	
+		let result=this.getDates(last,last.clone().add(16,'days'));	
 		this.setState({dates:update(this.state.dates,{$push:result})})
 	}
 	selectActiveDay(date){
@@ -74,19 +74,13 @@ export default class Calendar extends Component {
 
 					</ScrollView>
 				</View>
-				<View style={{flex:5.85,}}>
+				<View style={{flex:5.85,backgroundColor:'rgb(255,255,255)'}}>
 					<ScrollView>
 
 						<FutureMessage/>
 						<FutureMessage/>
 						<FutureMessage/>
-						<FutureMessage/>
-
-						<FutureMessage/>
-						<FutureMessage/>
-						<FutureMessage/>
-						<FutureMessage/>
-						<FutureMessage/>
+						
 						
 
 					</ScrollView>

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
   Image
 } from 'react-native';
 import moment from 'moment';
@@ -17,23 +18,31 @@ export default class FutureMessage extends Component {
 	render() {
 		return (
 			
-			<View style={{backgroundColor:'white',marginTop:7}}>
+			<View style={{marginTop:7}}>
 				<View style={{flexDirection:'row',alignItems:'center',width:320*k,justifyContent:'space-between'}}>
 					<View style={{alignItems:'center',flexDirection:'row'}}>
 						<Image source={{uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZtkLkOpnlyOMnP0eUbOi8Vn-lG1xmkeiwBxudHXdcok07ALnL'}}
-						 style={{margin:5,height:50,width:50,borderRadius:25}}/>
-						<Text style={{margin:5,fontSize:15,}}>Mellisa Lauren</Text>
+						 style={{margin:5,height:40,width:40,borderRadius:20}}/>
+						<Text style={{margin:5,fontSize:17,}}>Mellisa Lauren</Text>
 					</View>
 
-					<Text style={{margin:5,fontSize:12,color:'rgb(120,120,120)',marginRight:10}}>05/07/2017</Text>
+					<View style={{flexDirection:'row'}}>
+						{this.props.starred?null:
+							<TouchableOpacity style={{padding:10,marginRight:15,}}>
+								<Icon name="md-create" size={20} color={APP_COLOR} />
+							</TouchableOpacity>
+						}
+						<TouchableOpacity style={{padding:10,marginRight:10,}}>
+							<Icon name="md-trash" size={22} color={RED} />
+						</TouchableOpacity>
+
+					</View>
 
 
 				</View>
 
 
-				<View>
-					<CustomBubble message={message} color={GREEN} textColor={'white'}/>
-				</View>
+				<CustomBubble message={message} color={this.props.starred?APP_COLOR:GREEN} textColor={'white'}/>
 
 
 

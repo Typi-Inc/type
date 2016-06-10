@@ -26,6 +26,8 @@ import NewChat from './creation/newChat';
 import NewGroup from './creation/newGroup';
 import realm from './db';
 import _ from 'lodash';
+import Notifications from './settings/notifications';
+import StarredItems from './settings/starredItems';
 import Calendar from './calendar/calendar';
 import CalendarTitle from './navigation/calendarTitle';
 import NewBroadcast from './creation/newBroadcast';
@@ -175,15 +177,19 @@ export default class App extends Component {
 		else if(route.name==='newBroadcast') return <NewBroadcast/>;
 		else if(route.name==='calendar') return <Calendar/>;
 		else if(route.name==='home') return <List/>;
+		else if(route.name==='notifications') return <Notifications/>;
+		else if(route.name==='starred') return <StarredItems/>;
+
 	}
 	configureScene(route,routeStack){
 		if(route.name==='newChat'||route.name==='newGroup'||route.name==='newBroadcast') 
 			return {...Navigator.SceneConfigs.FloatFromBottom, gestures: {}};
-		if(route.name==='settings') return {...Navigator.SceneConfigs.PushFromRight, gestures: {}};
+		// if(route.name==='settings') return {...Navigator.SceneConfigs.PushFromRight, gestures: {}};
 		else if (route.name==='chat') return {...Navigator.SceneConfigs.PushFromRight, defaultTransitionVelocity:5}
 
 		// else if (route.name=='imageViewer') return Navigator.SceneConfigs.FadeAndroid
-		else if(route.name==='calendar') return {...Navigator.SceneConfigs.HorizontalSwipeJumpFromRight, gestures: {},defaultTransitionVelocity:7};
+		else if(route.name==='calendar'||route.name==='notifications'||route.name==='settings' || route.name==='starred')
+			return {...Navigator.SceneConfigs.HorizontalSwipeJumpFromRight, gestures: {},defaultTransitionVelocity:7};
 		return Navigator.SceneConfigs.PushFromRight;
 	}
 }
