@@ -26,6 +26,8 @@ import NewChat from './creation/newChat';
 import NewGroup from './creation/newGroup';
 import realm from './db';
 import _ from 'lodash';
+import Profile from './profile/profile';
+import EditProfile from './profile/editProfile';
 import Notifications from './settings/notifications';
 import StarredItems from './settings/starredItems';
 import Calendar from './calendar/calendar';
@@ -141,7 +143,7 @@ export default class App extends Component {
 						sideMenu({action:'enableGesture'})
 					}
 					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
-					if(this.nav&&this.nav.getCurrentRoutes().length>2){
+					if(this.nav&&this.nav.getCurrentRoutes().length>2&&e.name!=='editProfile'){
 						this.nav.replacePrevious({name:'home'})
 						// this.setTimeout(()=>{
 						// 	this.nav.immediatelyResetRouteStack([{name:'home'},{...this.nav.getCurrentRoutes()[2]}])
@@ -179,6 +181,8 @@ export default class App extends Component {
 		else if(route.name==='home') return <List/>;
 		else if(route.name==='notifications') return <Notifications/>;
 		else if(route.name==='starred') return <StarredItems/>;
+		else if(route.name==='profile') return <Profile/>;
+		else if(route.name==='editProfile') return <EditProfile/>;
 
 	}
 	configureScene(route,routeStack){

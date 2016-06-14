@@ -7,6 +7,7 @@ import {
   View,
   Animated
 } from 'react-native';
+
 import Spinner from 'react-native-spinkit';
 export default class Loading extends Component {
 	static defaultProps={delay:100};

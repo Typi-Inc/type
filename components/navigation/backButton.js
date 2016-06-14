@@ -16,6 +16,10 @@ export default class BackButton extends Component {
 
 	back(){
 		dismissKeyboard()
+		if(this.props.name==='editProfile'||this.props.name==='profile'){
+			appNav({nav:'appNav',action:'pop'})
+			return;
+		}
 		if(this.props.index>1){
 			appNav({nav:'appNav',action:'popToTop'})
 		}else appNav({nav:'appNav',action:'pop'})

@@ -16,7 +16,7 @@ import MDIcon from 'react-native-vector-icons/MaterialIcons';
 export default class Menu extends Component {
 	visitProfile(){
 		this.setTimeout(()=>sideMenu({action:'close'}),200)
-		appNav({nav:'appNav',action:'push',name:'discovery',info:{title:'Connect'}})
+		appNav({nav:'appNav',action:'push',name:'profile',info:{title:'Profile'}})
 	}
 	visitCalendar(){
 		this.setTimeout(()=>sideMenu({action:'close'}),200)
