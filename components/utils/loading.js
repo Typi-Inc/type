@@ -22,7 +22,7 @@ export default class Loading extends Component {
 				bottom:0,top:this.anim1.interpolate({inputRange:[0,1],outputRange:[0,700]}),
 				position:'absolute',left:0,
 				width:320*k,
-				opacity:this.anim,backgroundColor:'white',...center
+				opacity:this.anim,backgroundColor:this.props.transparent?'rgba(220,220,220,.5)':'white',...center
 				}}>
 				<Spinner ref={el=>this.spinner=el}
 					style={{marginBottom:50}} isVisible={true} 

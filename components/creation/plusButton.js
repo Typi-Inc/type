@@ -60,63 +60,67 @@ export default class PlusButton extends Component {
 		this.anim3=this.anim3 || new Animated.Value(0)
 		return (
 			<View>
-			<TouchableWithoutFeedback onPress={()=>{}}>
-				<Animated.View style={{shadowOpacity:this.anim1.interpolate({inputRange:[0,1],outputRange:[0,0.5]}),
-					shadowOffset:{width:4,height:4},}}>
-				<Animated.Image source={{uri:'http://a57.foxnews.com/media2.foxnews.com/BrightCove/694940094001/2016/05/09/876/493/694940094001_4885965796001_9cc88214-5962-41e4-a293-56e1f55dcc00.jpg?ve=1&tl=1'}} 
-					style={{
-					height:55,
-					width:55,
-					borderRadius:55/2,
-					position:'absolute',
-					bottom:this.anim1.interpolate({inputRange:[0,1],outputRange:[14,230]}),
-					right:17,
-					opacity:this.anim1.interpolate({inputRange:[0,.5,1],outputRange:[0,0,1]}),
-				}}/>
-				</Animated.View>
-				</TouchableWithoutFeedback>
 				<TouchableWithoutFeedback onPress={this.broadcast.bind(this)}>
-					<Animated.View style={{position:'absolute',
-						bottom:this.anim1.interpolate({inputRange:[0,1],outputRange:[14,160]}),
-						right:17,
-						opacity:this.anim1.interpolate({inputRange:[0,.2,1],outputRange:[0,1,1]}),
+					<Animated.View
+						style={{position:'absolute',flexDirection:'row',alignItems:'center',
+							bottom:this.anim1.interpolate({inputRange:[0,1],outputRange:[-50,160]}),
+							right:17,
+						}}
+					>
+						<Animated.View style={{marginRight:20,padding:6,backgroundColor:'white',
+						opacity:this.anim1.interpolate({inputRange:[0,.8,1],outputRange:[0,0,1]}),
+							shadowOpacity:0.3,shadowOffset:{width:1,height:2},borderRadius:3
+						}}>
+							<Text style={{color:TEXT_GREY,
+								fontSize:15
+								}}>Invite friends</Text>
+						</Animated.View>
+						<Animated.View style={{
+						opacity:this.anim1.interpolate({inputRange:[0,0.6,1],outputRange:[0,0,1]}),
 						shadowOpacity:this.anim1.interpolate({inputRange:[0,1],outputRange:[0,0.5]}),
 						shadowOffset:{width:4,height:4},
 						backgroundColor:ORANGE,...center,
 						height:55,width:55,borderRadius:55/2}}>
-						
-						<Animated.Image source={{uri:'invite',isStatic:true}} style={{
-							height:16,
-							width:19,
+							<Animated.Image source={{uri:'invite',isStatic:true}} style={{
+								height:16,
+								width:19,
 
-						}}/>
+							}}/>
+						</Animated.View>
 					</Animated.View>
 				</TouchableWithoutFeedback>
-
 				<TouchableWithoutFeedback onPress={this.createGroup.bind(this)}>
-					
+					<Animated.View
+						style={{position:'absolute',flexDirection:'row',alignItems:'center',
+							bottom:this.anim1.interpolate({inputRange:[0,1],outputRange:[-50,90]}),
+							right:17,
+						}}
+					>
+						<Animated.View style={{marginRight:20,padding:6,backgroundColor:'white',
+						opacity:this.anim1.interpolate({inputRange:[0,.8,1],outputRange:[0,0,1]}),
+							shadowOpacity:0.3,shadowOffset:{width:1,height:2},borderRadius:3
+						}}>
+							<Text style={{color:TEXT_GREY,
+								fontSize:15
+								}}>New group</Text>
+						</Animated.View>
 
+						<Animated.View style={{
+							opacity:this.anim1.interpolate({inputRange:[0,0.5,1],outputRange:[0,0,1]}),
+							shadowOpacity:this.anim1.interpolate({inputRange:[0,1],outputRange:[0,0.5]}),
+							shadowOffset:{width:4,height:4},
+							backgroundColor:GREEN,...center,
+							height:55,width:55,borderRadius:55/2}}>
+							
+							<Animated.Image source={{uri:'group',isStatic:true}} style={{
+								height:17,
+								width:25,
 
-					<Animated.View style={{position:'absolute',
-						bottom:this.anim1.interpolate({inputRange:[0,1],outputRange:[14,90]}),
-						right:17,
-						opacity:this.anim1.interpolate({inputRange:[0,0.1,1],outputRange:[0,1,1]}),
-						shadowOpacity:this.anim1.interpolate({inputRange:[0,1],outputRange:[0,0.5]}),
-						shadowOffset:{width:4,height:4},
-						backgroundColor:GREEN,...center,
-						height:55,width:55,borderRadius:55/2}}>
-						
-						<Animated.Image source={{uri:'group',isStatic:true}} style={{
-							height:17,
-							width:25,
-
-						}}/>
+							}}/>
+						</Animated.View>
 					</Animated.View>
 				</TouchableWithoutFeedback>
-				
-
 				<TouchableWithoutFeedback onPress={this.state.active?this.startChatting.bind(this):this.handlePress.bind(this)}>
-
 					<View style={{position:'absolute',flexDirection:'row',alignItems:'center',
 							bottom:14,right:14,}}>
 						<Animated.View style={{marginRight:20,padding:6,backgroundColor:'white',
@@ -124,7 +128,7 @@ export default class PlusButton extends Component {
 							shadowOpacity:0.3,shadowOffset:{width:1,height:2},borderRadius:3
 						}}>
 							<Animated.Text style={{color:TEXT_GREY,
-								fontSize:this.anim1.interpolate({inputRange:[0,.3,1],outputRange:[0.1,2,15]})
+								fontSize:this.anim1.interpolate({inputRange:[0,1],outputRange:[0.1,15]})
 							}}>Start messaging</Animated.Text>
 						</Animated.View>
 						<View style={{
@@ -148,15 +152,10 @@ export default class PlusButton extends Component {
 						</View>
 					</View>
 				</TouchableWithoutFeedback>
-
 			</View>
-
-
 		);
 	}
 }
-
-
 Object.assign(PlusButton.prototype, TimerMixin);
 
 

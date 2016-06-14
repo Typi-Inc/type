@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   Image,
+  InteractionManager,
   View
 } from 'react-native';
 import _ from 'lodash'
@@ -15,13 +16,18 @@ import {chatTitle} from '../actions/uiactions';
 import List from '../home/list';
 import StarredItems from '../settings/starredItems';
 export default class Chat extends Component {
-	state={contacts:realm.objects('Contact')};
+	state={showFuture:false};
 	changeTab(obj){
 		chatTitle({activeTab:obj['i']})
 	}
+	componentDidMount(){
+		InteractionManager.runAfterInteractions(()=>{
+			this.setState({showFuture:true})
+		})
+	}
 
 	render() {
-		let assem=this.state.contacts.filtered('givenName="Assem"')
+		// let assem=this.state.contacts.filtered('givenName="Assem"')
 		return (
 			<View style={{flex:1,backgroundColor:'white'}}>
 				<ScrollableTabView
@@ -31,7 +37,10 @@ export default class Chat extends Component {
 					renderTabBar={() => <View/>}
 				>
 		        	<Tube showInput={true} tabLabel="Chat" />
-		      		<StarredItems tabLabel="Future"/>
+		      		{
+		      			this.state.showFuture?<StarredItems tabLabel="Future"/>:
+		      				<View tabLabel="Future"/>
+		      		}
 		   	 </ScrollableTabView>
 		    </View>
 		);

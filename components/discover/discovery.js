@@ -80,7 +80,7 @@ export default class Discovery extends Component {
 			  <ListView
                     ref={el=>this.list=el}
                 	// automaticallyAdjustContentInsets={true}
-                    pageSize={2}
+                    pageSize={3}
                     scrollRenderAheadDistance={1000}
                 	removeClippedSubviews={true}
                     dataSource = {this.state.dataSource}
@@ -95,7 +95,7 @@ export default class Discovery extends Component {
 		);
 	}
 	renderRow(rowData,sectionID,rowId){
-		return <IncrementalGroup disabled={sectionID==='A'}><Contact contact={rowData}/></IncrementalGroup>
+		return <Contact contact={rowData}/>
 	}
 	renderSeparator(sectionID, rowID, adjacentRowHighlighted){
 		return <View style={{width:320*k,height:0.5,backgroundColor:TRANSPARENT_GREY}}/>

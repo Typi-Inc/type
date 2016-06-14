@@ -36,5 +36,16 @@ export const calendar$ = new Rx.Subject();
 
 export const calendar = (args) => calendar$.next(args);
 
+export const registerNav$ = new Rx.Subject();
+
+export const registerNav = (args) => registerNav$.next(args);
+
+export const chooseCountry$ = new Rx.Subject();
+
+export const chooseCountry = (args) => chooseCountry$.next(args);
+
+export const next$ = new Rx.Subject();
+
+export const next = (args) => next$.next(args);
 
 

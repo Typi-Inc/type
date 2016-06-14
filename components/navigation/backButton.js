@@ -11,7 +11,7 @@ import TimerMixin from 'react-timer-mixin';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import dismissKeyboard from 'dismissKeyboard'
-import {homeSearch$,appNav,input} from '../actions/uiactions'
+import {homeSearch$,appNav,input,registerNav} from '../actions/uiactions'
 export default class BackButton extends Component {
 
 	back(){
@@ -23,6 +23,9 @@ export default class BackButton extends Component {
 		input({action:'unsubscribe'})
 		if(this.props.name==='chat'){
 			dismissKeyboard()
+		}
+		if(this.props.name==='countryPicker'||this.props.name==='codeEnter'){
+			registerNav({nav:'registerNav',action:'pop'})
 		}
 	}
 	render() {

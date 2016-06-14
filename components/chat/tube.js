@@ -25,7 +25,7 @@ import Message from './message';
 import {tube$} from '../actions/uiactions';
 var update = ReactNative.addons.update;
 import dismissKeyboard from 'dismissKeyboard';
-import {keyboard} from '../animations'
+import {keyboard,veryFast} from '../animations'
 export default class Tube extends Component {
 	state={clipped:false,loading:true,refreshing:false,refreshColor:'transparent',messages:messages,clippedSubviews:true};
 	componentDidMount(){
@@ -136,6 +136,8 @@ export default class Tube extends Component {
 							})
 						}
 					</ScrollView>
+				
+
 				<Input show={this.show.bind(this)} hide={this.hide.bind(this)} setBottom={this.setBottom.bind(this)} ref={el=>this.input=el}/>
 				
 			

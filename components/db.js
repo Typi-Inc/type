@@ -27,10 +27,21 @@ const ContactSchema = {
     imageDataAvailable:'bool',
   }
 };
-
-
-
-
+const MessageSchema={
+  name: 'Message',
+  properties: {
+    id:'string',
+    authorId:'string',
+    chatId:'string',
+    text:'string',
+    createdAt:'date',
+    deadlineDate:{type: 'date', optional: true},
+    showTrueDate:'bool',
+    deliveryStatus:'string',
+    
+  }
+}
 
 let realm = new Realm({schema: [PhoneSchema, ContactSchema,EmailSchema]});
 export default realm;
+
