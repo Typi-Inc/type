@@ -35,10 +35,9 @@ export default class List extends Component {
   getDataSource() {
     const chats = realm.objects('Chat').slice()
     const sortedChats = chats.sort(
-      (a, b) => console.log(a.messages[a.messages.length - 1].createdAt) ||
+      (a, b) =>
         a.messages[a.messages.length - 1].createdAt < b.messages[b.messages.length - 1].createdAt
     )
-    console.log(sortedChats.map(c => c.id))
     return sortedChats
   }
 	_onDone(){

@@ -7,12 +7,15 @@ import {
 } from 'react-native'
 import DrawerWithApp from './drawerWithApp'
 import RegistrationNavigation from './login/registrationNavigation'
-import { connectToUserChannel$ } from './actions/socket'
-import './reducers/socket'
-export default class AppNavigation extends Component {
+import state$ from './rx-state/state'
+import connect from './rx-state/connect'
+import socketActions from './actions/socket'
+class AppNavigation extends Component {
   constructor(props) {
     super(props)
-    connectToUserChannel$.next({ id: 6 })
+  }
+  componentDidMount() {
+    this.props.connectToUserChannel({ id: 6 })
   }
 	render() {
 		return (
@@ -35,3 +38,7 @@ export default class AppNavigation extends Component {
 		return Navigator.SceneConfigs.PushFromRight;
 	}
 }
+
+export default connect(state$, state => ({
+  connectToUserChannel(params) { socketActions.connectToUserChannel$.next(params) }
+}))(AppNavigation)

@@ -1,13 +1,17 @@
 import { Subject } from 'rxjs'
 
-export const connectToUserChannel$ = new Subject
-export const userChannelJoin$ = new Subject
-export const userChannelError$ = new Subject
-export const userChannelMessage$ = new Subject
-export const userChannelMessageStatus$ = new Subject
-export const userChannelTyping$ = new Subject
+const socket = {
+  connectToUserChannel$: new Subject,
+  userChannelJoin$: new Subject,
+  userChannelError$: new Subject,
+  userChannelMessage$: new Subject,
+  userChannelMessageStatus$: new Subject,
+  userChannelTyping$: new Subject,
 
-export const connectToChatChannel$ = new Subject
-export const chatChannelJoin$ = new Subject
-export const chatChannelError$ = new Subject
-export const chatChannelMessage$ = new Subject
+  connectToChatChannel$: new Subject,
+  chatChannelJoin$: new Subject,
+  chatChannelError$: new Subject,
+  chatChannelMessage$: new Subject
+}
+
+export default socket
