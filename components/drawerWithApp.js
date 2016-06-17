@@ -33,14 +33,15 @@ export default class DrawerWithApp extends Component {
   	})
   }
   render() {
-	let menu=<Menu/>
+	  let menu = <Menu/>
     return (
-	 <SideMenu ref={(el)=>this.sideMenu=el}
-     isOpen={this.state.isOpen} edgeHitWidth={100} openMenuOffset={250*k}
-	 	 bounceBackOnOverdraw={false}
-	 	 onChange={(value)=>{
-	 		// StatusBar.setHidden(value, 'slide') 
-	 	}}
+  	<SideMenu ref={(el)=>this.sideMenu=el}
+      isOpen={this.state.isOpen} edgeHitWidth={100} openMenuOffset={250*k}
+  	  bounceBackOnOverdraw={false}
+  	  onChange={(value)=>{
+  	  // StatusBar.setHidden(value, 'slide')
+  	  }
+    }
 		disableGestures={this.state.disableGestures} menuPosition={'right'} menu={menu}>
       <App toggle={this.toggle.bind(this)}/>
     </SideMenu>

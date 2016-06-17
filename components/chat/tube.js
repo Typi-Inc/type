@@ -29,7 +29,6 @@ import {keyboard,veryFast} from '../animations'
 export default class Tube extends Component {
 	state={clipped:false,loading:true,refreshing:false,refreshColor:'transparent',messages:messages,clippedSubviews:true};
 	componentDidMount(){
-
 		InteractionManager.runAfterInteractions(()=>{
 			this.scroll&&this.scroll.setNativeProps({removeClippedSubviews:true})
 			// this.setState({loading:false})
@@ -57,7 +56,7 @@ export default class Tube extends Component {
 	setBottom(h){
 		this.scroll && this.scroll.setNativeProps({style:{bottom:this.keyboardHeight+h}})
 	}
-	
+
 	onTouchStart(){
 		this.touchMove=false
 	}
@@ -79,17 +78,17 @@ export default class Tube extends Component {
 					let list=newMessages.concat(this.state.messages)
 					// LayoutAnimation.configureNext(keyboard)
 					this.setState({messages:update(this.state.messages,{$unshift:newMessages})},)
-					
+
 				},500)
 
 
 			})
 		}
-		
+
 	}
 	onContentSizeChange(contentWidth,contentHeight){
 		// this.setState({clippedSubviews:false},()=>{
-			
+
 			this.handle = ReactNative.findNodeHandle(this['90'])
 			if(this.handle) UIManager.measure(this.handle,(x,y,w,h,px,py)=>{
 				this.scroll.scrollTo({x:0,y:py-160,animated:false})
@@ -97,9 +96,9 @@ export default class Tube extends Component {
 			})
 
 		// })
-		
 
-		
+
+
 		// this.setState({offset:contentHeight-this.contentHeight+20})
 		// this.contentHeight=contentHeight
 	}
@@ -112,7 +111,7 @@ export default class Tube extends Component {
 		return (
 		<Image style={{flex:1}} source={{uri:"wall1",isStatic:true}}>
 			<View style={{flex:1}}>
-					<ScrollView 
+					<ScrollView
 						ref={el=>this.scroll=el}
 						 refreshControl={this.state.messages.length>15?null:
 				          <RefreshControl
@@ -128,7 +127,7 @@ export default class Tube extends Component {
 						onTouchStart={this.onTouchStart.bind(this)}
 						onTouchMove={this.onTouchMove.bind(this)}
 						onTouchEnd={this.onTouchEnd.bind(this)}
-						removeClippedSubviews={false} 
+						removeClippedSubviews={false}
 						contentContainerStyle={{paddingBottom:90}}>
 						{
 							this.state.messages.map((message,i)=>{
@@ -136,11 +135,11 @@ export default class Tube extends Component {
 							})
 						}
 					</ScrollView>
-				
+
 
 				<Input show={this.show.bind(this)} hide={this.hide.bind(this)} setBottom={this.setBottom.bind(this)} ref={el=>this.input=el}/>
-				
-			
+
+
 			</View>
 		</Image>
 		);

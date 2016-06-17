@@ -1,47 +1,92 @@
-const Realm = require('realm');
+const Realm = require('realm')
 const PhoneSchema = {
   name: 'Phone',
+  primaryKey: 'id',
   properties: {
-    id:  'string',
+    id: 'string',
     number: 'string',
-    countryCode: 'string',
+    countryCode: 'string'
   }
-};
+}
 const EmailSchema = {
   name: 'Email',
+  primaryKey: 'id',
   properties: {
-    id:  'string',
-    value: 'string',
+    id: 'string',
+    value: 'string'
   }
-};
+}
+const ProfilePicSchema = {
+  name: 'ProfilePic',
+  properties: {
+    primary: { type: 'bool', default: 'false' },
+    image: 'string'
+  }
+}
 const ContactSchema = {
   name: 'Contact',
+  primaryKey: 'id',
   properties: {
+    id: 'string',
+    profilePics: { type: 'list', objectType: 'ProfilePic' },
     givenName: 'string',
     fullName: 'string',
     id: 'string',
-    phones: {type: 'list', objectType: 'Phone'},
-    emailAddresses: {type: 'list', objectType: 'Email'},
-    picture:  {type: 'string', optional: true},
-    organizationName: {type: 'string', optional: true},
-    imageDataAvailable:'bool',
-  }
-};
-const MessageSchema={
-  name: 'Message',
-  properties: {
-    id:'string',
-    authorId:'string',
-    chatId:'string',
-    text:'string',
-    createdAt:'date',
-    deadlineDate:{type: 'date', optional: true},
-    showTrueDate:'bool',
-    deliveryStatus:'string',
-    
+    phones: { type: 'list', objectType: 'Phone' },
+    emailAddresses: { type: 'list', objectType: 'Email' },
+    picture:  { type: 'string', optional: true },
+    organizationName: { type: 'string', optional: true },
+    imageDataAvailable:'bool'
   }
 }
-
-let realm = new Realm({schema: [PhoneSchema, ContactSchema,EmailSchema]});
-export default realm;
-
+const MessageSchema={
+  name: 'Message',
+  primaryKey: 'id',
+  properties: {
+    id: { type: 'int', optional: true },
+    body: 'string',
+    chatId: 'int',
+    createdAt: { type: 'int', indexed: true },
+    publishAt: {type: 'int', optional: true},
+    showTrueDate: {type: 'date', optional: true},
+    status: 'string',
+    userId: 'int'
+  }
+}
+const ChatSchema = {
+  name: 'Chat',
+  primaryKey: 'id',
+  properties: {
+    id: 'int',
+    image: { type: 'string', optional: true },
+    contacts: { type: 'list', objectType: 'Contact' },
+    isGroupChat: { type: 'bool', default: false },
+    groupName: { type: 'string', optional: true },
+    notificationCount: { type: 'int', optional: true },
+    messages: { type: 'list', objectType: 'Message' }
+  }
+}
+// const realm = new Realm({
+//   schema: [PhoneSchema, ContactSchema, EmailSchema, MessageSchema, ChatSchema]
+// })
+// realm.write(() => {
+//   messages = realm.objects('Message')
+//   realm.delete(messages)
+// })
+// export default realm
+export default new Realm({
+  schema: [PhoneSchema, ContactSchema, EmailSchema, ProfilePicSchema, MessageSchema, ChatSchema],
+  // schemaVersion: 2,
+  // migration: function(oldRealm, newRealm) {
+  //   // only apply this change if upgrading to schemaVersion 1
+  //   if (oldRealm.schemaVersion < 1) {
+  //     var oldObjects = oldRealm.objects('Phone');
+  //     var newObjects = newRealm.objects('Phone');
+  //
+  //     // loop through all objects and set the name property in the new schema
+  //     for (var i = 0; i < oldObjects.length; i++) {
+  //       newObjects[i].id = oldObjects[i].id
+  //     }
+  //   }
+  // }
+});

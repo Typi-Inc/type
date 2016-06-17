@@ -59,9 +59,11 @@ export default class App extends Component {
 	writeContactsToRealmAsync(contacts){
 		realm.write(()=>{
 			// realm.deleteAll()
+      const realmContacts = realm.objects('Contact')
 			for (let contact of contacts){
-				if(!_.isEmpty(realm.objects('Contact').filtered(`id="${contact.identifier}"`))) ;
-				else  realm.create('Contact',{
+				if(_.isEmpty(realm.objects('Contact').filtered(`id="${contact.identifier}"`)))
+          realm.create('Contact',{
+            id: realmContacts.length,
 						givenName:contact.givenName,
 						fullName:contact.fullName,
 						id:contact.identifier,
@@ -142,7 +144,7 @@ export default class App extends Component {
 					}else{
 						sideMenu({action:'enableGesture'})
 					}
-					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)	
+					// console.log(e,'did foucsuign',this.nav&&this.nav.getCurrentRoutes().length)
 					if(this.nav&&this.nav.getCurrentRoutes().length>2&&e.name!=='editProfile'){
 						this.nav.replacePrevious({name:'home'})
 						// this.setTimeout(()=>{
@@ -161,7 +163,7 @@ export default class App extends Component {
 				}
 			/>
 			<TouchableWithoutFeedback onPress={this.hide.bind(this)}>
-				<Animated.View 
+				<Animated.View
 					style={{position:'absolute',top:0,left:0,
 					backgroundColor:TRANSPARENT_GREY,width:320*k,
 					height:this.anim.interpolate({inputRange:[0,1],outputRange:[0,70]})
@@ -173,7 +175,7 @@ export default class App extends Component {
 	renderApp(route,navigator){
 		if(route.name==='discovery') return <Discovery/>;
 		else if(route.name==='settings') return <Settings/>;
-		else if(route.name==='chat') return <Chat showInput={true}/>;
+		else if(route.name==='chat') return <Chat showInput={true} info={route.info}/>;
 		else if(route.name==='newChat') return <List disabled={true}/>;
 		else if(route.name==='newGroup') return <NewGroup/>;
 		else if(route.name==='newBroadcast') return <NewBroadcast/>;
@@ -186,7 +188,7 @@ export default class App extends Component {
 
 	}
 	configureScene(route,routeStack){
-		if(route.name==='newChat'||route.name==='newGroup'||route.name==='discovery') 
+		if(route.name==='newChat'||route.name==='newGroup'||route.name==='discovery')
 			return {...Navigator.SceneConfigs.FloatFromBottom, gestures: {}};
 		// if(route.name==='settings') return {...Navigator.SceneConfigs.PushFromRight, gestures: {}};
 		else if (route.name==='chat') return {...Navigator.SceneConfigs.PushFromRight, defaultTransitionVelocity:5}
@@ -198,4 +200,3 @@ export default class App extends Component {
 	}
 }
 Object.assign(App.prototype, TimerMixin);
-
