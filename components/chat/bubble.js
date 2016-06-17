@@ -1,33 +1,38 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
   View
-} from 'react-native';
-import Incremental from 'Incremental';
+} from 'react-native'
+import Incremental from 'Incremental'
+import moment from 'moment'
 export default class Bubble extends Component {
 
 	state={active:Math.random()>0.5};
-
+  showMessageTime(message) {
+    const createdAt = moment(message.createdAt)
+    return `${createdAt.hour()}:${createdAt.minute()}`
+  }
 	render() {
-		// console.log(this.props.index,this.props.message.text)
+		// console.log(this.props.index,this.props.message.body)
 		let left=this.state.active?{left:6}:{right:6}
 		return (
 		<View>
 			<View style={{padding:4,paddingTop:6,
 				paddingBottom:6,margin:6,marginRight:this.state.active?70:15,
 				marginLeft:this.state.active?15:70,shadowOpacity:0.2,shadowOffset:{width:1,height:1},
-				flexDirection:this.props.message.text.length<10?'row':'column',
+				flexDirection:this.props.message.body.length<10?'row':'column',
 				backgroundColor:this.state.active?'white':APP_COLOR,
-				borderRadius:this.props.message.text.length<30?6:7,alignSelf:this.state.active?"flex-start":"flex-end"}}>
+				borderRadius:this.props.message.body.length<30?6:7,alignSelf:this.state.active?"flex-start":"flex-end"}}>
 
 				<Text style={{fontSize:16,
 					paddingHorizontal: 4,color:this.state.active?"black":"white"}}>
-					{this.props.message.text}
+					{this.props.message.body}
 				</Text>
 				<Text style={{fontSize:11,paddingTop:5,
-					alignSelf:this.props.message.text.length<10?'center':'flex-end',
-					paddingHorizontal: 4,color:this.state.active?"black":"white"}}>      12:34
+					alignSelf:this.props.message.body.length<10?'center':'flex-end',
+					paddingHorizontal: 4,color:this.state.active?"black":"white"}}>
+          {this.showMessageTime(this.props.message)}
 				</Text>
 
 

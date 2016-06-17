@@ -113,7 +113,7 @@ export default class Tube extends Component {
 			<View style={{flex:1}}>
 					<ScrollView
 						ref={el=>this.scroll=el}
-						 refreshControl={this.state.messages.length>15?null:
+						 refreshControl={this.props.chat.messages.length > 15 ? null :
 				          <RefreshControl
 				          	// title={'loading'}
 				          	tintColor={this.state.refrechColor}
@@ -130,7 +130,7 @@ export default class Tube extends Component {
 						removeClippedSubviews={false}
 						contentContainerStyle={{paddingBottom:90}}>
 						{
-							this.state.messages.map((message,i)=>{
+							this.props.chat.messages.map((message,i)=>{
 								return  <Bubble ref={el=>this[`${i}`]=el} index={i} message={message} key={i}/>
 							})
 						}

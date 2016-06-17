@@ -25,7 +25,6 @@ export default class Chat extends Component {
 			this.setState({showFuture:true})
 		})
 	}
-
 	render() {
 		// let assem=this.state.contacts.filtered('givenName="Assem"')
 		return (
@@ -36,7 +35,7 @@ export default class Chat extends Component {
 					tabBarPosition={'overlayTop'}
 					renderTabBar={() => <View/>}
 				>
-		        	<Tube showInput={true} tabLabel="Chat" />
+		        	<Tube showInput={true} tabLabel="Chat" chat={this.props.info.item} />
 		      		{
 		      			this.state.showFuture?<StarredItems tabLabel="Future"/>:
 		      				<View tabLabel="Future"/>

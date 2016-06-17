@@ -19,7 +19,7 @@ export default class Message extends Component {
 				<View style={{borderLeftWidth:2,borderColor:!this.state.active?RED:APP_COLOR,padding:0,paddingLeft:3,marginLeft:1,marginTop:5}}>
 					<Text style={{fontSize:16,color:'rgb(80,80,80)',
 						paddingHorizontal: 4}}>
-						{this.props.message.text}
+						{this.props.message.body}
 					</Text>
 				</View>
 
