@@ -31,15 +31,14 @@ const ContactSchema = {
     profilePics: { type: 'list', objectType: 'ProfilePic' },
     givenName: 'string',
     fullName: 'string',
-    id: 'string',
     phones: { type: 'list', objectType: 'Phone' },
     emailAddresses: { type: 'list', objectType: 'Email' },
-    picture:  { type: 'string', optional: true },
+    picture: { type: 'string', optional: true },
     organizationName: { type: 'string', optional: true },
-    imageDataAvailable:'bool'
+    imageDataAvailable: 'bool'
   }
 }
-const MessageSchema={
+const MessageSchema = {
   name: 'Message',
   primaryKey: 'id',
   properties: {
@@ -47,8 +46,8 @@ const MessageSchema={
     body: 'string',
     chatId: 'int',
     createdAt: { type: 'int', indexed: true },
-    publishAt: {type: 'int', optional: true},
-    showTrueDate: {type: 'date', optional: true},
+    publishAt: { type: 'int', optional: true },
+    showTrueDate: { type: 'date', optional: true },
     status: { type: 'string', optional: true },
     userId: 'int'
   }
@@ -66,16 +65,26 @@ const ChatSchema = {
     messages: { type: 'list', objectType: 'Message' }
   }
 }
-// const realm = new Realm({
-//   schema: [PhoneSchema, ContactSchema, EmailSchema, MessageSchema, ChatSchema]
-// })
-// realm.write(() => {
-//   messages = realm.objects('Message')
-//   realm.delete(messages)
-// })
-// export default realm
+
+const MeSchema = {
+  name: 'Me',
+  primaryKey: 'id',
+  properties: {
+    id: 'int',
+    token: 'string'
+  }
+}
+
 export default new Realm({
-  schema: [PhoneSchema, ContactSchema, EmailSchema, ProfilePicSchema, MessageSchema, ChatSchema],
+  schema: [
+    PhoneSchema,
+    ContactSchema,
+    EmailSchema,
+    ProfilePicSchema,
+    MessageSchema,
+    ChatSchema,
+    MeSchema
+  ]
   // schemaVersion: 2,
   // migration: function(oldRealm, newRealm) {
   //   // only apply this change if upgrading to schemaVersion 1
@@ -89,4 +98,4 @@ export default new Realm({
   //     }
   //   }
   // }
-});
+})

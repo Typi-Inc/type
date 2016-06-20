@@ -67,15 +67,15 @@ export default class Discovery extends Component {
         	loaded:true
         });
     }
-    _onDone(){
-        this.loading&&this.loading._onDone()
+    onDone(){
+        this.loading&&this.loading.onDone()
     }
 
 	render() {
         // this.setTimeout(()=>this.list.setNativeProps({pageSize:3}),50)
 		return (
 			<View style={{flex:1,backgroundColor:'blue'}}>
-            <IncrementalGroup onDone={this._onDone.bind(this)}  disabled={false}>
+            <IncrementalGroup onDone={this.onDone.bind(this)}  disabled={false}>
 
 			  <ListView
                     ref={el=>this.list=el}

@@ -16,6 +16,9 @@
     "id-length": [0],
     "dot-notation": [0],
     "react/prop-types": [0],
-    "react/jsx-no-bind": [0]
+    "react/jsx-no-bind": [0],
+    "import/no-unresolved": [2, { "ignore": ["NativeModules", "IncrementalGroup"] }],
+    "no-unused-expressions": [0],
+    "no-return-assign": [0]
   }
 }
