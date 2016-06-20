@@ -11,7 +11,8 @@ const socket = {
   connectToChatChannel$: new Subject,
   chatChannelJoin$: new Subject,
   chatChannelError$: new Subject,
-  chatChannelMessage$: new Subject
+  chatChannelMessage$: new Subject,
+  leaveChatChannel$: new Subject
 }
 
 export default socket

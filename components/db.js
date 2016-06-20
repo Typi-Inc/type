@@ -49,7 +49,7 @@ const MessageSchema={
     createdAt: { type: 'int', indexed: true },
     publishAt: {type: 'int', optional: true},
     showTrueDate: {type: 'date', optional: true},
-    status: 'string',
+    status: { type: 'string', optional: true },
     userId: 'int'
   }
 }

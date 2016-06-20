@@ -1,47 +1,53 @@
-
-
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
-  StyleSheet,
-  Text,
-  Image,
   InteractionManager,
   View
-} from 'react-native';
-import _ from 'lodash'
-import realm from '../db'
-import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view';
-import Tube from './tube';
-import {chatTitle} from '../actions/uiactions';
-import List from '../home/list';
-import StarredItems from '../settings/starredItems';
-export default class Chat extends Component {
-	state={showFuture:false};
-	changeTab(obj){
-		chatTitle({activeTab:obj['i']})
-	}
-	componentDidMount(){
-		InteractionManager.runAfterInteractions(()=>{
-			this.setState({showFuture:true})
-		})
-	}
-	render() {
-		// let assem=this.state.contacts.filtered('givenName="Assem"')
-		return (
-			<View style={{flex:1,backgroundColor:'white'}}>
-				<ScrollableTabView
-					style={{backgroundColor:'white'}}
-					onChangeTab={this.changeTab.bind(this)}
-					tabBarPosition={'overlayTop'}
-					renderTabBar={() => <View/>}
-				>
-		        	<Tube showInput={true} tabLabel="Chat" chat={this.props.info.item} />
-		      		{
-		      			this.state.showFuture?<StarredItems tabLabel="Future"/>:
-		      				<View tabLabel="Future"/>
-		      		}
-		   	 </ScrollableTabView>
-		    </View>
-		);
-	}
+} from 'react-native'
+import ScrollableTabView from 'react-native-scrollable-tab-view'
+import Tube from './tube'
+import { chatTitle } from '../actions/uiactions'
+import StarredItems from '../settings/starredItems'
+import state$ from '../rx-state/state'
+import connect from '../rx-state/connect'
+import socketActions from '../actions/socket'
+
+class Chat extends Component {
+  state = { showFuture: false }
+  componentDidMount() {
+    this.props.connectToChatChannel(this.props.info.item)
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ showFuture: true })
+    })
+  }
+  componentWillUnmount() {
+    this.props.leaveChatChannel()
+  }
+  changeTab(obj) {
+    chatTitle({ activeTab: obj['i'] })
+  }
+  render() {
+    // let assem=this.state.contacts.filtered('givenName="Assem"')
+    return (
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <ScrollableTabView
+          style={{ backgroundColor: 'white' }}
+          onChangeTab={this.changeTab.bind(this)}
+          tabBarPosition={'overlayTop'}
+          renderTabBar={() => <View />}
+        >
+          <Tube showInput tabLabel="Chat" chat={this.props.info.item} />
+            {
+              this.state.showFuture ?
+                <StarredItems tabLabel="Future" /> :
+                <View tabLabel="Future" />
+            }
+        </ScrollableTabView>
+      </View>
+    )
+  }
 }
+
+export default connect(state$, () => ({
+  connectToChatChannel(chat) { socketActions.connectToChatChannel$.next(chat) },
+  leaveChatChannel() { socketActions.leaveChatChannel$.next() }
+}))(Chat)
