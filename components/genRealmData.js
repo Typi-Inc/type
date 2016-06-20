@@ -1,9 +1,17 @@
 import realm from './db'
 
-contacts = realm.objects('Contact')
-profilePics = realm.objects('ProfilePic')
+const contacts = realm.objects('Contact')
 
 realm.write(() => {
+  realm.create('Me', {
+    id: 6,
+    token: 'eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjYiLCJleHAiOjQ2MjI2MDE4NDks' +
+      'ImlhdCI6MTQ2NjQwOTg0OSwiaXNzIjoiVHlwaSIsImp0aSI6IjM0NjRlMWI2LTBhN2EtNGYxZC05NzY5LTE2YW' +
+      'QxM2IwMDlkNSIsInBlbSI6e30sInN1YiI6IlVzZXI6NiIsInR5cCI6InRva2VuIn0.AEXmvnYzqs43qoK4Eus1' +
+      'NoqzkmV8xw1yxtd7YASMJU6C3omIpQWKb6iid2i4Z2n7gDSa6hY0J4zFzya_hUkXFTFmARc2RvYbK-oBV8ihXm' +
+      'DhxFuZCM14gooCV5LBkwo9JyaNZGMiWxX599VbTH0k1hzdD9VHzuyskSlZ_jKQ_OMcAJeF'
+  })
+
   contacts[0].profilePics = [
     {
       primary: true,
@@ -47,7 +55,8 @@ realm.write(() => {
       },
       {
         id: 3,
-        body: `God sprinkles tiny but wonderful seeds of blessings on earth each day...and I just caught one that's so nice and true...it's YOU ! Love you and good night`,
+        body: `God sprinkles tiny but wonderful seeds of blessings on earth each day...
+          and I just caught one that's so nice and true...it's YOU ! Love you and good night`,
         chatId: 2,
         createdAt: Date.now() - 3000,
         status: 'read',
@@ -55,7 +64,8 @@ realm.write(() => {
       },
       {
         id: 4,
-        body: 'I love all the stars in the sky, but they are nothing compared to the ones in your eyes! So I’ll think about you as I turn in for the night. Good Night!',
+        body: `I love all the stars in the sky, but they are nothing compared to the ones
+          in your eyes! So I’ll think about you as I turn in for the night. Good Night!`,
         chatId: 2,
         createdAt: Date.now() - 2000,
         status: 'read',

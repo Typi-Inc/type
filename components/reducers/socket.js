@@ -3,9 +3,9 @@ import { Socket } from '../phoenix'
 import realm from '../db'
 
 const socketReducerFn = actions => Observable.merge(
-  actions.connectToUserChannel$.map(({ id }) => {
+  actions.connectToUserChannel$.map(({ id, token }) => {
     const socket = new Socket('http://localhost:4000/socket', {
-      params: { id },
+      params: { token },
       logger: (kind, msg, data) => console.log(`${kind}: ${msg}`, data)
     })
     socket.connect()

@@ -9,7 +9,6 @@ import Item from './item'
 import Loading from '../utils/loading'
 import PlusButton from '../creation/plusButton'
 import Background from '../creation/background'
-// import '../genRealmData'
 import realm from '../db'
 
 export default class List extends Component {
