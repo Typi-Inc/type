@@ -7,6 +7,20 @@
     "es6": true
   },
   "extends": "airbnb",
+  "globals": {
+    "k": "true",
+    "h": "true",
+    "center": "true",
+    "APP_COLOR": "true",
+    "GREEN": "true",
+    "ORANGE": "true",
+    "BORDER_COLOR": "true",
+    "RED": "true",
+    "BACKGROUND_GREY": "true",
+    "TEXT_GREY": "true",
+    "TRANSPARENT_GREY": "true",
+    "BUBBLE_GREY": "true",
+  },
   "rules": {
     "semi": [2, "never"],
     "object-curly-spacing": [1, "always"],

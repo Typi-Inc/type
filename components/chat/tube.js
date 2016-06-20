@@ -12,6 +12,7 @@ const UIManager = require('NativeModules').UIManager
 import TimerMixin from 'react-timer-mixin'
 import Input from './input'
 import Bubble from './bubble'
+import realm from '../db'
 const update = ReactNative.addons.update
 
 export default class Tube extends Component {
@@ -20,8 +21,8 @@ export default class Tube extends Component {
     loading: true,
     refreshing: false,
     refreshColor: 'transparent',
-    messages,
-    clippedSubviews: true
+    clippedSubviews: true,
+    user: realm.objects('Me')[0]
   }
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
@@ -112,7 +113,13 @@ export default class Tube extends Component {
           >
             {
               this.props.chat.messages.map((message, i) =>
-                <Bubble ref={el => this[`${i}`] = el} index={i} message={message} key={i} />
+                <Bubble
+                  ref={el => this[`${i}`] = el}
+                  index={i}
+                  message={message}
+                  key={i}
+                  mine={message.userId === this.state.user.id}
+                />
               )
             }
           </ScrollView>

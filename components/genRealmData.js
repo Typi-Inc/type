@@ -43,7 +43,7 @@ realm.write(() => {
         chatId: 2,
         createdAt: Date.now() - 5000,
         status: 'read',
-        userId: 6
+        userId: 7
       },
       {
         id: 2,
@@ -60,7 +60,7 @@ realm.write(() => {
         chatId: 2,
         createdAt: Date.now() - 3000,
         status: 'read',
-        userId: 6
+        userId: 7
       },
       {
         id: 4,
@@ -92,7 +92,7 @@ realm.write(() => {
         chatId: 2,
         createdAt: Date.now() - 9000,
         status: 'read',
-        userId: 6
+        userId: 8
       },
       {
         id: 7,
@@ -108,7 +108,7 @@ realm.write(() => {
         chatId: 2,
         createdAt: Date.now() - 7000,
         status: 'read',
-        userId: 6
+        userId: 8
       }
     ]
   })
@@ -137,7 +137,7 @@ realm.write(() => {
         chatId: 2,
         createdAt: Date.now() - 19000,
         status: 'read',
-        userId: 6
+        userId: 7
       },
       {
         id: 11,
@@ -145,7 +145,7 @@ realm.write(() => {
         chatId: 2,
         createdAt: Date.now() - 18000,
         status: 'read',
-        userId: 6
+        userId: 8
       },
       {
         id: 12,
@@ -153,7 +153,7 @@ realm.write(() => {
         chatId: 2,
         createdAt: Date.now() - 17000,
         status: 'read',
-        userId: 6
+        userId: 9
       }
     ]
   })
