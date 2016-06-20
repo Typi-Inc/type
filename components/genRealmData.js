@@ -33,7 +33,7 @@ realm.write(() => {
     }
   ]
   realm.create('Chat', {
-    id: 1,
+    id: 2,
     contacts: [contacts[0]],
     notificationCount: 1,
     messages: [
@@ -74,7 +74,7 @@ realm.write(() => {
     ]
   })
   realm.create('Chat', {
-    id: 2,
+    id: 3,
     contacts: [contacts[1]],
     notificationCount: 2,
     messages: [
@@ -113,7 +113,7 @@ realm.write(() => {
     ]
   })
   realm.create('Chat', {
-    id: 3,
+    id: 5,
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqtoCVUpVbxMyTwuExep1uQP83F9IhpAMF9Opez7WXICXZMi12Ag',
     contacts: [contacts[0], contacts[1], contacts[2]],
     groupName: 'Typi Inc',
