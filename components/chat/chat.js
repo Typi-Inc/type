@@ -10,16 +10,19 @@ import StarredItems from '../settings/starredItems'
 import state$ from '../rx-state/state'
 import connect from '../rx-state/connect'
 import socketActions from '../actions/socket'
+import realm from '../db'
 
 class Chat extends Component {
   state = { showFuture: false }
   componentDidMount() {
+    // realm.addListener('change', this.onChange.bind(this))
     this.props.connectToChatChannel(this.props.info.item)
     InteractionManager.runAfterInteractions(() => {
       this.setState({ showFuture: true })
     })
   }
   componentWillUnmount() {
+    // realm.removeListener('change', this.onChange.bind(this))
     this.props.leaveChatChannel()
   }
   changeTab(obj) {

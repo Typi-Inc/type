@@ -12,29 +12,37 @@ import Background from '../creation/background'
 import realm from '../db'
 
 export default class List extends Component {
-  state={
+  constructor(props) {
+    super(props)
+    this.onChange = this.onChange.bind(this)
+  }
+  state = {
     clippedSubviews: false,
-    dataSource: new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2
-    })
+    chats: realm.objects('Chat').slice()
   }
   componentWillMount() {
+    realm.removeListener('change', this.onChange)
     this.setTimeout(
       () => this.scroll && this.scroll.setNativeProps({ removeClippedSubviews: true }),
       100
     )
-    this.setState({ dataSource: this.state.dataSource.cloneWithRows(this.getDataSource()) })
   }
-  getDataSource() {
-    const chats = realm.objects('Chat').slice()
-    const sortedChats = chats.sort(
-      (a, b) =>
-        a.messages[a.messages.length - 1].createdAt < b.messages[b.messages.length - 1].createdAt
-    )
-    return sortedChats
+  componentDidMount() {
+    realm.addListener('change', this.onChange)
+  }
+  onChange() {
+    this.setState({ chats: realm.objects('Chat').slice() })
   }
   onDone() {
     this.loading && this.loading.onDone()
+  }
+  getDataSource(chats) {
+    const sortedChats = chats.sort(
+      (a, b) =>
+        b.messages[b.messages.length - 1].createdAt - a.messages[a.messages.length - 1].createdAt
+    )
+    console.log(sortedChats.map(c => c.id))
+    return sortedChats
   }
   renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
     return <View
@@ -58,7 +66,12 @@ export default class List extends Component {
               automaticallyAdjustContentInsets
               // ref={el=>this.scroll=el}
               renderSeparator={this.renderSeparator.bind(this)}
-              dataSource={this.state.dataSource}
+              dataSource={
+                new ListView.DataSource({
+                  rowHasChanged: (row1, row2) => row1 !== row2
+                })
+                .cloneWithRows(this.getDataSource(this.state.chats))
+              }
               renderRow={this.renderRow.bind(this)}
               removeClippedSubviews={false}
             />
