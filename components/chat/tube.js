@@ -7,15 +7,16 @@ import ReactNative, {
   RefreshControl,
   ScrollView
 } from 'react-native'
-import { messages, newMessages } from '../mock'
 const UIManager = require('NativeModules').UIManager
 import TimerMixin from 'react-timer-mixin'
 import Input from './input'
 import Bubble from './bubble'
+import state$ from '../rx-state/state'
+import connect from '../rx-state/connect'
 import realm from '../db'
 const update = ReactNative.addons.update
 
-export default class Tube extends Component {
+class Tube extends Component {
   state = {
     clipped: false,
     loading: true,
@@ -36,6 +37,7 @@ export default class Tube extends Component {
     this.touchMove = true
   }
   onTouchEnd() {
+    'calling this shit'
     if (!this.touchMove && !this.input.component.keyboardIsUp()) {
       this.input.dismissTimer()
     }
@@ -139,3 +141,5 @@ export default class Tube extends Component {
   }
 }
 Object.assign(Tube.prototype, TimerMixin)
+
+export default connect(state$, () => ({}))(Tube)

@@ -5,16 +5,16 @@ import {
 } from 'react-native'
 import DrawerWithApp from './drawerWithApp'
 import RegistrationNavigation from './login/registrationNavigation'
-import state$ from './rx-state/state'
-import connect from './rx-state/connect'
 import socketActions from './actions/socket'
+import state$ from './rx-state/state'
 import realm from './db'
 // import './genRealmData'
+state$.subscribe(state => state) // dummy subscription to make state machine work
 
-class AppNavigation extends Component {
+export default class AppNavigation extends Component {
   componentDidMount() {
     const me = realm.objects('Me')[0]
-    this.props.connectToUserChannel(me)
+    socketActions.connectToUserChannel$.next(me)
   }
   configureScene(route, routeStack){
     return Navigator.SceneConfigs.PushFromRight
@@ -39,7 +39,3 @@ class AppNavigation extends Component {
     )
   }
 }
-
-export default connect(state$, () => ({
-  connectToUserChannel(params) { socketActions.connectToUserChannel$.next(params) }
-}))(AppNavigation)

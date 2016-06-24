@@ -19,6 +19,7 @@ import state$ from '../rx-state/state'
 import connect from '../rx-state/connect'
 import socketActions from '../actions/socket'
 import realm from '../db'
+import _ from 'lodash'
 
 class Input extends Component {
   state={
@@ -116,7 +117,7 @@ class Input extends Component {
   }
   sendMessage() {
     this.props.sendMessage({
-      body: this.state.text,
+      body: _.trim(this.state.text),
       chatId: this.props.chat.id,
       createdAt: Date.now(),
       userId: realm.objects('Me')[0].id
@@ -245,10 +246,10 @@ class Input extends Component {
                 width: /\S/.test(this.state.text) ? 238 * k : 273 * k,
                 paddingLeft: 7
               }}
-              // value={this.state.text}
+              value={this.state.text}
               onChange={(event) => {
                 // var handle = InteractionManager.createInteractionHandle();
-                this.requestAnimationFrame(() => LayoutAnimation.configureNext(fast))
+                // this.requestAnimationFrame(() => LayoutAnimation.configureNext(fast))
                 this.setState({
                   text: event.nativeEvent.text,
                   height: Math.min(event.nativeEvent.contentSize.height, 129 * k)
@@ -257,7 +258,7 @@ class Input extends Component {
                 this.props.setBottom(this.addHeight)
               }}
             />
-            <TouchableOpacity onPress={this.sendMessage.bind(this)}>
+            <TouchableOpacity onPress={e => this.sendMessage(e)}>
               <Text
                 ref={el => this.send = el}
                 style={{

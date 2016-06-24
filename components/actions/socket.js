@@ -13,7 +13,8 @@ const socket = {
   chatChannelError$: new Subject,
   chatChannelMessage$: new Subject,
   sendMessage$: new Subject,
-  leaveChatChannel$: new Subject
+  leaveChatChannel$: new Subject,
+  receiveMessageResponse$: new Subject
 }
 
 export default socket

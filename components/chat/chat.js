@@ -7,29 +7,24 @@ import ScrollableTabView from 'react-native-scrollable-tab-view'
 import Tube from './tube'
 import { chatTitle } from '../actions/uiactions'
 import StarredItems from '../settings/starredItems'
-import state$ from '../rx-state/state'
-import connect from '../rx-state/connect'
 import socketActions from '../actions/socket'
-import realm from '../db'
 
-class Chat extends Component {
+export default class Chat extends Component {
   state = { showFuture: false }
   componentDidMount() {
-    // realm.addListener('change', this.onChange.bind(this))
-    this.props.connectToChatChannel(this.props.info.item)
+    socketActions.connectToChatChannel$.next(this.props.info.item)
     InteractionManager.runAfterInteractions(() => {
       this.setState({ showFuture: true })
     })
   }
   componentWillUnmount() {
     // realm.removeListener('change', this.onChange.bind(this))
-    this.props.leaveChatChannel()
+    socketActions.leaveChatChannel$.next()
   }
   changeTab(obj) {
     chatTitle({ activeTab: obj['i'] })
   }
   render() {
-    console.log('rendering stuff')
     // let assem=this.state.contacts.filtered('givenName="Assem"')
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -40,18 +35,13 @@ class Chat extends Component {
           renderTabBar={() => <View />}
         >
           <Tube showInput tabLabel="Chat" chat={this.props.info.item} />
-            {
-              this.state.showFuture ?
-                <StarredItems tabLabel="Future" /> :
-                <View tabLabel="Future" />
-            }
+          {
+            this.state.showFuture ?
+              <StarredItems tabLabel="Future" /> :
+              <View tabLabel="Future" />
+          }
         </ScrollableTabView>
       </View>
     )
   }
 }
-
-export default connect(state$, () => ({
-  connectToChatChannel(chat) { socketActions.connectToChatChannel$.next(chat) },
-  leaveChatChannel() { socketActions.leaveChatChannel$.next() }
-}))(Chat)

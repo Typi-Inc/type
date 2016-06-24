@@ -86,14 +86,18 @@ const socketReducerFn = actions => Observable.merge(
         user_id: msg.userId
       })
       .receive('ok', updatedMsg => {
-        const message = realm.objects('Message').filtered(`createdAt = ${updatedMsg.createdAt}`)[0]
-        realm.write(() => {
-          message.id = updatedMsg.id
-          message.status = updatedMsg.status
-        })
+        actions.receiveMessageResponse$.next(updatedMsg)
       })
       .receive('error', reasons => console.log(reasons))
       .receive('timeout', () => console.log('Networking issue. Still waiting...'))
+    return state
+  }),
+  actions.receiveMessageResponse$.map(updatedMsg => state => {
+    const message = realm.objects('Message').filtered(`createdAt = ${updatedMsg.createdAt}`)[0]
+    realm.write(() => {
+      message.id = updatedMsg.id
+      message.status = updatedMsg.status
+    })
     return state
   })
 )
