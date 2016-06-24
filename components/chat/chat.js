@@ -31,8 +31,10 @@ export default class Chat extends Component {
         <ScrollableTabView
           style={{ backgroundColor: 'white' }}
           onChangeTab={this.changeTab.bind(this)}
-          tabBarPosition={'overlayTop'}
           renderTabBar={() => <View />}
+          contentProps={{
+            keyboardShouldPersistTaps: true
+          }}
         >
           <Tube showInput tabLabel="Chat" chat={this.props.info.item} />
           {

@@ -26,10 +26,28 @@ class Tube extends Component {
     user: realm.objects('Me')[0]
   }
   componentDidMount() {
+    // this.scrollToBottom()
     InteractionManager.runAfterInteractions(() => {
       this.scroll && this.scroll.setNativeProps({ removeClippedSubviews: true })
     })
   }
+  // scrollToBottom() {
+  //   const innerScrollView = this.scroll.refsInnerScrollView
+  //   console.log(Object.keys(this.scroll.refs))
+  //   const scrollView = this.scroll.refs.ScrollView;
+  //   console.log(innerScrollView)
+  //   requestAnimationFrame(() => {
+  //     innerScrollView.measure((innerScrollViewX, innerScrollViewY, innerScrollViewWidth, innerScrollViewHeight) => {
+  //       scrollView.measure((scrollViewX, scrollViewY, scrollViewWidth, scrollViewHeight) => {
+  //         var scrollTo = innerScrollViewHeight - scrollViewHeight + innerScrollViewY
+  //         if (innerScrollViewHeight < scrollViewHeight) {
+  //           return
+  //         }
+  //         this.scroll.scrollTo(scrollTo)
+  //       })
+  //     })
+  //   })
+  // }
   onTouchStart() {
     this.touchMove = false
   }
@@ -43,10 +61,10 @@ class Tube extends Component {
     }
   }
   onContentSizeChange(contentWidth, contentHeight) {
-    this.handle = ReactNative.findNodeHandle(this['90'])
+    this.handle = ReactNative.findNodeHandle(this.scroll)
     if (this.handle) {
       UIManager.measure(this.handle, (x, y, w, h, px, py) => {
-        this.scroll.scrollTo({ x: 0, y: py - 160, animated: false })
+        this.scroll.scrollTo({ x: 0, y: contentHeight - h, animated: false })
       })
     }
   }
