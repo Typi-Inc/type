@@ -18,7 +18,7 @@ function connect(state$, selector = state => state) {
       }
       render() {
         return (
-          <WrappedComponent {...this.state} {...this.props} />
+          <WrappedComponent ref={el => this.component = el} {...this.state} {...this.props} />
         )
       }
     }

@@ -16,6 +16,16 @@ class AppNavigation extends Component {
     const me = realm.objects('Me')[0]
     this.props.connectToUserChannel(me)
   }
+  configureScene(route, routeStack){
+    return Navigator.SceneConfigs.PushFromRight
+  }
+  renderApp(route, navigator) {
+    if (route.name === 'home'){
+      return <DrawerWithApp />
+    }
+    // else if (route.name === 'registration')
+    return <RegistrationNavigation />
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -27,13 +37,6 @@ class AppNavigation extends Component {
         />
       </View>
     )
-  }
-  renderApp(route, navigator) {
-    if (route.name === 'home') return <DrawerWithApp />
-    else if (route.name === 'registration') return <RegistrationNavigation />
-  }
-  configureScene(route, routeStack){
-    return Navigator.SceneConfigs.PushFromRight
   }
 }
 

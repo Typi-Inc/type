@@ -36,9 +36,11 @@ export default class Tube extends Component {
     this.touchMove = true
   }
   onTouchEnd() {
-    if (!this.touchMove && this.input && !this.input.keyboardIsUp()) this.input.dismissTimer()
+    if (!this.touchMove && !this.input.component.keyboardIsUp()) {
+      this.input.dismissTimer()
+    }
   }
-  onContentSizeChange(contentWidth, contentHeight){
+  onContentSizeChange(contentWidth, contentHeight) {
     this.handle = ReactNative.findNodeHandle(this['90'])
     if (this.handle) {
       UIManager.measure(this.handle, (x, y, w, h, px, py) => {
@@ -95,13 +97,14 @@ export default class Tube extends Component {
         <View style={{ flex: 1 }}>
           <ScrollView
             ref={el => this.scroll = el}
-            refreshControl={this.props.chat.messages.length > 15 ? null :
-              <RefreshControl
-                tintColor={this.state.refrechColor}
-                refreshing={this.state.refreshing}
-                onRefresh={this.onRefresh.bind(this)}
-              />
-                }
+            refreshControl={
+              this.props.chat.messages.length > 15 ? null :
+                <RefreshControl
+                  tintColor={this.state.refrechColor}
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onRefresh.bind(this)}
+                />
+            }
             onContentSizeChange={this.onContentSizeChange.bind(this)}
             scrollEventThrottle={100}
             onScroll={this.handleScroll.bind(this)}
