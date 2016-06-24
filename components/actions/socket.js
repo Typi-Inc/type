@@ -12,6 +12,7 @@ const socket = {
   chatChannelJoin$: new Subject,
   chatChannelError$: new Subject,
   chatChannelMessage$: new Subject,
+  sendMessage$: new Subject,
   leaveChatChannel$: new Subject
 }
 

@@ -145,6 +145,7 @@ export default class App extends Component {
     })
   }
   renderApp(route, navigator) {
+    console.log('rendering navigation')
     if (route.name === 'discovery') return <Discovery />
     else if (route.name === 'settings') return <Settings />
     else if (route.name === 'chat') return <Chat showInput info={route.info} />
@@ -160,7 +161,6 @@ export default class App extends Component {
   }
   render() {
     // menu=<View style={{flex:1,...center}}><Text> hello</Text></View>
-
     this.anim = this.anim || new Animated.Value(0)
     return (
       <View style={{ flex: 1 }}>

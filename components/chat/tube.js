@@ -36,7 +36,7 @@ export default class Tube extends Component {
     this.touchMove = true
   }
   onTouchEnd() {
-    if (!this.touchMove && !this.input.keyboardIsUp()) this.input.dismissTimer()
+    if (!this.touchMove && this.input && !this.input.keyboardIsUp()) this.input.dismissTimer()
   }
   onContentSizeChange(contentWidth, contentHeight){
     this.handle = ReactNative.findNodeHandle(this['90'])
@@ -124,10 +124,11 @@ export default class Tube extends Component {
             }
           </ScrollView>
           <Input
+            ref={el => this.input = el}
             show={this.show.bind(this)}
             hide={this.hide.bind(this)}
             setBottom={this.setBottom.bind(this)}
-            ref={el => this.input = el}
+            chat={this.props.chat}
           />
         </View>
       </Image>

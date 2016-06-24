@@ -9,8 +9,20 @@ export default class Bubble extends Component {
     const createdAt = moment(message.createdAt)
     return `${createdAt.hour()}:${createdAt.minute()}`
   }
+  showStatus(message) {
+    switch (message.status) {
+      case 'sending':
+        return 'single tick'
+      case 'received':
+        return 'double tick'
+      case 'read':
+        return 'coloured tick'
+      default:
+        return 'clock'
+    }
+  }
   render() {
-    const left = this.props.mine ? { left: 6 } : { right: 6 }
+    const left = this.props.mine ? { right: 6 } : { left: 6 }
     return (
       <View>
         <View
@@ -19,21 +31,21 @@ export default class Bubble extends Component {
             paddingTop: 6,
             paddingBottom: 6,
             margin: 6,
-            marginRight: this.props.mine ? 70 : 15,
-            marginLeft: this.props.mine ? 15 : 70,
+            marginRight: this.props.mine ? 15 : 70,
+            marginLeft: this.props.mine ? 70 : 15,
             shadowOpacity: 0.2,
             shadowOffset: { width: 1, height: 1 },
             flexDirection: this.props.message.body.length < 10 ? 'row' : 'column',
-            backgroundColor: this.props.mine ? 'white' : APP_COLOR,
+            backgroundColor: this.props.mine ? APP_COLOR : 'white',
             borderRadius: this.props.message.body.length < 30 ? 6 : 7,
-            alignSelf: this.props.mine ? 'flex-start' : 'flex-end'
+            alignSelf: this.props.mine ? 'flex-end' : 'flex-start'
           }}
         >
           <Text
             style={{
               fontSize: 16,
               paddingHorizontal: 4,
-              color: this.props.mine ? 'black' : 'white'
+              color: this.props.mine ? 'white' : 'black'
             }}
           >
             {this.props.message.body}
@@ -44,10 +56,11 @@ export default class Bubble extends Component {
               paddingTop: 5,
               alignSelf: this.props.message.body.length < 10 ? 'center' : 'flex-end',
               paddingHorizontal: 4,
-              color: this.props.mine ? 'black' : 'white'
+              color: this.props.mine ? 'white' : 'black'
             }}
           >
             {this.showMessageTime(this.props.message)}
+            {this.props.mine ? this.showStatus(this.props.message) : ''}
           </Text>
         </View>
         <View
@@ -55,7 +68,7 @@ export default class Bubble extends Component {
             width: 0,
             bottom: 3,
             ...left,
-            transform: [{ rotate: this.props.mine ? '-110deg' : '110deg' }],
+            transform: [{ rotate: this.props.mine ? '110deg' : '-110deg' }],
             position: 'absolute',
             height: 0,
             borderRadius: 4,
@@ -66,7 +79,7 @@ export default class Bubble extends Component {
             borderBottomWidth: 16,
             borderLeftColor: 'transparent',
             borderRightColor: 'transparent',
-            borderBottomColor: this.props.mine ? 'white' : APP_COLOR
+            borderBottomColor: this.props.mine ? APP_COLOR : 'white'
           }}
         />
       </View>

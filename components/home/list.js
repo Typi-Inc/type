@@ -41,7 +41,6 @@ export default class List extends Component {
       (a, b) =>
         b.messages[b.messages.length - 1].createdAt - a.messages[a.messages.length - 1].createdAt
     )
-    console.log(sortedChats.map(c => c.id))
     return sortedChats
   }
   renderSeparator(sectionID, rowID, adjacentRowHighlighted) {

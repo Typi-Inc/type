@@ -68,6 +68,33 @@ const socketReducerFn = actions => Observable.merge(
       ...state,
       chatChannel: undefined
     }
+  }),
+  actions.sendMessage$.map(msg => state => {
+    const chat = realm.objects('Chat').filtered(`id = ${msg.chatId}`)[0]
+    realm.write(() => {
+      chat.messages.push({
+        id: msg.createdAt,
+        ...msg
+      })
+    })
+    state.chatChannel
+      .push('message', {
+        body: msg.body,
+        chat_id: msg.chatId,
+        created_at: msg.createdAt,
+        publish_at: msg.publishAt,
+        user_id: msg.userId
+      })
+      .receive('ok', updatedMsg => {
+        const message = realm.objects('Message').filtered(`createdAt = ${updatedMsg.createdAt}`)[0]
+        realm.write(() => {
+          message.id = updatedMsg.id
+          message.status = updatedMsg.status
+        })
+      })
+      .receive('error', reasons => console.log(reasons))
+      .receive('timeout', () => console.log('Networking issue. Still waiting...'))
+    return state
   })
 )
 

@@ -29,6 +29,7 @@ class Chat extends Component {
     chatTitle({ activeTab: obj['i'] })
   }
   render() {
+    console.log('rendering stuff')
     // let assem=this.state.contacts.filtered('givenName="Assem"')
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>

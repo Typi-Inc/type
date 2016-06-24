@@ -47,7 +47,6 @@ const MessageSchema = {
     chatId: 'int',
     createdAt: { type: 'int', indexed: true },
     publishAt: { type: 'int', optional: true },
-    showTrueDate: { type: 'date', optional: true },
     status: { type: 'string', optional: true },
     userId: 'int'
   }
