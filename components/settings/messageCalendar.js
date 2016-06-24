@@ -17,8 +17,8 @@ export default class MessageCalendar extends Component {
 	onDateSelect(date){
 		// console.log(date)
 	}
-	_onDone(){
-		this.loading&&this.loading._onDone()
+	onDone(){
+		this.loading&&this.loading.onDone()
 	}
 	goTube(){
 		this.props.navigator.push({component:Tube,props:{test:true}})

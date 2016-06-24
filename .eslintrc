@@ -1,0 +1,38 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "extends": "airbnb",
+  "globals": {
+    "k": "true",
+    "h": "true",
+    "center": "true",
+    "APP_COLOR": "true",
+    "GREEN": "true",
+    "ORANGE": "true",
+    "BORDER_COLOR": "true",
+    "RED": "true",
+    "BACKGROUND_GREY": "true",
+    "TEXT_GREY": "true",
+    "TRANSPARENT_GREY": "true",
+    "BUBBLE_GREY": "true",
+  },
+  "rules": {
+    "semi": [2, "never"],
+    "object-curly-spacing": [1, "always"],
+    "comma-dangle": [2, "never"],
+    "react/wrap-multilines": [0],
+    "new-cap": [0],
+    "id-length": [0],
+    "dot-notation": [0],
+    "react/prop-types": [0],
+    "react/jsx-no-bind": [0],
+    "import/no-unresolved": [2, { "ignore": ["NativeModules", "IncrementalGroup", "dismissKeyboard"] }],
+    "no-unused-expressions": [0],
+    "no-return-assign": [0]
+  }
+}

@@ -31,8 +31,8 @@ export default class Calendar extends Component {
 	    }
 	    return dateArray
 	}
-	_onDone(){
-		this.loading&&this.loading._onDone()
+	onDone(){
+		this.loading&&this.loading.onDone()
 	}
 	_onScroll(e){
 		if(this.state.dates.length>600) return;
