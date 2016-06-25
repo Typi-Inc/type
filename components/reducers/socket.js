@@ -36,6 +36,13 @@ const socketReducerFn = actions => Observable.merge(
       userChannel: channel
     })
   }),
+  actions.userChannelMessageStatus$.map(({ id, status }) => state => {
+    const message = realm.objects('Message').filtered(`id = ${id}`)[0]
+    realm.write(() => {
+      message.status = status
+    })
+    return state
+  }),
   actions.connectToChatChannel$.map(chat => state => {
     const channel = state.socket.channel(`chats:${chat.id}`)
     channel
