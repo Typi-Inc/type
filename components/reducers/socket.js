@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs'
 import { Socket } from '../phoenix'
 import realm from '../db'
+import _ from 'lodash'
 
 const socketReducerFn = actions => Observable.merge(
   actions.connectToUserChannel$.map(({ id, token }) => {
@@ -16,7 +17,7 @@ const socketReducerFn = actions => Observable.merge(
     const channel = socket.channel(`users:${id}`)
     channel
       .join()
-      .receive('ok', response => actions.userChannelJoin$.next(response))
+      .receive('ok', response => actions.userChannelAfterJoin$.next(response))
       .receive('error', reason => actions.userChannelError$.next(reason))
       .receive('timout', () => actions.userChannelError$.next(`The request has
         timed out please try againg when you will have internet connection`))
@@ -32,9 +33,32 @@ const socketReducerFn = actions => Observable.merge(
     })
     return state => ({
       ...state,
+      userId: id,
       socket,
       userChannel: channel
     })
+  }),
+  actions.userChannelMessage$.map(msg => state => {
+    console.log('message has come and is ', msg)
+    realm.write(() => {
+      const chat = realm.objects('Chat').filtered(`id = ${msg.chatId}`)[0]
+      chat.messages.push({
+        ...msg,
+        status: 'received'
+      })
+    })
+
+    state.userChannel
+      .push('status', {
+        id: msg.id,
+        status: 'received'
+      })
+      .receive('ok', () => {
+        console.log('message received')
+      })
+      .receive('error', reasons => console.log(reasons))
+      .receive('timeout', () => console.log('Networking issue. Still waiting...'))
+    return state
   }),
   actions.userChannelMessageStatus$.map(({ id, status }) => state => {
     const message = realm.objects('Message').filtered(`id = ${id}`)[0]
@@ -47,7 +71,7 @@ const socketReducerFn = actions => Observable.merge(
     const channel = state.socket.channel(`chats:${chat.id}`)
     channel
       .join()
-      .receive('ok', response => actions.chatChannelJoin$.next(response))
+      .receive('ok', response => actions.chatChannelAfterJoin$.next({ chat, response }))
       .receive('error', reason => actions.chatChannelError$.next(reason))
       .receive('timout', () => actions.chatChannelError$.next(`The request has
         timed out please try againg when you will have internet connection`))
@@ -63,9 +87,27 @@ const socketReducerFn = actions => Observable.merge(
       chatChannel: channel
     }
   }),
+  actions.chatChannelAfterJoin$.map(({ chat, response }) => state => {
+    const messages = realm.objects('Message')
+      .filtered(`chatId == ${chat.id} and userId != ${state.userId} and status != "read"`)
+    if (!_.isEmpty(messages)) {
+      state.chatChannel.push('statuses', {
+        statuses: _.values(messages).map(message => ({ id: message.id, status: 'read' }))
+      })
+      realm.write(() => {
+        _.values(messages).forEach(message => {
+          message.status = 'read' // eslint-disable-line
+        })
+      })
+    }
+    return state
+  }),
   actions.chatChannelMessage$.map(({ chat, msg }) => state => {
     realm.write(() => {
-      chat.messages.push(msg)
+      chat.messages.push({
+        ...msg,
+        status: 'read'
+      })
     })
     return state
   }),

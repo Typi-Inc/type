@@ -4,12 +4,12 @@ const contacts = realm.objects('Contact')
 
 realm.write(() => {
   realm.create('Me', {
-    id: 6,
-    token: 'eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjYiLCJleHAiOjQ2MjI2MDE4NDks' +
-      'ImlhdCI6MTQ2NjQwOTg0OSwiaXNzIjoiVHlwaSIsImp0aSI6IjM0NjRlMWI2LTBhN2EtNGYxZC05NzY5LTE2YW' +
-      'QxM2IwMDlkNSIsInBlbSI6e30sInN1YiI6IlVzZXI6NiIsInR5cCI6InRva2VuIn0.AEXmvnYzqs43qoK4Eus1' +
-      'NoqzkmV8xw1yxtd7YASMJU6C3omIpQWKb6iid2i4Z2n7gDSa6hY0J4zFzya_hUkXFTFmARc2RvYbK-oBV8ihXm' +
-      'DhxFuZCM14gooCV5LBkwo9JyaNZGMiWxX599VbTH0k1hzdD9VHzuyskSlZ_jKQ_OMcAJeF'
+    id: 7,
+    token: 'eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjciLCJleHAiOjQ2MjMxMjY5MjQs' +
+      'ImlhdCI6MTQ2NjkzNDkyNCwiaXNzIjoiVHlwaSIsImp0aSI6IjFhNzc0OWRkLTQyNDMtNDA0My04ZjFmLWMyNG' +
+      'NiMTE4NTVjOCIsInBlbSI6e30sInN1YiI6IlVzZXI6NyIsInR5cCI6InRva2VuIn0.oircB5slaW-Vl8h6YVLz' +
+      'FmqdB7XaIg2SG7FvOUI3ANtXB2KsAQe-z7J2TaL0c5H_w7ODN82gfCGl-wyXpWcNd9pNj7sOOKCv3LzjMczkKT' +
+      'yNBKzkn2aDkdJaX6f0F61s5_kTH3BosPb93-QB2CV9GuKMcj4wXyZBSjRCHRuQU4Co7A'
   })
 
   contacts[0].profilePics = [

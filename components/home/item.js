@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import { appNav, homeSearch } from '../actions/uiactions'
 import moment from 'moment'
+import realm from '../db'
 
 export default class Item extends Component {
   componentWillMount() {
@@ -54,6 +55,10 @@ export default class Item extends Component {
       return `${text.substring(0, 53)}...`
     }
     return text
+  }
+  getNotificationCount(chat) {
+    const me = realm.objects('Me')[0]
+    return chat.messages.filtered(`userId != ${me.id} and status != "read"`).length
   }
   render() {
     // console.log(this.props.item)
@@ -111,13 +116,13 @@ export default class Item extends Component {
                 style={{
                   width: 200 * k,
                   color: TEXT_GREY,
-                  fontWeight: this.props.item.notificationCount > 0 ? 'bold' : 'normal'
+                  fontWeight: this.getNotificationCount(this.props.item) > 0 ? 'bold' : 'normal'
                 }}
               >
                 {this.shortenText(this.showLastMessageBody(this.props.item))}
               </Text>
               {
-                this.props.item.notificationCount > 0 ?
+                this.getNotificationCount(this.props.item) > 0 ?
                   <View
                     style={{
                       backgroundColor: APP_COLOR,
@@ -129,7 +134,9 @@ export default class Item extends Component {
                       marginBottom: 10
                     }}
                   >
-                    <Text style={{ color: 'white' }}>{this.props.item.notificationCount}</Text>
+                    <Text style={{ color: 'white' }}>
+                      {this.getNotificationCount(this.props.item)}
+                    </Text>
                   </View> :
                   null
               }

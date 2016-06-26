@@ -8,7 +8,10 @@ import RegistrationNavigation from './login/registrationNavigation'
 import socketActions from './actions/socket'
 import state$ from './rx-state/state'
 import realm from './db'
-// import './genRealmData'
+// realm.write(() => {
+//   realm.deleteAll()
+// })
+// import './genRealmData0'
 state$.subscribe(state => state) // dummy subscription to make state machine work
 
 export default class AppNavigation extends Component {

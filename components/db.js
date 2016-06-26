@@ -60,7 +60,6 @@ const ChatSchema = {
     contacts: { type: 'list', objectType: 'Contact' },
     isGroupChat: { type: 'bool', default: false },
     groupName: { type: 'string', optional: true },
-    notificationCount: { type: 'int', optional: true },
     messages: { type: 'list', objectType: 'Message' }
   }
 }

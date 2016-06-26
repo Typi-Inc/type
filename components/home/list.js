@@ -9,9 +9,11 @@ import Item from './item'
 import Loading from '../utils/loading'
 import PlusButton from '../creation/plusButton'
 import Background from '../creation/background'
+import state$ from '../rx-state/state'
+import connect from '../rx-state/connect'
 import realm from '../db'
 
-export default class List extends Component {
+class List extends Component {
   constructor(props) {
     super(props)
     this.onChange = this.onChange.bind(this)
@@ -84,3 +86,5 @@ export default class List extends Component {
   }
 }
 Object.assign(List.prototype, TimerMixin)
+
+export default connect(state$, () => ({}))(List)
