@@ -56,7 +56,7 @@ class Tube extends Component {
   }
   onTouchEnd() {
     'calling this shit'
-    if (!this.touchMove && !this.input.component.keyboardIsUp()) {
+    if (!this.touchMove && !this.input.keyboardIsUp()) {
       this.input.dismissTimer()
     }
   }

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs'
-import { Socket } from '../phoenix'
+import { Socket, Presence } from '../phoenix'
 import realm from '../db'
 import _ from 'lodash'
 
@@ -31,15 +31,65 @@ const socketReducerFn = actions => Observable.merge(
     channel.on('message:status', payload => {
       actions.userChannelMessageStatus$.next(payload)
     })
+    channel.on('typing', payload => {
+      console.log('typing information has come')
+      console.log(payload)
+      actions.userChannelTyping$.next(payload)
+    })
     return state => ({
       ...state,
       userId: id,
       socket,
-      userChannel: channel
+      userChannel: channel,
+      presences: {}
     })
   }),
+  actions.userChannelTyping$.map(({ chatId, userId, status }) => state => {
+    if (status === 'typing') {
+      if (!state.typings) {
+        state.typings = {}
+      }
+      if (state.typings[chatId]) {
+        if (!_.includes(state.typings[chatId], userId)) {
+          state.typings[chatId].push(userId)
+        }
+      } else {
+        state.typings[chatId] = [userId]
+      }
+    } else {
+      const index = state.typings[chatId].indexOf(userId)
+      index !== -1 && state.typings[chatId].splice(index, 1)
+    }
+    return state
+  }),
+  // actions.userChannelAfterJoin$.map(response => state => {
+  //   state.userChannel.on('presence_state', presenceState => {
+  //     actions.presenceState$.next(presenceState)
+  //     // Presence.syncState(state.presences, state)
+  //   })
+  //   state.userChannel.on('presence_diff', diff => {
+  //     actions.presenceDiff$.next(diff)
+  //     // Presence.syncDiff(state.presences, diff)
+  //   })
+  //   return state
+  // }),
+  // actions.presenceState$.map(presenceState => state => {
+  //   console.log('presence shit has come')
+  //   console.log(presenceState)
+  //   console.log(state.presences)
+  //   Presence.syncState(state.presences, presenceState)
+  //   console.log(state.presences)
+  //   return state
+  // }),
+  // actions.presenceDiff$.map(diff => state => {
+  //   console.log('presence diff shit has come')
+  //   console.log(diff)
+  //   console.log(state.presences)
+  //   Presence.syncDiff(state.presences, diff)
+  //   console.log(state.presences)
+  //   return state
+  // }),
   actions.userChannelMessage$.map(msg => state => {
-    console.log('message has come and is ', msg)
     realm.write(() => {
       const chat = realm.objects('Chat').filtered(`id = ${msg.chatId}`)[0]
       chat.messages.push({
@@ -47,7 +97,6 @@ const socketReducerFn = actions => Observable.merge(
         status: 'received'
       })
     })
-
     state.userChannel
       .push('status', {
         id: msg.id,
@@ -109,6 +158,16 @@ const socketReducerFn = actions => Observable.merge(
         status: 'read'
       })
     })
+    state.userChannel
+      .push('status', {
+        id: msg.id,
+        status: 'read'
+      })
+      .receive('ok', () => {
+        console.log('message received')
+      })
+      .receive('error', reasons => console.log(reasons))
+      .receive('timeout', () => console.log('Networking issue. Still waiting...'))
     return state
   }),
   actions.leaveChatChannel$.map(() => state => {
@@ -147,6 +206,16 @@ const socketReducerFn = actions => Observable.merge(
       message.id = updatedMsg.id
       message.status = updatedMsg.status
     })
+    return state
+  }),
+  actions.sendTypingStatus$.debounceTime(1000).map(status => state => {
+    state.chatChannel
+      .push('typing', { status })
+      .receive('ok', () => {
+        console.log('status has successfully been delivered')
+      })
+      .receive('error', reasons => console.log(reasons))
+      .receive('timeout', () => console.log('Networking issue. Still waiting...'))
     return state
   })
 )

@@ -28,6 +28,7 @@ const ContactSchema = {
   primaryKey: 'id',
   properties: {
     id: 'string',
+    // contactId: 'string',
     profilePics: { type: 'list', objectType: 'ProfilePic' },
     givenName: 'string',
     fullName: 'string',

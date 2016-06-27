@@ -15,13 +15,11 @@ import { keyboard, fast } from '../animations'
 import dismissKeyboard from 'dismissKeyboard'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/Ionicons'
-import state$ from '../rx-state/state'
-import connect from '../rx-state/connect'
 import socketActions from '../actions/socket'
 import realm from '../db'
 import _ from 'lodash'
 
-class Input extends Component {
+export default class Input extends Component {
   state={
     text: '',
     showTime: false,
@@ -116,7 +114,7 @@ class Input extends Component {
     return d.calendar()
   }
   sendMessage() {
-    this.props.sendMessage({
+    socketActions.sendMessage$.next({
       body: _.trim(this.state.text),
       chatId: this.props.chat.id,
       createdAt: Date.now(),
@@ -250,6 +248,11 @@ class Input extends Component {
               onChange={(event) => {
                 // var handle = InteractionManager.createInteractionHandle();
                 // this.requestAnimationFrame(() => LayoutAnimation.configureNext(fast))
+                if (event.nativeEvent.text.length > 0) {
+                  socketActions.sendTypingStatus$.next('typing')
+                } else {
+                  socketActions.sendTypingStatus$.next('not typing')
+                }
                 this.setState({
                   text: event.nativeEvent.text,
                   height: Math.min(event.nativeEvent.contentSize.height, 129 * k)
@@ -316,7 +319,3 @@ class Input extends Component {
   }
 }
 Object.assign(Input.prototype, TimerMixin)
-
-export default connect(state$, () => ({
-  sendMessage(message) { socketActions.sendMessage$.next(message) }
-}))(Input)

@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import { appNav, homeSearch } from '../actions/uiactions'
 import moment from 'moment'
+import _ from 'lodash'
 import realm from '../db'
 
 export default class Item extends Component {
@@ -26,11 +27,19 @@ export default class Item extends Component {
     const profilePics = chat.contacts[0].profilePics.filtered('primary = true')
     return profilePics.length !== 0 ? profilePics[0].image : undefined
   }
+  getContactNameById(chat, id) {
+    // this.props.item.contact.filter(contact => contact.id == )
+    return this.props.item.contacts[0].fullName
+  }
   getName(chat) {
     if (chat.isGroupChat) {
       return chat.groupName
     }
     return this.props.item.contacts[0].fullName
+  }
+  getNotificationCount(chat) {
+    const me = realm.objects('Me')[0]
+    return chat.messages.filtered(`userId != ${me.id} and status != "read"`).length
   }
   showLastMessageBody(chat) {
     const message = chat.messages[chat.messages.length - 1]
@@ -56,12 +65,8 @@ export default class Item extends Component {
     }
     return text
   }
-  getNotificationCount(chat) {
-    const me = realm.objects('Me')[0]
-    return chat.messages.filtered(`userId != ${me.id} and status != "read"`).length
-  }
   render() {
-    // console.log(this.props.item)
+    console.log(this.props.item.typing)
     return (
       <TouchableOpacity
         onPress={this.showTube.bind(this, this.props.item)}
@@ -112,15 +117,27 @@ export default class Item extends Component {
                 alignItems: 'center'
               }}
             >
-              <Text
-                style={{
-                  width: 200 * k,
-                  color: TEXT_GREY,
-                  fontWeight: this.getNotificationCount(this.props.item) > 0 ? 'bold' : 'normal'
-                }}
-              >
-                {this.shortenText(this.showLastMessageBody(this.props.item))}
-              </Text>
+              {
+                !_.isEmpty(this.props.item.typing) ?
+                  <Text
+                    style={{
+                      width: 200 * k,
+                      color: TEXT_GREY,
+                      fontWeight: this.getNotificationCount(this.props.item) > 0 ? 'bold' : 'normal'
+                    }}
+                  >
+                    {this.getContactNameById(this.props.item, this.props.item.typing[0])} is typing...
+                  </Text> :
+                  <Text
+                    style={{
+                      width: 200 * k,
+                      color: TEXT_GREY,
+                      fontWeight: this.getNotificationCount(this.props.item) > 0 ? 'bold' : 'normal'
+                    }}
+                  >
+                    {this.shortenText(this.showLastMessageBody(this.props.item))}
+                  </Text>
+              }
               {
                 this.getNotificationCount(this.props.item) > 0 ?
                   <View

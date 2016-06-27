@@ -12,6 +12,7 @@ import Background from '../creation/background'
 import state$ from '../rx-state/state'
 import connect from '../rx-state/connect'
 import realm from '../db'
+import _ from 'lodash'
 
 class List extends Component {
   constructor(props) {
@@ -43,6 +44,11 @@ class List extends Component {
       (a, b) =>
         b.messages[b.messages.length - 1].createdAt - a.messages[a.messages.length - 1].createdAt
     )
+    sortedChats.forEach(chat => {
+      if (!_.isEmpty(this.props.typings) && this.props.typings[chat.id]) {
+        chat.typing =  this.props.typings[chat.id] // eslint-disable-line
+      }
+    })
     return sortedChats
   }
   renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
@@ -87,4 +93,6 @@ class List extends Component {
 }
 Object.assign(List.prototype, TimerMixin)
 
-export default connect(state$, () => ({}))(List)
+export default connect(state$, state => ({
+  typings: state.typings
+}))(List)
