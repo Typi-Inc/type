@@ -45,6 +45,7 @@ const socketReducerFn = actions => Observable.merge(
     })
   }),
   actions.userChannelTyping$.map(({ chatId, userId, status }) => state => {
+    console.log('here it is')
     if (status === 'typing') {
       if (!state.typings) {
         state.typings = {}
@@ -60,6 +61,7 @@ const socketReducerFn = actions => Observable.merge(
       const index = state.typings[chatId].indexOf(userId)
       index !== -1 && state.typings[chatId].splice(index, 1)
     }
+    console.log(state.typings)
     return state
   }),
   // actions.userChannelAfterJoin$.map(response => state => {

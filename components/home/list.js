@@ -46,7 +46,7 @@ class List extends Component {
     )
     sortedChats.forEach(chat => {
       if (!_.isEmpty(this.props.typings) && this.props.typings[chat.id]) {
-        chat.typing =  this.props.typings[chat.id] // eslint-disable-line
+        chat.typing = this.props.typings[chat.id] // eslint-disable-line
       }
     })
     return sortedChats

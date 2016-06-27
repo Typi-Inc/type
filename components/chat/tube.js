@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactNative, {
   View,
+  Text,
   Image,
   InteractionManager,
   Animated,
@@ -9,6 +10,7 @@ import ReactNative, {
 } from 'react-native'
 const UIManager = require('NativeModules').UIManager
 import TimerMixin from 'react-timer-mixin'
+import _ from 'lodash'
 import Input from './input'
 import Bubble from './bubble'
 import state$ from '../rx-state/state'
@@ -108,7 +110,15 @@ class Tube extends Component {
   onDone() {
     this.loading && this.loading.onDone()
   }
+  isTyping(chat, typings) {
+    console.log(typings)
+    if (!_.isEmpty(typings) && !_.isEmpty(typings[chat.id])) {
+      return true
+    }
+    return false
+  }
   render() {
+    console.log(this.isTyping(this.props.chat, this.props.typings))
     this.anim = this.anim || new Animated.Value(1)
     this.anim1 = this.anim1 || new Animated.Value(0)
     this.contentHeight = this.contentHeight || 0
@@ -145,6 +155,12 @@ class Tube extends Component {
                 />
               )
             }
+            {
+              this.isTyping(this.props.chat, this.props.typings) &&
+                <Text>
+                  typing...
+                </Text>
+            }
           </ScrollView>
           <Input
             ref={el => this.input = el}
@@ -160,4 +176,6 @@ class Tube extends Component {
 }
 Object.assign(Tube.prototype, TimerMixin)
 
-export default connect(state$, () => ({}))(Tube)
+export default connect(state$, state => ({
+  typings: state.typings
+}))(Tube)
