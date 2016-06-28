@@ -122,11 +122,12 @@ export default class App extends Component {
   writeContactsToRealmAsync(contacts) {
     realm.write(() => {
       for (const contact of contacts) {
-        if (_.isEmpty(realm.objects('Contact').filtered(`id="${contact.identifier}"`))) {
+        if (_.isEmpty(realm.objects('Contact').filtered(`contactId="${contact.identifier}"`))) {
           realm.create('Contact', {
+            id: Date.now() * 100 + Math.floor(Math.random() * (999 - 100 + 1)) + 100,
+            contactId: contact.identifier,
             givenName: contact.givenName,
             fullName: contact.fullName,
-            id: contact.identifier,
             imageDataAvailable: contact.imageDataAvailable,
             picture: contact.imageDataAvailable ? contact.thumbnailImageData : null,
             organizationName: contact.organizationName,

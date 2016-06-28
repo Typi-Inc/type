@@ -33,23 +33,6 @@ class Tube extends Component {
       this.scroll && this.scroll.setNativeProps({ removeClippedSubviews: true })
     })
   }
-  // scrollToBottom() {
-  //   const innerScrollView = this.scroll.refsInnerScrollView
-  //   console.log(Object.keys(this.scroll.refs))
-  //   const scrollView = this.scroll.refs.ScrollView;
-  //   console.log(innerScrollView)
-  //   requestAnimationFrame(() => {
-  //     innerScrollView.measure((innerScrollViewX, innerScrollViewY, innerScrollViewWidth, innerScrollViewHeight) => {
-  //       scrollView.measure((scrollViewX, scrollViewY, scrollViewWidth, scrollViewHeight) => {
-  //         var scrollTo = innerScrollViewHeight - scrollViewHeight + innerScrollViewY
-  //         if (innerScrollViewHeight < scrollViewHeight) {
-  //           return
-  //         }
-  //         this.scroll.scrollTo(scrollTo)
-  //       })
-  //     })
-  //   })
-  // }
   onTouchStart() {
     this.touchMove = false
   }
@@ -111,11 +94,21 @@ class Tube extends Component {
     this.loading && this.loading.onDone()
   }
   isTyping(chat, typings) {
-    console.log(typings)
     if (!_.isEmpty(typings) && !_.isEmpty(typings[chat.id])) {
       return true
     }
     return false
+  }
+  whoIsTyping(chat, typings) {
+    if (!chat.isGroupChat || !this.isTyping(chat, typings)) {
+      return
+    }
+
+    const result = typings[chat.id]
+      .map(userId => realm.objects('Contact').filtered(`id = ${userId}`)[0].fullName)
+      .reduce((prev, curr) => `${prev} ${curr}`)
+
+    return result
   }
   render() {
     console.log(this.isTyping(this.props.chat, this.props.typings))
@@ -158,7 +151,7 @@ class Tube extends Component {
             {
               this.isTyping(this.props.chat, this.props.typings) &&
                 <Text>
-                  typing...
+                  {`${this.whoIsTyping(this.props.chat, this.props.typings)} is typing...`}
                 </Text>
             }
           </ScrollView>

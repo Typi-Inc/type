@@ -11,7 +11,7 @@ import realm from './db'
 // realm.write(() => {
 //   realm.deleteAll()
 // })
-// import './genRealmData0'
+// import './genRealmData'
 state$.subscribe(state => state) // dummy subscription to make state machine work
 
 export default class AppNavigation extends Component {

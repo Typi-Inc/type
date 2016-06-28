@@ -28,6 +28,9 @@ export default class Item extends Component {
     return profilePics.length !== 0 ? profilePics[0].image : undefined
   }
   getContactNameById(chat, id) {
+    if (!chat.isGroupChat) {
+      return
+    }
     // this.props.item.contact.filter(contact => contact.id == )
     return this.props.item.contacts[0].fullName
   }
@@ -64,6 +67,17 @@ export default class Item extends Component {
       return `${text.substring(0, 53)}...`
     }
     return text
+  }
+  whoIsTyping(chat, typing) {
+    if (!chat.isGroupChat || _.isEmpty(typing)) {
+      return
+    }
+
+    const result = typing
+      .map(userId => realm.objects('Contact').filtered(`id = ${userId}`)[0].fullName)
+      .reduce((prev, curr) => `${prev} ${curr}`)
+
+    return result
   }
   render() {
     console.log(this.props.item.typing)
@@ -126,7 +140,7 @@ export default class Item extends Component {
                       fontWeight: this.getNotificationCount(this.props.item) > 0 ? 'bold' : 'normal'
                     }}
                   >
-                    {this.getContactNameById(this.props.item, this.props.item.typing[0])} is typing...
+                    {this.whoIsTyping(this.props.item, this.props.item.typing)} is typing...
                   </Text> :
                   <Text
                     style={{

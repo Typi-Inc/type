@@ -11,7 +11,7 @@ const socketReducerFn = actions => Observable.merge(
     })
     socket.connect()
     socket.onOpen(e => console.log("OPEN", e))
-    // socket.onError(e => console.log("ERROR", e))
+    socket.onError(e => console.log("ERROR", e))
     socket.onClose(e => console.log("CLOSE", e))
 
     const channel = socket.channel(`users:${id}`)
@@ -28,7 +28,7 @@ const socketReducerFn = actions => Observable.merge(
     channel.on('message', msg => {
       actions.userChannelMessage$.next(msg)
     })
-    channel.on('message:status', payload => {
+    channel.on('status', payload => {
       actions.userChannelMessageStatus$.next(payload)
     })
     channel.on('typing', payload => {
@@ -142,7 +142,7 @@ const socketReducerFn = actions => Observable.merge(
     const messages = realm.objects('Message')
       .filtered(`chatId == ${chat.id} and userId != ${state.userId} and status != "read"`)
     if (!_.isEmpty(messages)) {
-      state.chatChannel.push('statuses', {
+      state.userChannel.push('statuses', {
         statuses: _.values(messages).map(message => ({ id: message.id, status: 'read' }))
       })
       realm.write(() => {
@@ -210,16 +210,24 @@ const socketReducerFn = actions => Observable.merge(
     })
     return state
   }),
-  actions.sendTypingStatus$.debounceTime(1000).map(status => state => {
-    state.chatChannel
-      .push('typing', { status })
-      .receive('ok', () => {
-        console.log('status has successfully been delivered')
-      })
-      .receive('error', reasons => console.log(reasons))
-      .receive('timeout', () => console.log('Networking issue. Still waiting...'))
-    return state
-  })
+  actions.sendTypingStatus$
+    .merge(
+      // TODO this is not finished
+      actions.sendTypingStatus$
+        .map(() => 'not typing')
+        .delay(3000)
+    )
+    .debounceTime(300)
+    .map(status => state => {
+      state.chatChannel
+        .push('typing', { status })
+        .receive('ok', () => {
+          console.log('status has successfully been delivered')
+        })
+        .receive('error', reasons => console.log(reasons))
+        .receive('timeout', () => console.log('Networking issue. Still waiting...'))
+      return state
+    })
 )
 
 export default socketReducerFn

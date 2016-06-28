@@ -27,8 +27,8 @@ const ContactSchema = {
   name: 'Contact',
   primaryKey: 'id',
   properties: {
-    id: 'string',
-    // contactId: 'string',
+    id: 'int',
+    contactId: { type: 'string', indexed: true },
     profilePics: { type: 'list', objectType: 'ProfilePic' },
     givenName: 'string',
     fullName: 'string',
@@ -43,7 +43,7 @@ const MessageSchema = {
   name: 'Message',
   primaryKey: 'id',
   properties: {
-    id: { type: 'int', optional: true },
+    id: 'int',
     body: 'string',
     chatId: 'int',
     createdAt: { type: 'int', indexed: true },

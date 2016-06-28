@@ -12,6 +12,7 @@ realm.write(() => {
       'yNBKzkn2aDkdJaX6f0F61s5_kTH3BosPb93-QB2CV9GuKMcj4wXyZBSjRCHRuQU4Co7A'
   })
 
+  contacts[0].id = 6
   contacts[0].profilePics = [
     {
       primary: true,
@@ -22,6 +23,7 @@ realm.write(() => {
       image: 'http://a57.foxnews.com/media2.foxnews.com/BrightCove/694940094001/2016/05/09/876/493/694940094001_4885965796001_9cc88214-5962-41e4-a293-56e1f55dcc00.jpg?ve=1&tl=1'
     }
   ]
+  contacts[1].id = 8
   contacts[1].profilePics = [
     {
       primary: true,
@@ -113,7 +115,7 @@ realm.write(() => {
   realm.create('Chat', {
     id: 5,
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqtoCVUpVbxMyTwuExep1uQP83F9IhpAMF9Opez7WXICXZMi12Ag',
-    contacts: [contacts[0], contacts[1], contacts[2]],
+    contacts: [contacts[0], contacts[1]],
     groupName: 'Typi Inc',
     isGroupChat: true,
     messages: [
