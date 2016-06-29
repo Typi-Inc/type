@@ -23,7 +23,7 @@ export default class AppNavigation extends Component {
     return Navigator.SceneConfigs.PushFromRight
   }
   renderApp(route, navigator) {
-    if (route.name === 'home'){
+    if (route.name === 'home') {
       return <DrawerWithApp />
     }
     // else if (route.name === 'registration')
@@ -34,7 +34,7 @@ export default class AppNavigation extends Component {
       <View style={{ flex: 1 }}>
         <Navigator
           ref={el => this.nav = el}
-          initialRoute={{ name: 'home' }}
+          initialRoute={{ name: 'registration' }}
           configureScene={this.configureScene.bind(this)}
           renderScene={this.renderApp.bind(this)}
         />

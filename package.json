@@ -11,6 +11,7 @@
     "react-native": "^0.27.0",
     "react-native-animatable": "^0.6.1",
     "react-native-calendar": "^0.6.4",
+    "react-native-device-info": "^0.9.3",
     "react-native-lightbox": "https://github.com/oblador/react-native-lightbox.git",
     "react-native-loading": "^0.1.0",
     "react-native-scrollable-tab-view": "^0.4.3",
